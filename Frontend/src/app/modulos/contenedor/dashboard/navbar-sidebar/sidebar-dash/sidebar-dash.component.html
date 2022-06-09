@@ -1,0 +1,109 @@
+<div
+  id="layoutSidenav"
+  style="
+    width: 200px;
+    height: 100vh;
+    position: fixed;
+    top: 68px;
+    right: 0;
+    left: -205px;
+    z-index: 1038;
+  "
+>
+  <div id="layoutSidenav_nav">
+    <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+      <div class="sb-sidenav-menu">
+        <div class="nav">
+          <div class="card-header-nav">
+            <img
+              class="imagen-nav"
+              src="../../../../../../assets/img/imagen-nav.jpg"
+            />
+            <img class="user-nav" src="../../../../../../assets/img/user.png" />
+            <div class="datos-nav">
+              <span>Usuario</span><br />
+              <span>Rol</span>
+            </div>
+          </div>
+          <div class="sb-sidenav-menu-heading">Menú principal</div>
+          <a class="nav-link" [routerLink]="['inicio-dash']">
+            <div class="sb-nav-link-icon">
+              <i class="fa-solid fa-house-chimney"></i>
+            </div>
+            Inicio
+          </a>
+
+          <a
+            class="nav-link collapsed"
+            href="#"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseLayouts"
+            aria-expanded="false"
+            aria-controls="collapseLayouts"
+          >
+            <div class="sb-nav-link-icon">
+              <i class="fa-solid fa-user-gear"></i>
+            </div>
+            Administrador
+            <div class="sb-sidenav-collapse-arrow">
+              <i class="fas fa-angle-down"></i>
+            </div>
+          </a>
+          <div
+            class="collapseLayouts"
+            id="collapseLayouts"
+            aria-labelledby="headingOne"
+            data-bs-parent="#sidenavAccordion"
+          >
+            <nav
+              class="sb-sidenav-menu-nested nav accordion"
+              id="sidenavAccordionPages"
+            >
+              <a class="nav-link" [routerLink]="['/private/roles/listar-rol']">Roles</a>
+              <a class="nav-link" [routerLink]="['/private/usuario/listar-usuario']"
+                >Usuarios</a
+              >
+            </nav>
+          </div>
+          <a
+            class="nav-link collapsed"
+            href="#"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapsePages"
+            aria-expanded="false"
+            aria-controls="collapsePages"
+          >
+            <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+            Encuestas
+            <div class="sb-sidenav-collapse-arrow">
+              <i class="fas fa-angle-down"></i>
+            </div>
+          </a>
+          <div
+            class="collapse"
+            id="collapsePages"
+            aria-labelledby="headingTwo"
+            data-bs-parent="#sidenavAccordion"
+          >
+            <nav
+              class="sb-sidenav-menu-nested nav accordion"
+              id="sidenavAccordionPages"
+            >
+              <a class="nav-link" href="crear-encuestas.html">Crear encuesta</a>
+              <a class="nav-link" href="encuestas_realizadas.html"
+                >Listar encuesta</a
+              >
+            </nav>
+          </div>
+
+          <a class="nav-link" href="resultados.html">
+            <div class="sb-nav-link-icon">
+              <i class="fas fa-chart-area"></i>
+            </div>
+            Análisis de resultados
+          </a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</div>

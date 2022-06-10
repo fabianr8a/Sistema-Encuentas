@@ -1,13 +1,12 @@
 import { Response, Request } from 'express';
 import AccesoDAO from '../daos/AccesoDAO';
 import { SQL_ACCESO } from '../repositorios/Acceso_sql';
-import {SQL_REG_USU} from '../repositorios/RegistrarUsuario_sql'
+import { SQL_REG_USU } from '../repositorios/RegistrarUsuario_sql'
 
 
 class AccesoControlador extends AccesoDAO {
 
   public validarSesion(req: Request, res: Response): void {
-    console.log(req.body);
     const parametros = [req.body.correoAcceso, req.body.claveAcceso];
     AccesoControlador.iniciarSesion(SQL_ACCESO.INICIAR_SESION_DATOS, parametros, res);
   }
@@ -15,12 +14,11 @@ class AccesoControlador extends AccesoDAO {
   public crearUsuario(req: Request, res: Response): void {
     console.log(req.body);
     const parametros = [
-      req.body.correoRegistro,
-      req.body.nombresRegistro,
-      req.body.apellidosRegistro,
-      req.body.documentoRegistro,
-      req.body.claveRegistro,
-
+      req.body[0].correoRegistro,
+      req.body[0].nombresRegistro,
+      req.body[0].apellidosRegistro,
+      req.body[0].documentoRegistro,
+      req.body[0].claveRegistro,
     ];
     AccesoControlador.crearElUsuario(SQL_REG_USU.EXISTE_CORREO,
       SQL_REG_USU.AGREGAR_USUARIO,

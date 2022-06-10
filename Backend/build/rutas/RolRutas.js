@@ -14,6 +14,7 @@ class RolRutas {
         this.miRutaRol.get('/getAll', RolControlador_1.default.obtenerTodosRoles);
         this.miRutaRol.delete('/delete/:codigo', RolControlador_1.default.eliminarRol);
         this.miRutaRol.post('/create', RolControlador_1.default.crearRol);
+        this.miRutaRol.post('/buscar', RolControlador_1.default.buscarRoles);
     }
 }
 const rolRutas = new RolRutas();

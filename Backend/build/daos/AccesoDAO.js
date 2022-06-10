@@ -20,10 +20,8 @@ class AccesoDAO {
             yield conexionBd_1.default.task((consulta) => __awaiter(this, void 0, void 0, function* () {
                 const fila = yield consulta.result(sql, parametros);
                 return fila;
-            }))
-                .then((fila) => {
+            })).then((fila) => {
                 const arreglo = fila.rows;
-                console.log(arreglo);
                 if (arreglo.length == 0) {
                     res.status(401).json({ msg: 'Usuario no encontrado' });
                 }
@@ -52,7 +50,7 @@ class AccesoDAO {
                     const clavecita = parametros[4];
                     yield consulta.none(sqlAgreAcceso, [nuevoUsuario.codUsuario, correito, clavecita]);
                     yield consulta.none(sqlAgreIngreso, [nuevoUsuario.codUsuario]);
-                    //Nos falta analizar el return
+                    console.log(nuevoUsuario);
                     return yield consulta.result(sqlTodoListo, [nuevoUsuario.codUsuario]);
                 }
                 else {
@@ -65,10 +63,12 @@ class AccesoDAO {
                 const rolUsuarioNuevo = arreglo[0].nombreRol;
                 const correoUsuarioNuevo = arreglo[0].correoAcceso;
                 if (arreglo.length > 0) {
-                    const miTokencito = jsonwebtoken_1.default.sign({ codUsuario: codUsuarioNuevo,
+                    const miTokencito = jsonwebtoken_1.default.sign({
+                        codUsuario: codUsuarioNuevo,
                         nombreRol: rolUsuarioNuevo,
-                        correoAcceso: correoUsuarioNuevo }, 'LaClaveSuperSecreta');
-                    res.status(200).json({ tokenFullStack: miTokencito, foticoFullStack: 'Acá va el base 64 de la foto' });
+                        correoAcceso: correoUsuarioNuevo
+                    }, 'LaClaveSuperSecreta');
+                    res.status(200).json({ token: miTokencito, foto: 'Acá va el base 64 de la foto' });
                 }
                 else {
                     res.status(400).json({ mensaje: 'No funciona' });

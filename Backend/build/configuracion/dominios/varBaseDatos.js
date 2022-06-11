@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = {
-    user: 'postgres',
+    user: 'user_encuestas',
     password: 'melissa123',
     host: 'localhost',
     port: 5432,
-    database: 'sistema_encuestas'
+    database: 'bd_sistemaencuestas'
 };

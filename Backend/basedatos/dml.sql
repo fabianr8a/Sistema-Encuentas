@@ -1,3 +1,6 @@
+delete from roles
+alter sequence roles_cod_rol_seq restart with 1;
+
 INSERT INTO roles(nombre_rol, estado_rol) VALUES ('Administrador', 1);
 INSERT INTO roles(nombre_rol, estado_rol) VALUES ('Docente', 1);
 INSERT INTO roles(nombre_rol, estado_rol) VALUES ('Secretaria', 1);

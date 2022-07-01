@@ -31,7 +31,13 @@
         style="padding: 21px; background-color: rgba(17, 17, 17, 0.116)"
       ></div>
       <div class="card-body">
-        <form>
+        <form
+
+        #frmModificar="ngForm"
+        (ngSubmit)="frmModificar.form.valid && modificarRol(frmModificar)"
+        novalidate
+        ng-init="obtenerRolesBuscar()"
+        >
           <div class="table-responsive">
             <div class="row mb-3" style="width: 100%">
               <div class="col-md-6" style="width: 50%">
@@ -49,8 +55,13 @@
                       <input
                         type="text"
                         class="form-control"
-                        id="nom"
-                        name="nom"
+                        id="nomRol"
+                        name="nomRol"
+                        [(ngModel)]="objRol.nombreRol"
+                        #nomRol="ngModel"
+                        [ngClass]="{
+                          'is-invalid': frmModificar.submitted && nomRol.invalid
+                        }"
                         required
                       />
                     </div>
@@ -70,10 +81,15 @@
                           >Estado</label
                         >
                       </div>
-                      <select class="form-control">
-                        <option value>Seleccione un estado</option>
-                        <option>Activo</option>
-                        <option>Inactivo</option>
+                      <select class="form-control"
+                      name="estadoRol"
+                      [(ngModel)]="objRol.estadoRol"
+                      #estadoRol="ngModel"
+                      [ngClass]="{
+                        'is-invalid': frmModificar.submitted && estadoRol.invalid
+                      }">
+                        <option value="1">Activo</option>
+                        <option value="2">Inactivo</option>
                       </select>
                     </div>
                   </div>

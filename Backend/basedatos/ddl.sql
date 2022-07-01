@@ -25,7 +25,7 @@ comment on column usuarios.estado_usuario is
 2 inactivo';
 
 alter table usuarios owner to user_encuestas;
-alter table usuarios drop column correo_usuario
+
 
 create unique index indice_doc on usuarios (documento_usuario);
 

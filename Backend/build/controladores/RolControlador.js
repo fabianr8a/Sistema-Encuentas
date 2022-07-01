@@ -30,6 +30,22 @@ class RolControlador extends RolDAO_1.default {
         const misParametros = [req.body.nombreRol];
         RolControlador.crearRol(Roles_sql_1.SQL_ROL.CREAR, misParametros, res);
     }
+    modificarRol(req, res) {
+        const codigoRol = req.params.codRol;
+        const nombreRol = req.body.nombreRol;
+        const estadoRol = req.body.estadoRol;
+        const misParametros = [codigoRol, nombreRol, estadoRol];
+        RolControlador.modificarRol(Roles_sql_1.SQL_ROL.MODIFICAR, misParametros, res);
+    }
+    buscarUnosRoles(req, res) {
+        const buscarRol = req.params.codRol;
+        const miParametro = [buscarRol];
+        console.log(req.body, 'este es el buscar');
+        if (!buscarRol) {
+            return res.status(400).json({ 'Error': 'No se encontro un parametro' });
+        }
+        RolControlador.buscarUnRol(Roles_sql_1.SQL_ROL.BUSCARROL, miParametro, res);
+    }
 }
 const rolControlador = new RolControlador();
 exports.default = rolControlador;

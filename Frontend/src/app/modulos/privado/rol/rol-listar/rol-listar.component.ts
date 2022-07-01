@@ -114,7 +114,6 @@ export class RolListarComponent implements OnInit, OnDestroy {
       .pipe(
         map((respuesta) => {
           this.arregloRoles = respuesta;
-          console.log('el servicio sirve')
         }),
         catchError((err) => {
           throw err;

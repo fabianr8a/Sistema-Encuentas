@@ -37,7 +37,7 @@
 
       <div class="card-body">
         <div class="table-responsive">
-          <div class="row">
+          <div class="row" style="width: 100%;">
             <div class="col-md-3"></div>
             <div class="col-md-6">
               <div class="input-group">
@@ -95,7 +95,7 @@
                 <td>{{ objRol.cantUsuarios }}</td>
                 <td>
                   <p style="text-align: center; margin: 0">
-                    <a [routerLink]="['/private/roles/editar-rol']"
+                    <a [routerLink]="['/private/roles/editar-rol',objRol.codRol]"
                       ><i class="far fa-edit"></i></a
                     >&nbsp;
                     <i
@@ -162,21 +162,4 @@
   </div>
 </ng-template>
 
-<!-- Modal de buscar -->
-<ng-template #modalBuscar>
-  <div class="modal-header bg-dark text-white py-2">
-    <h5 class="modal-title">{{ modalTitulo }}</h5>
-  </div>
 
-  <div class="modal-body">
-    <b>Rol:</b> {{ modalContenido }}
-    <br />
-    {{ modalCuerpo }}
-  </div>
-
-  <div class="modal-footer py-2">
-    <button class="btn btn-secondary btn-sm" (click)="cancelarEliminar()">
-      Cancelar
-    </button>
-  </div>
-</ng-template>

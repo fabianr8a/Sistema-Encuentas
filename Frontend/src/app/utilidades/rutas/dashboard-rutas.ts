@@ -8,7 +8,7 @@ export const RUTAS_DASHBOARD: Routes = [
     path: 'usuario',
     loadChildren: () =>
       import('../../modulos/privado/usuario/usuario.module').then((m) => m.UsuarioModule),
-  }, //Acá va el ruteo lazzy
+  },
 
   {
     path: 'roles',
@@ -16,7 +16,15 @@ export const RUTAS_DASHBOARD: Routes = [
       import('../../modulos/privado/rol/rol.module').then(
         (m) => m.RolModule
       ),
-  }, //Acá va el ruteo lazzy
+  },
+
+  {
+    path: 'encuestas',
+    loadChildren: () =>
+      import('../../modulos/privado/encuestas/encuestas.module').then(
+        (m) => m.EncuestasModule
+      ),
+  },
 
   { path: '', redirectTo: 'inicio-dash', pathMatch: 'full' },
   { path: '**', component: ErrorDashComponent },

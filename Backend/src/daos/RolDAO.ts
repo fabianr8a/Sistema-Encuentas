@@ -25,8 +25,17 @@ class RolDAO {
       });
   }
 
-
-
+  protected static async buscarUnRol(sqlBuscar: string, parametros: any, res: Response): Promise<any> {
+    await pool.oneOrNone(sqlBuscar, parametros)
+      .then((resultado: any) => {
+        if(!resultado){ res.status(400).json({ respuesta: 'Error buscando el rol' });}
+        res.status(200).json(resultado);
+      })
+      .catch((miError: any) => {
+        console.log(miError);
+        res.status(400).json({ respuesta: 'Error buscando el rol' });
+      });
+  }
 
   protected static async eliminarRol(sqlEliminar: string, parametros: any, res: Response): Promise<any> {
     await pool.result(sqlEliminar, parametros)
@@ -49,6 +58,20 @@ class RolDAO {
       .catch((miError: any) => {
         console.log(miError);
         res.status(400).json({ respuesta: 'Error creando el rol' });
+      });
+  }
+
+  protected static async modificarRol(sqlModificar: string, parametros: any, res: Response): Promise<any> {
+    await pool.task(async(consulta:any)=>{
+      return await consulta.result(sqlModificar,parametros);
+    })
+      .then((resultado: any) => {
+        res.status(200).json({respuesta: "Rol actualizado",
+        });
+      })
+      .catch((miError: any) => {
+        console.log(miError);
+        res.status(400).json({ respuesta: 'Error actualizando el rol' });
       });
   }
 

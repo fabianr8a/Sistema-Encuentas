@@ -12,9 +12,13 @@ class RolRutas {
     }
     listadoRutas() {
         this.miRutaRol.get('/getAll', RolControlador_1.default.obtenerTodosRoles);
+        /*this.miRutaRol.get('/', rolControlador.obtenerTodosRoles);
+        this.miRutaRol.get('/:codRol', rolControlador.buscarUnosRoles);*/
         this.miRutaRol.delete('/delete/:codigo', RolControlador_1.default.eliminarRol);
         this.miRutaRol.post('/create', RolControlador_1.default.crearRol);
         this.miRutaRol.post('/buscar', RolControlador_1.default.buscarRoles);
+        this.miRutaRol.put('/actualizar/:codRol', RolControlador_1.default.modificarRol);
+        this.miRutaRol.get('/buscar-rol/:codRol', RolControlador_1.default.buscarUnosRoles);
     }
 }
 const rolRutas = new RolRutas();

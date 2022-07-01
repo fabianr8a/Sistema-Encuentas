@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 const routes: Routes = [
   { path: 'listar-rol', component: RolListarComponent  },
   { path: 'crear-rol', component: RolCrearComponent  },
-  { path: 'editar-rol', component: RolEditarComponent  },
+  { path: 'editar-rol/:codRol', component: RolEditarComponent  },
 
 
   { path: '', redirectTo: 'listar-rol', pathMatch: 'full' },

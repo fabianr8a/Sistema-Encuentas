@@ -1,4 +1,9 @@
+import { observadorAny } from './../../../../../utilidades/observadores/tipo-any';
 import { Component, OnInit } from '@angular/core';
+import { Subscription, map, catchError, finalize } from 'rxjs';
+import { Acceso } from 'src/app/modelos/acceso';
+import { AccesoService } from 'src/app/servicios/acceso.service';
+
 
 @Component({
   selector: 'app-sidebar-dash',
@@ -6,60 +11,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sidebar-dash.component.css']
 })
 export class SidebarDashComponent implements OnInit {
+  public respuestaToken:Acceso;
 
-  public items: any[] = [
-    {
-        id: 1,
-        ruta: '/inicio',
-        icono: 'fas fa-home',
-        label: 'Inicio'
-    },
-    {
-        id: 2,
-        ruta: '/resultados',
-        icono: 'fas fa-chart-area',
-        label: 'Análisis de resultados'
-    }
-]
 
-public itemsAccordion: any[] = [
-    {
-        id: 1,
-        ruta: 'administrador',
-        icono: 'fas fa-user-cog',
-        label: 'Administrador',
-        itemsHijos: [
-            {
-                ruta: 'administrador/listar-rol',
-                label: 'Roles'
-            },
-            {
-              ruta: 'administrador/listar-usuario',
-              label: 'Usuarios'
-            },
-        ]
-    },
-    {
-        id: 2,
-        ruta: '/encuestas',
-        icono: 'fas fa-book-open',
-        label: 'Encuestas',
-        itemsHijos: [
-            {
-                ruta: '/encuestas/crear-encuesta',
-                label: 'Crear encuesta'
-            },
-            {
-                ruta: '/encuestas/listar-encuesta',
-                label: 'Listar Encuesta'
-            }
-        ]
-    }
-]
 
-constructor() { }
+constructor( private acceso:AccesoService ) {
+  this.respuestaToken = this.acceso.objAcceso;
+}
 
 ngOnInit(): void {
 }
+
+
 
 }

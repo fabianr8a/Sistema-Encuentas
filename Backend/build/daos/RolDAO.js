@@ -38,7 +38,7 @@ class RolDAO {
             });
         });
     }
-    static buscarUnRol(sqlBuscar, parametros, res) {
+    static buscarUnRolModificar(sqlBuscar, parametros, res) {
         return __awaiter(this, void 0, void 0, function* () {
             yield conexionBd_1.default.oneOrNone(sqlBuscar, parametros)
                 .then((resultado) => {

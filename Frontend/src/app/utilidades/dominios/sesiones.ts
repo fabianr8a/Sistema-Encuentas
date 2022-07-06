@@ -1,2 +1,2 @@
 export const TOKEN_SISTEMA = 'TOKEN_FULLSTACK';
-export const FOTO_SISTEMA = 'FOTO_FULLSTACK';
+

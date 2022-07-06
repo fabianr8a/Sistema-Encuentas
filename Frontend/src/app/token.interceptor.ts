@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from "rxjs";
 import { catchError, map } from "rxjs/operators";
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse } from "@angular/common/http";
-import { FOTO_SISTEMA, TOKEN_SISTEMA } from "./utilidades/dominios/sesiones";
+import {  TOKEN_SISTEMA } from "./utilidades/dominios/sesiones";
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
@@ -21,7 +21,6 @@ export class TokenInterceptor implements HttpInterceptor {
         if (error.status === 401) {
           this.router.navigate(['/land/public/login']);
           localStorage.removeItem(TOKEN_SISTEMA);
-          localStorage.removeItem(FOTO_SISTEMA);
         }
         return throwError(() => error);
       })

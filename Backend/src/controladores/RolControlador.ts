@@ -44,12 +44,8 @@ class RolControlador extends RolDAO {
     const miParametro = [buscarRol];
     console.log(req.body, 'este es el buscar');
     if(!buscarRol){return res.status(400).json({'Error':'No se encontro un parametro'})}
-    RolControlador.buscarUnRol(SQL_ROL.BUSCARROL, miParametro, res);
+    RolControlador.buscarUnRolModificar(SQL_ROL.BUSCAR_ROL_MODIFICAR, miParametro, res);
   }
-
-
-
-
 }
 const rolControlador = new RolControlador();
 export default rolControlador;

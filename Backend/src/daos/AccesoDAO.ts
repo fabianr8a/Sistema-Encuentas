@@ -14,8 +14,9 @@ class AccesoDAO {
       if (arreglo.length == 0) {
         res.status(401).json({ msg: 'Usuario no encontrado' });
       } else {
-        const miTokencito = jwt.sign({ ramon: 'uyy', veanos: 'Los de fullstack' }, 'LaClaveSuperSecreta');
-        res.status(200).json({ tokenFullStack: miTokencito, foticoFullStack: 'Acá va el base 64 de la foto' });
+        const miTokencito = jwt.sign({ datos:arreglo, alg: 'HS256', typ: 'JWT' }, 'LaClaveSuperSecreta');
+        res.status(200).json({ tokenFullStack: miTokencito});
+        console.log(fila)
       }
     })
       .catch((miError) => {
@@ -65,7 +66,7 @@ class AccesoDAO {
             correoAcceso: correoUsuarioNuevo
           },
             'LaClaveSuperSecreta');
-          res.status(200).json({ token: miTokencito, foto: 'Acá va el base 64 de la foto' });
+          res.status(200).json({ token: miTokencito});
         } else {
           res.status(400).json({ mensaje: 'No funciona' });
         }

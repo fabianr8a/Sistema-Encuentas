@@ -12,7 +12,7 @@ import { AccesoService } from 'src/app/servicios/acceso.service';
 import { observadorAny } from 'src/app/utilidades/observadores/tipo-any';
 import { RespuestaAcceso } from 'src/app/modelos/respuesta-acceso';
 import {
-  FOTO_SISTEMA,
+
   TOKEN_SISTEMA,
 } from 'src/app/utilidades/dominios/sesiones';
 
@@ -51,7 +51,7 @@ export class InicioComponent implements OnInit, OnDestroy {
   // **********************************************************
 
   public inicializarUsuario(): Acceso {
-    return new Acceso(0, '', '');
+    return new Acceso(0, '', '','');
   }
 
   // Lógica del negocio
@@ -60,14 +60,14 @@ export class InicioComponent implements OnInit, OnDestroy {
   public verificarDatos(formulario: NgForm): void {
     const miHashcito = cifrado.sha512(this.usuarioSeleccionado.claveAcceso);
     const correo = this.usuarioSeleccionado.correoAcceso;
-    const acceso = new Acceso(0, correo, miHashcito);
+    const rol=this.usuarioSeleccionado.nombreRol;
+    const acceso = new Acceso(0, correo, miHashcito,rol);
 
     this.miSuscripcion = this.accesoService
       .iniciarSesion(acceso)
       .pipe(
         map((resultado: RespuestaAcceso) => {
           localStorage.setItem(TOKEN_SISTEMA, resultado.tokenFullStack);
-          localStorage.setItem(FOTO_SISTEMA, resultado.foticoFullStack);
           this.router.navigate(['/private/inicio-dash']);
           mostrarMensaje(
             'success',

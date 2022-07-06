@@ -7,7 +7,6 @@ import { Registro } from 'src/app/modelos/registro';
 import { catchError, map, Subscription } from 'rxjs';
 import { NgForm } from '@angular/forms';
 import {
-  FOTO_SISTEMA,
   TOKEN_SISTEMA,
 } from 'src/app/utilidades/dominios/sesiones';
 import { mostrarMensaje } from 'src/app/utilidades/mensajes/toas.func';
@@ -102,7 +101,6 @@ export class RegistroComponent implements OnInit {
         map((resultado: any) => {
           formulario.resetForm();
           localStorage.setItem(TOKEN_SISTEMA, resultado.tokenFullStack);
-          localStorage.setItem(FOTO_SISTEMA, resultado.foticoFullStack);
           mostrarMensaje(
             'success',
             'Se creó el registro',

@@ -10,7 +10,7 @@ export const SQL_ROL = {
 
   MODIFICAR:'UPDATE roles SET nombre_rol=$2, estado_rol=$3 WHERE cod_rol=$1;',
 
-  BUSCARROL:'select * from roles where cod_rol=$1 ',
+  BUSCAR_ROL_MODIFICAR:'select * from roles where cod_rol=$1 ',
 
   BUSCAR:'select * from \
 (select r.cod_rol, r.nombre_rol, r.estado_rol, \

@@ -25,7 +25,7 @@ class RolDAO {
       });
   }
 
-  protected static async buscarUnRol(sqlBuscar: string, parametros: any, res: Response): Promise<any> {
+  protected static async buscarUnRolModificar(sqlBuscar: string, parametros: any, res: Response): Promise<any> {
     await pool.oneOrNone(sqlBuscar, parametros)
       .then((resultado: any) => {
         if(!resultado){ res.status(400).json({ respuesta: 'Error buscando el rol' });}

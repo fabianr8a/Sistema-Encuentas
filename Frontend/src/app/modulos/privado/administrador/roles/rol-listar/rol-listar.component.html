@@ -10,7 +10,7 @@
           style="background-color: white; margin-top: 24px"
         >
           <li class="breadcrumb-item">
-            <a [routerLink]="['/private/inicio-dash']"
+            <a [routerLink]="['/administrador/inicio-dash']"
               ><i class="fas fa-home"></i
             ></a>
           </li>
@@ -89,7 +89,7 @@
                 <td>{{ objRol.cantUsuarios }}</td>
                 <td>
                   <p style="text-align: center; margin: 0">
-                    <a [routerLink]="['/private/roles/editar-rol',objRol.codRol]"
+                    <a [routerLink]="['/administrador/roles/editar-rol',objRol.codRol]"
                       ><i class="far fa-edit"></i></a
                     >&nbsp;
                     <i

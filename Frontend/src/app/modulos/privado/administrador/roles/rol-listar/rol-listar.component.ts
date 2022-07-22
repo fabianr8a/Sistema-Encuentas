@@ -15,11 +15,11 @@ import { Component, OnInit, OnDestroy, TemplateRef } from '@angular/core';
 })
 export class RolListarComponent implements OnInit, OnDestroy {
   //Atributos requeridos
-  public selected?: string;
   public arregloRoles: Rol[];
   public arregloBuscar: string[];
   public arregloEstados: any[];
   public rolSeleccionado: Rol;
+  public cadena: string;
 
   //Atributos paginación
   public paginaActual: number;
@@ -38,7 +38,7 @@ export class RolListarComponent implements OnInit, OnDestroy {
   public miSuscripcion: Subscription;
   public miSuscripcionEliminar: Subscription;
   public cargaFinalizada: boolean;
-  public cadena: string;
+
 
   constructor(
     private rolService: RolService,

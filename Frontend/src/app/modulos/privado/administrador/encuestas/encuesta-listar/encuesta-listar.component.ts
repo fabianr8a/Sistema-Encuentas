@@ -13,10 +13,11 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
   styleUrls: ['./encuesta-listar.component.css'],
 })
 export class EncuestaListarComponent implements OnInit {
-  public selected?: string;
-  public arregloBuscar: string[];
+ //Atributos requeridos
   public arregloEncuesta: Encuestas[];
+  public arregloBuscar: string[];
   public encuestaSeleccionada: Encuestas;
+  public cadena: string;
 
   //Atributos paginación
   public paginaActual: number;
@@ -35,7 +36,7 @@ export class EncuestaListarComponent implements OnInit {
   public miSuscripcion: Subscription;
   public miSuscripcionEliminar: Subscription;
   public cargaFinalizada: boolean;
-  public cadena: string;
+
 
   constructor(
     public encuestaService: EncuestaService,
@@ -105,6 +106,24 @@ export class EncuestaListarComponent implements OnInit {
       .subscribe(observadorAny);
   }
 
+  public buscarEncuesta(textico: string): void {
+    this.miSuscripcion = this.encuestaService
+      .buscarEncuesta(textico)
+      .pipe(
+        map((respuesta) => {
+          this.arregloEncuesta = respuesta;
+        }),
+        catchError((err) => {
+          throw err;
+        }),
+        finalize(() => {
+          this.cargaFinalizada = true;
+          this.verificarPaginador();
+        })
+      )
+      .subscribe(observadorAny);
+  }
+
   // Paginador
   public verificarPaginador(): void {
     this.paginaActual = 1;
@@ -115,10 +134,5 @@ export class EncuestaListarComponent implements OnInit {
     );
   }
 
-  formatsDateTest: string[] = [
-    'dd/MM/yyyy'
-   ,
-    ];
 
-    dateNow : Date = new Date();
 }

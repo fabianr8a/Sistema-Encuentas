@@ -10,7 +10,7 @@
           style="background-color: white; margin-top: 24px"
         >
           <li class="breadcrumb-item">
-            <a [routerLink]="['/private/inicio-dash']"
+            <a [routerLink]="['/administrador/inicio-dash']"
               ><i class="fas fa-home"></i
             ></a>
           </li>
@@ -43,7 +43,11 @@
                   [(ngModel)]="cadena"
                   [typeahead]="arregloBuscar"
                 />
-                <button type="button" class="btn btn-primary">
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  (click)="buscarEncuesta(cadena)"
+                >
                   <i class="fas fa-search"></i>
                 </button>
               </div>
@@ -67,17 +71,23 @@
             </thead>
             <tbody>
               <tr
-              *ngFor="let objEncuesta of arregloEncuesta
-              | paginate:{
-                id: 'codiguitoPaginacion',
-                itemsPerPage: cantidadMostrar,
-                currentPage: paginaActual,
-                totalItems: cantidadTotalRegistros
-              }">
-                <td >{{objEncuesta.fechaCreacionEncuesta | date:'longDate'}}</td>
-                <td>{{objEncuesta.nombreTipoEvento}}</td>
-                <td>{{objEncuesta.nombreEncuesta}}</td>
-                <td>{{objEncuesta.nombreTipoDependencia}}</td>
+                *ngFor="
+                  let objEncuesta of arregloEncuesta
+                    | paginate
+                      : {
+                          id: 'codiguitoPaginacion',
+                          itemsPerPage: cantidadMostrar,
+                          currentPage: paginaActual,
+                          totalItems: cantidadTotalRegistros
+                        }
+                "
+              >
+                <td>
+                  {{ objEncuesta.fechaCreacionEncuesta | date: "longDate" }}
+                </td>
+                <td>{{ objEncuesta.nombreTipoEvento }}</td>
+                <td>{{ objEncuesta.nombreEncuesta }}</td>
+                <td>{{ objEncuesta.nombreTipoDependencia }}</td>
                 <td>
                   <p style="text-align: center; margin: 0">
                     <a
@@ -122,4 +132,3 @@
     </div>
   </div>
 </main>
-

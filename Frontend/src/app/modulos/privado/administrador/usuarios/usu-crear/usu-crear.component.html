@@ -18,7 +18,7 @@
             <a href="javascript:void(0)">Administrador</a>
           </li>
           <li class="breadcrumb-item">
-            <a [routerLink]="['/private/usuario/listar-usuario']"
+            <a [routerLink]="['/administrador/usuario/listar-usuario']"
               >Listado usuarios</a
             >
           </li>
@@ -163,19 +163,17 @@
               </div>
 
               <div class="col-md-6">
-                <div class="form-group">
-                  <div class="form-floating mb-3 mb-md-0">
-                    <div class="input-group mb-2 mr-sm-2">
-                      <div class="input-group-prepend">
-                        <label for="ingresoUsu" class="input-group-text"
-                          >Usuario</label
-                        >
-                      </div>
-                      <input class="form-control" />
+                <div class="form-floating mb-3 mb-md-0">
+                  <div class="input-group mb-2 mr-sm-2">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">Estado</div>
                     </div>
+                    <select class="form-control"></select>
                   </div>
                 </div>
               </div>
+
+
             </div>
 
             <div class="row mb-3">
@@ -213,9 +211,12 @@
                 <div class="form-floating mb-3 mb-md-0">
                   <div class="input-group mb-2 mr-sm-2">
                     <div class="input-group-prepend">
-                      <div class="input-group-text">Estado</div>
+                      <div class="input-group-text">Tipo de documento</div>
                     </div>
-                    <select class="form-control"></select>
+                    <select class="form-control">
+                      <option value>Seleccione un tipo de documento</option>
+                      <option></option>
+                    </select>
                   </div>
                 </div>
               </div>
@@ -227,22 +228,6 @@
                       <div class="input-group-text">Rol asignado</div>
                     </div>
                     <select class="form-control"></select>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="row mb-3">
-              <div class="col-md-6">
-                <div class="form-floating mb-3 mb-md-0">
-                  <div class="input-group mb-2 mr-sm-2">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">Tipo de documento</div>
-                    </div>
-                    <select class="form-control">
-                      <option value>Seleccione un tipo de documento</option>
-                      <option></option>
-                    </select>
                   </div>
                 </div>
               </div>

@@ -11,10 +11,7 @@ import { mostrarMensaje } from 'src/app/utilidades/mensajes/toas.func';
 import { AccesoService } from 'src/app/servicios/acceso.service';
 import { observadorAny } from 'src/app/utilidades/observadores/tipo-any';
 import { RespuestaAcceso } from 'src/app/modelos/respuesta-acceso';
-import {
-
-  TOKEN_SISTEMA,
-} from 'src/app/utilidades/dominios/sesiones';
+import { TOKEN_SISTEMA } from 'src/app/utilidades/dominios/sesiones';
 
 @Component({
   selector: 'app-inicio',
@@ -32,7 +29,7 @@ export class InicioComponent implements OnInit, OnDestroy {
     public router: Router,
     public toastr: ToastrService,
     public route: ActivatedRoute,
-    public accesoService: AccesoService,
+    public accesoService: AccesoService
   ) {
     this.usuarioSeleccionado = this.inicializarUsuario();
     this.miSuscripcion = this.temporal;
@@ -50,7 +47,7 @@ export class InicioComponent implements OnInit, OnDestroy {
   // **********************************************************
 
   public inicializarUsuario(): Acceso {
-    return new Acceso(0, '', '','');
+    return new Acceso(0, '', '', '');
   }
 
   // Lógica del negocio
@@ -59,9 +56,8 @@ export class InicioComponent implements OnInit, OnDestroy {
   public verificarDatos(formulario: NgForm): void {
     const miHashcito = cifrado.sha512(this.usuarioSeleccionado.claveAcceso);
     const correo = this.usuarioSeleccionado.correoAcceso;
-    const rol=this.usuarioSeleccionado.nombreRol;
-    const acceso = new Acceso(0,correo,miHashcito,rol);
-
+    const rol = this.usuarioSeleccionado.nombreRol;
+    const acceso = new Acceso(0, correo, miHashcito, rol);
 
     this.miSuscripcion = this.accesoService
       .iniciarSesion(acceso)
@@ -72,9 +68,18 @@ export class InicioComponent implements OnInit, OnDestroy {
             case 'Administrador':
               this.router.navigate(['/administrador']);
               break;
-              case 'Docente':
-                this.router.navigate(['/docente']);
-                break;
+            case 'Docente':
+              this.router.navigate(['/docente']);
+              break;
+            case 'Estudiante':
+              this.router.navigate(['/estudiante']);
+              break;
+            case 'Secretaria':
+              this.router.navigate(['/secretaria']);
+              break;
+            case 'Invitado':
+              this.router.navigate(['/invitado']);
+              break;
 
             default:
               break;

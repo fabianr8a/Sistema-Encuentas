@@ -19,7 +19,9 @@ export const API_ROL_BUSCAR_ROL=API_URL + 'api/private/rol/buscar-rol'
 
 /*********************Encuestas**************/
 export const API_ENCUESTA = API_URL + 'api/private/encuesta/getAll';
-export const API_ENCUESTA_EVENTOS = API_URL + 'api/private/encuesta/eventos';
+export const API_ENCUESTA_EVENTOS = API_URL + 'api/private/encuesta/eventos'; //listar tipo de eventos
+export const API_ENCUESTA_BUSCAR = API_URL + 'api/private/encuesta/buscar'; //buscar encuestas
+
 
 
 

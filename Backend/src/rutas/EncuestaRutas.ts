@@ -10,8 +10,12 @@ class EncuestaRutas {
   }
 
   public listadoRutas(): void {
+    //listar encuestas
     this.miRutaEncuesta.get('/getAll',encuestaControlador.listarEncuestas);
+    //obtener tipo de eventos
     this.miRutaEncuesta.get('/eventos',encuestaControlador.listarEventos);
+    //buscar una encuesta
+    this.miRutaEncuesta.post('/buscar', encuestaControlador.buscarEncuestas);
   }
 }
 const encuestaRutas = new EncuestaRutas();

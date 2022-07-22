@@ -37,7 +37,7 @@ class Servidor {
   //Arrancar el servidor
   public arrancar(): void {
     this.app.listen(this.app.get('PORT'), () => {
-      console.log('YA FUNCIONA EL BACK!!!', this.app.get('PORT'));
+      console.log('YA FUNCIONA EL BACK', this.app.get('PORT'));
     });
   }
 

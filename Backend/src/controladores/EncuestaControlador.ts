@@ -12,6 +12,16 @@ class EncuestaControlador extends RolDAO {
     EncuestaControlador.listarLosEventos(SQL_ENCUESTA.LISTAR_EVENTOS, req, res);
   }
 
+  public buscarEncuestas(req: Request, res: Response) {
+    const buscar = req.body.nombreEncuesta;
+    const miParametro = [buscar];
+    if (buscar === '') {
+      EncuestaControlador.listarLasEncuestas(SQL_ENCUESTA.LISTAR, req, res);
+    } else {
+      EncuestaControlador.buscarEncuesta(SQL_ENCUESTA.BUSCAR, miParametro, res);
+    }
+  }
+
 }
 const encuestaControlador = new EncuestaControlador();
 export default encuestaControlador;

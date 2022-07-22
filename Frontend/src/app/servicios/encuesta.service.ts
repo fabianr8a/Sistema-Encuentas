@@ -1,4 +1,4 @@
-import { API_ENCUESTA_EVENTOS } from './../utilidades/dominios/uris';
+import { API_ENCUESTA_EVENTOS, API_ENCUESTA_BUSCAR } from './../utilidades/dominios/uris';
 import { TipoEventos } from './../modelos/tipo_eventos';
 import { Encuestas } from "../modelos/encuestas";
 import { Observable } from "rxjs";
@@ -13,6 +13,7 @@ import { Injectable } from "@angular/core";
 export class EncuestaService{
   public apiEncuesta:string=API_ENCUESTA;
   public apiEncuestaEvento:string=API_ENCUESTA_EVENTOS;
+  public apiBuscarEncuesta:string=API_ENCUESTA_BUSCAR;
 
   constructor(private htttp:HttpClient){}
 
@@ -22,6 +23,10 @@ export class EncuestaService{
 
   public listarEventos():Observable<TipoEventos[]>{
     return this.htttp.get<TipoEventos[]>(this.apiEncuestaEvento);
+  }
+
+  public buscarEncuesta(nombreEncuesta:string):Observable<Encuestas[]>{
+    return this.htttp.post<Encuestas[]>(this.apiBuscarEncuesta,{nombreEncuesta:nombreEncuesta});
   }
 }
 

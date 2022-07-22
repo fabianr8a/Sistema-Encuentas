@@ -54,6 +54,12 @@ ng g m modulos/privado/rol/rol-routing --flat --module=rol
 ng g m modulos/privado/encuestas
 ng g m modulos/privado/encuestas/encuestas-routing --flat --module=encuestas
 
+ng g m modulos/privado/estudiante/encuestas
+ng g m modulos/privado/estudiante/encuestas/encuestas-routing --flat --module=encuestas
+
+ng g m modulos/privado/docente/encuestas
+ng g m modulos/privado/docente/encuestas/encuestas-routing --flat --module=encuestas
+
 ng g m modulos/contenedor
 
 /************* componentes **************/
@@ -85,6 +91,13 @@ ng g c modulos/privado/rol/rolListar --skip-tests=true
 ng g c modulos/privado/encuestas/encuestaCrear --skip-tests=true
 ng g c modulos/privado/encuestas/encuestaEditar --skip-tests=true
 ng g c modulos/privado/encuestas/encuestaListar --skip-tests=true
+
+ng g c modulos/privado/estudiante/encuestas/responderEncuesta --skip-tests=true
+ng g c modulos/privado/estudiante/encuestas/listarEncuestas --skip-tests=true
+
+ng g c modulos/privado/docente/encuestas/crearEncuesta --skip-tests=true
+ng g c modulos/privado/docente/encuestas/listarEncuesta --skip-tests=true
+
 
 
 /************* Utilidades **************/

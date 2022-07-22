@@ -49,10 +49,10 @@ export class RegistroComponent implements OnInit {
   //Métodos obligatorios
   // ********************************************/
   public inicializarRegistro(): Registro {
-    return new Registro('', '', '', '', '');
+    return new Registro('', '', '', '', '','');
   }
   public inicializarImagen(): Imagen {
-    return new Imagen(0, '', '', '', '', '');
+    return new Imagen(0, '', '', '');
   }
 
   public seleccionarFoto(input: any): any {
@@ -79,10 +79,8 @@ export class RegistroComponent implements OnInit {
     reader.readAsDataURL(input.target.files[0]);
     reader.onload = () => {
       this.tmpBase64 = reader.result;
-      this.imagenRegistro.base64Imagen = this.tmpBase64;
       this.imagenRegistro.nombrepublicoImagen = input.target.files[0].name;
       this.imagenRegistro.tipoImagen = input.target.files[0].type;
-      this.imagenRegistro.tamanoImagen = input.target.files[0].size;
     };
   }
 

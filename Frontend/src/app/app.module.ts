@@ -14,6 +14,13 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import {ContenedorModule} from './modulos/contenedor/contenedor.module';
 import { TokenInterceptor } from './token.interceptor';
 
+import {LOCALE_ID } from '@angular/core';
+import localeEs from '@angular/common/locales/es';
+import { registerLocaleData } from '@angular/common';
+
+
+registerLocaleData(localeEs, 'es');
+
 
 @NgModule({
   declarations: [
@@ -33,7 +40,7 @@ import { TokenInterceptor } from './token.interceptor';
 
     ContenedorModule
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass:TokenInterceptor, multi:true}],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass:TokenInterceptor, multi:true },{ provide:LOCALE_ID, useValue: 'es',}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

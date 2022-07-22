@@ -5,8 +5,8 @@ exports.SQL_REG_USU = {
     EXISTE_CORREO: 'select count(a.cod_usuario) as existe from accesos a \
     where a.correo_acceso = $1',
     AGREGAR_USUARIO: 'INSERT INTO usuarios(cod_rol, documento_usuario, \
-  tipo_documento_usuario, nombres_usuario, apellidos_usuario,telefono_usuario) \
-  VALUES(1, $1, 1, $2, $3, \'Sin telefono\') \
+  tipo_documento_usuario, nombres_usuario, apellidos_usuario,telefono_usuario,cod_imagen) \
+  VALUES(5, $1, 1, $2, $3, \'Sin telefono\',1) \
   RETURNING cod_usuario',
     AGREGAR_ACCESO: 'INSERT INTO accesos(cod_usuario, correo_acceso, clave_acceso) \
 	VALUES ($1, $2, $3);',

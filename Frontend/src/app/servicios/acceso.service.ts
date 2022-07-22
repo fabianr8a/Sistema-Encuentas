@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Acceso } from '../modelos/acceso';
 import * as urls from '../utilidades/dominios/uris';
 import { RespuestaAcceso } from '../modelos/respuesta-acceso';
-import {  TOKEN_SISTEMA } from '../utilidades/dominios/sesiones';
+import { TOKEN_SISTEMA } from '../utilidades/dominios/sesiones';
 
 import jwtDecode from 'jwt-decode';
 
@@ -16,7 +16,6 @@ export class AccesoService {
   public objAcceso: Acceso;
   public urlInicioSesion: string;
 
-
   constructor(private http: HttpClient, private router: Router) {
     this.objAcceso = this.inicializarAcceso();
     this.urlInicioSesion = urls.API_INICIO;
@@ -24,7 +23,7 @@ export class AccesoService {
 
   // Métodos obligatorios
   public inicializarAcceso(): Acceso {
-    return new Acceso(0, '', '','');
+    return new Acceso(0, '', '', '');
   }
 
   public obtenerAcceso(): Acceso {
@@ -50,10 +49,10 @@ export class AccesoService {
       try {
         const objetoVerificado: any = jwtDecode(this.obtenerToken());
         this.objAcceso.codUsuario = objetoVerificado.datos[0].codUsuario;
-       this.objAcceso.correoAcceso = objetoVerificado.datos[0].correoAcceso;
-        this.objAcceso.nombreRol=objetoVerificado.datos[0].nombreRol;
-        this.objAcceso.nombresUsuario=objetoVerificado.datos[0].nombresUsuario;
-        this.objAcceso.apellidosUsuario=objetoVerificado.datos[0].apellidosUsuario;
+        this.objAcceso.correoAcceso = objetoVerificado.datos[0].correoAcceso;
+        this.objAcceso.nombreRol = objetoVerificado.datos[0].nombreRol;
+        this.objAcceso.nombresUsuario =objetoVerificado.datos[0].nombresUsuario;
+        this.objAcceso.apellidosUsuario =objetoVerificado.datos[0].apellidosUsuario;
         return true;
       } catch (error) {
         return false;
@@ -61,7 +60,4 @@ export class AccesoService {
     }
     return false;
   }
-  
 }
-
-

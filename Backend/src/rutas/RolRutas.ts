@@ -11,8 +11,6 @@ class RolRutas {
 
   public listadoRutas(): void {
     this.miRutaRol.get('/getAll', rolControlador.obtenerTodosRoles);
-    /*this.miRutaRol.get('/', rolControlador.obtenerTodosRoles);
-    this.miRutaRol.get('/:codRol', rolControlador.buscarUnosRoles);*/
     this.miRutaRol.delete('/delete/:codigo', rolControlador.eliminarRol);
     this.miRutaRol.post('/create', rolControlador.crearRol);
     this.miRutaRol.post('/buscar', rolControlador.buscarRoles);

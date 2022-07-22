@@ -12,10 +12,10 @@ class AccesoDAO {
     }).then((fila) => {
       const arreglo = fila.rows;
       if (arreglo.length == 0) {
-        res.status(401).json({ msg: 'Usuario no encontrado' });
+        res.status(400).json({ msg: 'Usuario no encontrado' });
       } else {
         const miTokencito = jwt.sign({ datos:arreglo, alg: 'HS256', typ: 'JWT' }, 'LaClaveSuperSecreta');
-        res.status(200).json({ tokenFullStack: miTokencito});
+        res.status(200).json({ tokenFullStack: miTokencito,nombreRol:arreglo[0].nombreRol});
         console.log(fila)
       }
     })

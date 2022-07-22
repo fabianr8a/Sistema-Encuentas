@@ -4,6 +4,7 @@ import express from 'express';
 
 import rutaAcceso from '../../rutas/AccesoRutas';
 import miRutaRol from '../../rutas/RolRutas';
+import miRutaEncuesta from '../../rutas/EncuestaRutas';
 
 
 class Servidor {
@@ -30,6 +31,7 @@ class Servidor {
 
     // Rutas privadas
     this.app.use('/api/private/rol', miRutaRol);
+    this.app.use('/api/private/encuesta', miRutaEncuesta);
   }
 
   //Arrancar el servidor

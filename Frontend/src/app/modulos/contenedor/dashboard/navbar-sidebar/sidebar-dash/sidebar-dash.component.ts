@@ -5,6 +5,7 @@ import { Acceso } from 'src/app/modelos/acceso';
 import { AccesoService } from 'src/app/servicios/acceso.service';
 
 
+
 @Component({
   selector: 'app-sidebar-dash',
   templateUrl: './sidebar-dash.component.html',
@@ -17,10 +18,24 @@ export class SidebarDashComponent implements OnInit {
 
 constructor( private acceso:AccesoService ) {
   this.respuestaToken = this.acceso.objAcceso;
+
 }
 
+
+
+
+
+
 ngOnInit(): void {
+
+
+
 }
+
+
+
+
+
 
 
 

@@ -5,14 +5,15 @@ export class Registro {
   public correoRegistro: string;
   public claveRegistro: string;
   public confirmarClaveRegistro?: string;
+  public codImagen:string;
 
 
-  constructor(nombre: string, apellido: string, documento:string, correo: string, clave: string){
+  constructor(nombre: string, apellido: string, documento:string, correo: string, clave: string,imagen:string){
     this.nombresRegistro = nombre;
     this.apellidosRegistro = apellido;
     this.documentoRegistro=documento;
     this.correoRegistro = correo;
     this.claveRegistro = clave;
-
+    this.codImagen=imagen;
   }
 }

@@ -28,12 +28,11 @@ export class InicioComponent implements OnInit, OnDestroy {
 
   //Propiedad de tipo suscripcion
   public miSuscripcion: Subscription;
-
   constructor(
     public router: Router,
     public toastr: ToastrService,
     public route: ActivatedRoute,
-    public accesoService: AccesoService
+    public accesoService: AccesoService,
   ) {
     this.usuarioSeleccionado = this.inicializarUsuario();
     this.miSuscripcion = this.temporal;
@@ -61,14 +60,25 @@ export class InicioComponent implements OnInit, OnDestroy {
     const miHashcito = cifrado.sha512(this.usuarioSeleccionado.claveAcceso);
     const correo = this.usuarioSeleccionado.correoAcceso;
     const rol=this.usuarioSeleccionado.nombreRol;
-    const acceso = new Acceso(0, correo, miHashcito,rol);
+    const acceso = new Acceso(0,correo,miHashcito,rol);
+
 
     this.miSuscripcion = this.accesoService
       .iniciarSesion(acceso)
       .pipe(
         map((resultado: RespuestaAcceso) => {
           localStorage.setItem(TOKEN_SISTEMA, resultado.tokenFullStack);
-          this.router.navigate(['/private/inicio-dash']);
+          switch (resultado.nombreRol) {
+            case 'Administrador':
+              this.router.navigate(['/administrador']);
+              break;
+              case 'Docente':
+                this.router.navigate(['/docente']);
+                break;
+
+            default:
+              break;
+          }
           mostrarMensaje(
             'success',
             'Bienvenido al sistema',

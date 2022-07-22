@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { ErrorLandComponent } from './landscape/error-land/error-land.component';
 import { InicioLandComponent } from './landscape/inicio-land/inicio-land.component';
 import { ContenedorLandComponent } from './landscape/contenedor-land/contenedor-land.component';
-
 import { ContenedorDashComponent } from './dashboard/contenedor-dash/contenedor-dash.component';
 import { CabeceraDashComponent } from './dashboard/cabecera-dash/cabecera-dash.component';
 import { CuerpoDashComponent } from './dashboard/cuerpo-dash/cuerpo-dash.component';

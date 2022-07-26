@@ -1,0 +1,137 @@
+<main>
+  <div class="container-fluid px-4">
+    <div class="row">
+      <div class="col-md-6">
+        <h2 style="font-size: 25px; margin-top: 19px">Crear Encuestas</h2>
+      </div>
+      <div class="col-md-6">
+        <ol
+          class="breadcrumb d-flex justify-content-end"
+          style="background-color: white; margin-top: 24px"
+        >
+          <li class="breadcrumb-item">
+            <a [routerLink]="['/administrador/inicio-dash']"
+              ><i class="fas fa-home"></i
+            ></a>
+          </li>
+          <li class="breadcrumb-item">
+            <a href="javascript:void(0)">Encuestas</a>
+          </li>
+          <li class="breadcrumb-item active">Crear encuestas</li>
+        </ol>
+      </div>
+    </div>
+    <div class="card mb-4">
+      <div
+        class="card-header"
+        style="padding-bottom: 32px; background-color: rgba(17, 17, 17, 0.116)"
+      ></div>
+
+      <div class="card-body">
+          <div class="tiulo-encuesta">
+            <p style="text-align: center">
+              <input
+                class="titulo-formulario"
+                placeholder="Título de la encuesta"
+                required
+              />
+            </p>
+          </div>
+          <br />
+          <div class="row mb-3">
+            <div class="col-md-3">
+              <div class="form-group">
+                <div class="form-floating mb-3 mb-md-0">
+                  <div class="input-group mb-2 mr-sm-2">
+                    <div class="input-group-prepend">
+                      <label>Fecha de inicio:</label>
+                      <input
+                        class="fecha-encuesta"
+                        type="date"
+                        id="start"
+                        name="trip-start"
+                        value="2022-07-22"
+                        min="2022-01-01"
+                        max="2040-12-31"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="form-group">
+                <div class="form-floating mb-3 mb-md-0">
+                  <div class="input-group mb-2 mr-sm-2">
+                    <div class="input-group-prepend">
+                      <label>Fecha de cierre:</label>
+                      <input
+                        class="fecha-encuesta"
+                        type="date"
+                        id="start"
+                        name="trip-start"
+                        value="2022-07-22"
+                        min="2022-01-01"
+                        max="2040-12-31"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <label>Tipo de evento:</label>
+              <div class="form-group">
+              <div class="form-floating mb-3 mb-md-0">
+                <div class="input-group mb-2 mr-sm-2">
+                  <select
+                  name="eventos"
+                  [(ngModel)]="eventoSeleccionado"
+                    class="form-select-evento"
+                    aria-label="Default select example"
+                   >
+                   <option [value]="objEventos" *ngFor="let objEventos of arregloEvento">{{objEventos.nombreTipoEvento}}</option>
+
+                  </select>
+                  <p>aqui va{{eventoSeleccionado}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+
+          <br />
+          <div class="tiulo-encuesta">
+            <textarea
+              class="descripcion-formulario"
+              placeholder="Descripción del formulario"
+              id="exampleFormControlTextarea1"
+              rows="3"
+              required
+            ></textarea>
+          </div>
+          <br />
+          <div class="row mb-3">
+            <div class="col-5">
+              <div class="form-floating mb-3 mb-md-0">
+                <div class="input-group mb-2 mr-sm-2">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">Tipo de pregunta</div>
+                  </div>
+                  <select class="form-select">
+                    <option>Pregunta abierta</option>
+                    <option>Pregunta de fecha</option>
+                    <option>Pregunta de selección múltiple</option>
+                    <option>Pregunta de selección única</option>
+                    <option>Pregunta de escala</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</main>

@@ -13,5 +13,15 @@ export const API_USUARIO = API_URL + 'api/private/usuario/getAll';
 export const API_ROL = API_URL + 'api/private/rol/getAll';
 export const API_ROL_ELIMINAR = API_URL + 'api/private/rol/delete';
 export const API_ROL_CREAR = API_URL + 'api/private/rol/create';
-export const API_ROL_BUSCAR=API_URL + 'api/private/rol/buscar'
+export const API_ROL_BUSCAR=API_URL + 'api/private/rol/buscar';
+export const API_ROL_MODIFICAR=API_URL+'api/private/rol/actualizar';
+export const API_ROL_BUSCAR_ROL=API_URL + 'api/private/rol/buscar-rol'
+
+/*********************Encuestas**************/
+export const API_ENCUESTA = API_URL + 'api/private/encuesta/getAll';
+export const API_ENCUESTA_EVENTOS = API_URL + 'api/private/encuesta/eventos'; //listar tipo de eventos
+export const API_ENCUESTA_BUSCAR = API_URL + 'api/private/encuesta/buscar'; //buscar encuestas
+
+
+
 

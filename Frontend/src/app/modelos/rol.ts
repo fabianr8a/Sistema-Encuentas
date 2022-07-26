@@ -11,3 +11,5 @@ export class Rol {
     this.cantUsuarios = can;
   }
 }
+
+

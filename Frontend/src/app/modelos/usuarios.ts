@@ -7,13 +7,10 @@ export class Usuarios {
   public nombreRol:string;
   public telefonoUsuario:string;
   public estadoUsuario:number;
-  public nickName:string;
   public claveUsuario:string;
   public reclaveUsuario:string;
-  public nombreFoto:string;
-  public fotoUsuario: string;
   public tipoDocumentoUsuario: number;
-
+  public codImagen:number;
 
   constructor(
     cod:number,
@@ -24,13 +21,10 @@ export class Usuarios {
     rolUsu:string,
     teleUsu:string,
     estado:number,
-    fotoUsu:string,
-    ingreso:string,
     clave:string,
     reclave:string,
-    nomFoto:string,
     tipoDocumento:number,
-
+    codImagen:number,
 
   ){
     this.codUsuario=cod;
@@ -39,13 +33,11 @@ export class Usuarios {
     this.apellidosUsuario=apeUsu;
     this.correoUsuario=correoUsu;
     this.telefonoUsuario=teleUsu;
-    this.nickName=ingreso;
-    this.fotoUsuario=fotoUsu;
     this.claveUsuario=clave;
     this.reclaveUsuario=reclave;
     this.nombreRol=rolUsu;
     this.estadoUsuario=estado;
-    this.nombreFoto=nomFoto;
     this.tipoDocumentoUsuario = tipoDocumento;
+    this.codImagen=codImagen;
 }
 }

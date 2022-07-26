@@ -1,9 +1,8 @@
 export class RespuestaAcceso {
   public tokenFullStack: string;
-  public foticoFullStack: string;
+  public nombreRol?: string|any;
 
-  constructor(tok: string, fot: string){
+  constructor(tok: string){
     this.tokenFullStack = tok;
-    this.foticoFullStack = fot;
   }
 }

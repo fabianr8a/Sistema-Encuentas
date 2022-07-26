@@ -7,7 +7,6 @@ import { Registro } from 'src/app/modelos/registro';
 import { catchError, map, Subscription } from 'rxjs';
 import { NgForm } from '@angular/forms';
 import {
-  FOTO_SISTEMA,
   TOKEN_SISTEMA,
 } from 'src/app/utilidades/dominios/sesiones';
 import { mostrarMensaje } from 'src/app/utilidades/mensajes/toas.func';
@@ -50,10 +49,10 @@ export class RegistroComponent implements OnInit {
   //Métodos obligatorios
   // ********************************************/
   public inicializarRegistro(): Registro {
-    return new Registro('', '', '', '', '');
+    return new Registro('', '', '', '', '','');
   }
   public inicializarImagen(): Imagen {
-    return new Imagen(0, '', '', '', '', '');
+    return new Imagen(0, '', '', '');
   }
 
   public seleccionarFoto(input: any): any {
@@ -80,10 +79,8 @@ export class RegistroComponent implements OnInit {
     reader.readAsDataURL(input.target.files[0]);
     reader.onload = () => {
       this.tmpBase64 = reader.result;
-      this.imagenRegistro.base64Imagen = this.tmpBase64;
       this.imagenRegistro.nombrepublicoImagen = input.target.files[0].name;
       this.imagenRegistro.tipoImagen = input.target.files[0].type;
-      this.imagenRegistro.tamanoImagen = input.target.files[0].size;
     };
   }
 
@@ -102,7 +99,6 @@ export class RegistroComponent implements OnInit {
         map((resultado: any) => {
           formulario.resetForm();
           localStorage.setItem(TOKEN_SISTEMA, resultado.tokenFullStack);
-          localStorage.setItem(FOTO_SISTEMA, resultado.foticoFullStack);
           mostrarMensaje(
             'success',
             'Se creó el registro',

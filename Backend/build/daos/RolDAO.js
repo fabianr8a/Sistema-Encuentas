@@ -38,6 +38,21 @@ class RolDAO {
             });
         });
     }
+    static buscarUnRolModificar(sqlBuscar, parametros, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield conexionBd_1.default.oneOrNone(sqlBuscar, parametros)
+                .then((resultado) => {
+                if (!resultado) {
+                    res.status(400).json({ respuesta: 'Error buscando el rol' });
+                }
+                res.status(200).json(resultado);
+            })
+                .catch((miError) => {
+                console.log(miError);
+                res.status(400).json({ respuesta: 'Error buscando el rol' });
+            });
+        });
+    }
     static eliminarRol(sqlEliminar, parametros, res) {
         return __awaiter(this, void 0, void 0, function* () {
             yield conexionBd_1.default.result(sqlEliminar, parametros)
@@ -61,6 +76,21 @@ class RolDAO {
                 .catch((miError) => {
                 console.log(miError);
                 res.status(400).json({ respuesta: 'Error creando el rol' });
+            });
+        });
+    }
+    static modificarRol(sqlModificar, parametros, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield conexionBd_1.default.task((consulta) => __awaiter(this, void 0, void 0, function* () {
+                return yield consulta.result(sqlModificar, parametros);
+            }))
+                .then((resultado) => {
+                res.status(200).json({ respuesta: "Rol actualizado",
+                });
+            })
+                .catch((miError) => {
+                console.log(miError);
+                res.status(400).json({ respuesta: 'Error actualizando el rol' });
             });
         });
     }

@@ -11,10 +11,7 @@ import { mostrarMensaje } from 'src/app/utilidades/mensajes/toas.func';
 import { AccesoService } from 'src/app/servicios/acceso.service';
 import { observadorAny } from 'src/app/utilidades/observadores/tipo-any';
 import { RespuestaAcceso } from 'src/app/modelos/respuesta-acceso';
-import {
-  FOTO_SISTEMA,
-  TOKEN_SISTEMA,
-} from 'src/app/utilidades/dominios/sesiones';
+import { TOKEN_SISTEMA } from 'src/app/utilidades/dominios/sesiones';
 
 @Component({
   selector: 'app-inicio',
@@ -28,7 +25,6 @@ export class InicioComponent implements OnInit, OnDestroy {
 
   //Propiedad de tipo suscripcion
   public miSuscripcion: Subscription;
-
   constructor(
     public router: Router,
     public toastr: ToastrService,
@@ -51,7 +47,7 @@ export class InicioComponent implements OnInit, OnDestroy {
   // **********************************************************
 
   public inicializarUsuario(): Acceso {
-    return new Acceso(0, '', '');
+    return new Acceso(0, '', '', '');
   }
 
   // Lógica del negocio
@@ -60,15 +56,34 @@ export class InicioComponent implements OnInit, OnDestroy {
   public verificarDatos(formulario: NgForm): void {
     const miHashcito = cifrado.sha512(this.usuarioSeleccionado.claveAcceso);
     const correo = this.usuarioSeleccionado.correoAcceso;
-    const acceso = new Acceso(0, correo, miHashcito);
+    const rol = this.usuarioSeleccionado.nombreRol;
+    const acceso = new Acceso(0, correo, miHashcito, rol);
 
     this.miSuscripcion = this.accesoService
       .iniciarSesion(acceso)
       .pipe(
         map((resultado: RespuestaAcceso) => {
           localStorage.setItem(TOKEN_SISTEMA, resultado.tokenFullStack);
-          localStorage.setItem(FOTO_SISTEMA, resultado.foticoFullStack);
-          this.router.navigate(['/private/inicio-dash']);
+          switch (resultado.nombreRol) {
+            case 'Administrador':
+              this.router.navigate(['/administrador']);
+              break;
+            case 'Docente':
+              this.router.navigate(['/docente']);
+              break;
+            case 'Estudiante':
+              this.router.navigate(['/estudiante']);
+              break;
+            case 'Secretaria':
+              this.router.navigate(['/secretaria']);
+              break;
+            case 'Invitado':
+              this.router.navigate(['/invitado']);
+              break;
+
+            default:
+              break;
+          }
           mostrarMensaje(
             'success',
             'Bienvenido al sistema',

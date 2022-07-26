@@ -10,9 +10,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CabeceraDashComponent implements OnInit {
   objUsuarioSesion:Acceso;
+  public respuestaToken:Acceso;
 
   constructor(public accesoService:AccesoService) {
     this.objUsuarioSesion= accesoService.obtenerAcceso();
+    this.respuestaToken = this.accesoService.objAcceso;
    }
 
   ngOnInit(): void {

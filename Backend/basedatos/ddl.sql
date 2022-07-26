@@ -8,6 +8,7 @@ constraint ckc_tipo_documento_usu_usuarios check (tipo_documento_usuario in (1,2
 	apellidos_usuario varchar (80) not null,
 telefono_usuario varchar (50) not null,
 estado_usuario int2 null default 1,
+cod_imagen int not null,
 	CONSTRAINT ckc_estado_usuario_usuarios check (estado_usuario is null or (estado_usuario in (1,2))),
 constraint pk_usuarios primary key (cod_usuario)
 );
@@ -25,10 +26,9 @@ comment on column usuarios.estado_usuario is
 2 inactivo';
 
 alter table usuarios owner to user_encuestas;
-alter table usuarios drop column correo_usuario
+
 
 create unique index indice_doc on usuarios (documento_usuario);
-
 
 
 CREATE TABLE accesos(
@@ -44,17 +44,11 @@ create unique index indice_correo on accesos (correo_acceso);
 
 CREATE TABLE imagenes(
 cod_imagen SERIAL not null,
-cod_usuario int4 not null,
 nombre_publico_imagen varchar(200 ) not null,
 nombre_privado_imagen varchar (200) not null,
 tipo_imagen varchar (50) not null,
-tamano_imagen varchar (50) not null,
-favorita_imagen int2 not null default 2
-CONSTRAINT ckc_favorita_imagen_imagenes check (favorita_imagen in (1,2)),
 constraint pk_imagenes primary key (cod_imagen)
 );
-
-comment on column imagenes.favorita_imagen is '1 seleccionada 2 otras';
 
 alter table imagenes owner to user_encuestas;
 
@@ -82,14 +76,89 @@ comment on column roles.estado_rol is
 
 alter table roles owner to user_encuestas;
 
+CREATE TABLE encuestas(
+cod_encuesta SERIAL NOT NULL,
+cod_dependencia int not null,
+cod_tipo_dependencia int not null,
+cod_tipo_evento int not null,
+nombre_encuesta varchar(200) not null,
+fecha_creacion_encuesta DATE not null,
+fecha_cierre_encuesta DATE not null,
+descripcion_encuesta text not null,
+constraint pk_encuestas primary key (cod_encuesta)
+);
+
+alter table encuestas owner to user_encuestas;
+
+CREATE TABLE dependencias(
+cod_dependencia SERIAL NOT NULL,
+nombre_dependencia varchar(200) not null,
+constraint pk_dependencias primary key (cod_dependencia)
+);
+
+alter table dependencias owner to user_encuestas;
+
+CREATE TABLE tipo_dependencias(
+cod_tipo_dependencia SERIAL NOT NULL,
+cod_dependencia int not null,
+nombre_tipo_dependencia varchar(200) not null,
+constraint pk_tipo_dependencias primary key (cod_tipo_dependencia)
+);
+
+alter table tipo_dependencias owner to user_encuestas;
+
+CREATE TABLE tipo_eventos(
+cod_tipo_evento SERIAL NOT NULL,
+nombre_tipo_evento varchar(200) not null,
+constraint pk_tipo_eventos primary key (cod_tipo_evento)
+);
+
+alter table tipo_eventos owner to user_encuestas;
+
+CREATE TABLE preguntas(
+cod_pregunta SERIAL NOT NULL,
+cod_tipo_pregunta int not null,
+cod_encuesta int not null,
+descripcion_pregunta text not null,
+constraint pk_preguntas primary key (cod_pregunta)
+);
+
+alter table preguntas owner to user_encuestas;
+
+CREATE TABLE tipo_preguntas(
+cod_tipo_pregunta SERIAL NOT NULL,
+nombre_tipo_pregunta varchar(100) not null,
+constraint pk_tipo_preguntas primary key (cod_tipo_preguntas)
+);
+
+alter table tipo_preguntas owner to user_encuestas;
+
+CREATE TABLE opciones(
+cod_opcion SERIAL NOT NULL,
+cod_pregunta int not null,
+texto_opcion varchar(100) not null,
+constraint pk_tipo_opciones primary key (cod_opcion)
+);
+
+alter table opciones owner to user_encuestas;
+
+CREATE TABLE usuarios_respuestas_opciones(
+cod_usuario int not null,
+cod_opcion int not null,
+respuesta_usuario text not null
+);
+
+alter table usuarios_respuestas_opciones owner to user_encuestas;
+
+CREATE TABLE asignados(
+	cod_usuario int not null,
+	cod_encuesta int not null
+);
+
+alter table asignados owner to user_encuestas;
 
 alter table accesos
 add constraint fk_accesos_ref_usuarios foreign key (cod_usuario)
-references usuarios (cod_usuario)
-on delete restrict on update cascade;
-
-alter table imagenes
-add constraint fk_imagenes_ref_usuarios foreign key (cod_usuario)
 references usuarios (cod_usuario)
 on delete restrict on update cascade;
 
@@ -101,4 +170,46 @@ on delete restrict on update cascade;
 alter table usuarios
 add constraint fk_usuarios_ref_roles foreign key (cod_rol)
 references roles (cod_rol)
+add constraint fk_usuarios_ref_imagenes foreign key (cod_imagen)
+references imagenes (cod_imagen)
+on delete restrict on update cascade;
+
+alter table asignados
+add constraint fk_asignados_ref_usuarios foreign key (cod_usuario)
+references usuarios (cod_usuario),
+add constraint fk_asignados_ref_encuestas foreign key (cod_encuesta)
+references encuestas (cod_encuesta),
+on delete restrict on update cascade;
+
+alter table encuestas
+add constraint fk_encuestas_ref_dependencias foreign key (cod_dependencia)
+references dependencias (cod_dependencia),
+add constraint fk_encuestas_ref_tipo_dependencias foreign key (cod_tipo_dependencia)
+references tipo_dependencias (cod_tipo_dependencia),
+add constraint fk_encuestas_ref_tipo_eventos foreign key (cod_tipo_evento)
+references tipo_eventos (cod_tipo_evento)
+on delete restrict on update cascade;
+
+alter table tipo_dependencias
+add constraint fk_tipo_dependencias_ref_dependencias foreign key (cod_dependencia)
+references dependencias (cod_dependencia)
+on delete restrict on update cascade;
+
+alter table preguntas
+add constraint fk_preguntas_ref_encuestas foreign key (cod_encuesta)
+references encuestas (cod_encuesta),
+add constraint fk_preguntas_ref_tipo_pregunta foreign key (cod_tipo_pregunta)
+references tipo_preguntas (cod_tipo_pregunta)
+on delete restrict on update cascade;
+
+alter table opciones
+add constraint fk_opciones_ref_preguntas foreign key (cod_pregunta)
+references preguntas (cod_pregunta)
+on delete restrict on update cascade;
+
+alter table usuarios_respuestas_opciones
+add constraint fk_respuestas_ref_usuarios foreign key (cod_usuario)
+references usuarios (cod_usuario),
+add constraint fk_respuestas_ref_opciones foreign key (cod_opcion)
+references opciones (cod_opcion)
 on delete restrict on update cascade;

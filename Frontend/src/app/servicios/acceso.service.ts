@@ -2,11 +2,10 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
 import { Acceso } from '../modelos/acceso';
 import * as urls from '../utilidades/dominios/uris';
 import { RespuestaAcceso } from '../modelos/respuesta-acceso';
-import { FOTO_SISTEMA, TOKEN_SISTEMA } from '../utilidades/dominios/sesiones';
+import { TOKEN_SISTEMA } from '../utilidades/dominios/sesiones';
 
 import jwtDecode from 'jwt-decode';
 
@@ -24,7 +23,7 @@ export class AccesoService {
 
   // Métodos obligatorios
   public inicializarAcceso(): Acceso {
-    return new Acceso(0, '', '');
+    return new Acceso(0, '', '', '');
   }
 
   public obtenerAcceso(): Acceso {
@@ -34,7 +33,6 @@ export class AccesoService {
   // Lógica de negocio
   public salir(): void {
     localStorage.removeItem(TOKEN_SISTEMA);
-    localStorage.removeItem(FOTO_SISTEMA);
     this.router.navigate(['/land/public/login']);
   }
 
@@ -50,9 +48,11 @@ export class AccesoService {
     if (localStorage.getItem(TOKEN_SISTEMA)) {
       try {
         const objetoVerificado: any = jwtDecode(this.obtenerToken());
-        this.objAcceso.codUsuario = objetoVerificado.codUsuario;
-        this.objAcceso.nombreRol = objetoVerificado.nombreRol;
-        this.objAcceso.correoAcceso = objetoVerificado.correoUsuario;
+        this.objAcceso.codUsuario = objetoVerificado.datos[0].codUsuario;
+        this.objAcceso.correoAcceso = objetoVerificado.datos[0].correoAcceso;
+        this.objAcceso.nombreRol = objetoVerificado.datos[0].nombreRol;
+        this.objAcceso.nombresUsuario =objetoVerificado.datos[0].nombresUsuario;
+        this.objAcceso.apellidosUsuario =objetoVerificado.datos[0].apellidosUsuario;
         return true;
       } catch (error) {
         return false;

@@ -13,7 +13,6 @@ class AccesoRutas {
   public crearRutas(): void {
     this.rutaAcceso.post('/login', accesoControlador.validarSesion);
     this.rutaAcceso.post('/register', accesoControlador.crearUsuario);
-
   }
 }
 const accesoRutas = new AccesoRutas();

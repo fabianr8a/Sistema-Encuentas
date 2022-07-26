@@ -1,5 +1,5 @@
-/************************* creación del taller  ********************/
-ng new proyecto10login
+/************************* creación del proyecto  ********************/
+ng new proyectoSistemaEncuestas
 
 /************************* Instalacion Paquetes ********************/
 npm i ajv-keywords
@@ -51,6 +51,15 @@ ng g m modulos/privado/usuario/usuario-routing --flat --module=usuario
 ng g m modulos/privado/rol
 ng g m modulos/privado/rol/rol-routing --flat --module=rol
 
+ng g m modulos/privado/encuestas
+ng g m modulos/privado/encuestas/encuestas-routing --flat --module=encuestas
+
+ng g m modulos/privado/estudiante/encuestas
+ng g m modulos/privado/estudiante/encuestas/encuestas-routing --flat --module=encuestas
+
+ng g m modulos/privado/docente/encuestas
+ng g m modulos/privado/docente/encuestas/encuestas-routing --flat --module=encuestas
+
 ng g m modulos/contenedor
 
 /************* componentes **************/
@@ -75,10 +84,20 @@ ng g c modulos/privado/usuario/usuEditar --skip-tests=true
 ng g c modulos/privado/usuario/usuListar --skip-tests=true
 ng g c modulos/privado/usuario/usuDatos --skip-tests=true
 
-ng g c modulos/privado/rol/rolAdmin --skip-tests=true
 ng g c modulos/privado/rol/rolCrear --skip-tests=true
 ng g c modulos/privado/rol/rolEditar --skip-tests=true
 ng g c modulos/privado/rol/rolListar --skip-tests=true
+
+ng g c modulos/privado/encuestas/encuestaCrear --skip-tests=true
+ng g c modulos/privado/encuestas/encuestaEditar --skip-tests=true
+ng g c modulos/privado/encuestas/encuestaListar --skip-tests=true
+
+ng g c modulos/privado/estudiante/encuestas/responderEncuesta --skip-tests=true
+ng g c modulos/privado/estudiante/encuestas/listarEncuestas --skip-tests=true
+
+ng g c modulos/privado/docente/encuestas/crearEncuesta --skip-tests=true
+ng g c modulos/privado/docente/encuestas/listarEncuesta --skip-tests=true
+
 
 
 /************* Utilidades **************/
@@ -99,6 +118,7 @@ ng g class modelos/respuestaAcceso --skip-tests=true
 ng g class modelos/registro --skip-tests=true
 ng g class modelos/rol --skip-tests=true
 ng g class modelos/usuarios --skip-tests=true
+ng g class modelos/encuestas --skip-tests=true
 
 /************* Servicios **************/
 
@@ -201,34 +221,7 @@ export const observadorAny: Observer<any> ={
   }
 }
 
-/*************************** Modelos ***********************/
-export class Acceso {
-  public codUsuario: number;
-  public correoAcceso: string;
-  public claveAcceso: string;
 
-  public reclaveAcceso?: string;
-  public nombreRol?: string;
-  public nombresUsuario?: string;
-  public apellidosUsuario?: string;
-
-  constructor(cod: number, cor: string, cla: string){
-    this.codUsuario = cod;
-    this.correoAcceso = cor;
-    this.claveAcceso = cla;
-  }
-}
-
-
-export class RespuestaAcceso {
-  public tokenFullStack: string;
-  public foticoFullStack: string;
-
-  constructor(tok: string, fot: string){
-    this.tokenFullStack = tok;
-    this.foticoFullStack = fot;
-  }
-}
 
 /*************************** On tan las APIS (Uris)***********************/
 export const API_URL = 'http://localhost:3210/';

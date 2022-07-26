@@ -23,11 +23,12 @@ class AccesoDAO {
             })).then((fila) => {
                 const arreglo = fila.rows;
                 if (arreglo.length == 0) {
-                    res.status(401).json({ msg: 'Usuario no encontrado' });
+                    res.status(400).json({ msg: 'Usuario no encontrado' });
                 }
                 else {
-                    const miTokencito = jsonwebtoken_1.default.sign({ ramon: 'uyy', veanos: 'Los de fullstack' }, 'LaClaveSuperSecreta');
-                    res.status(200).json({ tokenFullStack: miTokencito, foticoFullStack: 'Acá va el base 64 de la foto' });
+                    const miTokencito = jsonwebtoken_1.default.sign({ datos: arreglo, alg: 'HS256', typ: 'JWT' }, 'LaClaveSuperSecreta');
+                    res.status(200).json({ tokenFullStack: miTokencito, nombreRol: arreglo[0].nombreRol });
+                    console.log(fila);
                 }
             })
                 .catch((miError) => {
@@ -68,7 +69,7 @@ class AccesoDAO {
                         nombreRol: rolUsuarioNuevo,
                         correoAcceso: correoUsuarioNuevo
                     }, 'LaClaveSuperSecreta');
-                    res.status(200).json({ token: miTokencito, foto: 'Acá va el base 64 de la foto' });
+                    res.status(200).json({ token: miTokencito });
                 }
                 else {
                     res.status(400).json({ mensaje: 'No funciona' });

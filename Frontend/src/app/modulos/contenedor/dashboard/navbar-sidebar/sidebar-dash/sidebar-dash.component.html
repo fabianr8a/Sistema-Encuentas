@@ -21,8 +21,8 @@
             />
             <img class="user-nav" src="../../../../../../assets/img/user.png" />
             <div class="datos-nav">
-              <span>Usuario</span><br />
-              <span>Rol</span>
+              <b><span>{{respuestaToken.nombresUsuario}}</span><span>.{{respuestaToken.apellidosUsuario}}</span><br/></b>
+              <div style="font-size: 14.3px"><span>{{respuestaToken.nombreRol}}</span></div>
             </div>
           </div>
           <div class="sb-sidenav-menu-heading">Menú principal</div>
@@ -58,9 +58,10 @@
             <nav
               class="sb-sidenav-menu-nested nav accordion"
               id="sidenavAccordionPages"
+
             >
-              <a class="nav-link" [routerLink]="['/private/roles/listar-rol']">Roles</a>
-              <a class="nav-link" [routerLink]="['/private/usuario/listar-usuario']"
+              <a class="nav-link" [routerLink]="['/administrador/roles/listar-rol']">Roles</a>
+              <a class="nav-link" [routerLink]="['/administrador/usuario/listar-usuario']"
                 >Usuarios</a
               >
             </nav>
@@ -87,21 +88,12 @@
           >
             <nav
               class="sb-sidenav-menu-nested nav accordion"
-              id="sidenavAccordionPages"
-            >
-              <a class="nav-link" href="crear-encuestas.html">Crear encuesta</a>
-              <a class="nav-link" href="encuestas_realizadas.html"
-                >Listar encuesta</a
+              id="sidenavAccordionPages1"
               >
+              <a  class="nav-link " [routerLink]="['/administrador/encuestas/crear-encuesta']">Crear encuesta</a>
+              <a  class="nav-link" [routerLink]="['/administrador/encuestas/listar-encuesta']">Listar encuesta</a>
             </nav>
           </div>
-
-          <a class="nav-link" href="resultados.html">
-            <div class="sb-nav-link-icon">
-              <i class="fas fa-chart-area"></i>
-            </div>
-            Análisis de resultados
-          </a>
         </div>
       </div>
     </nav>

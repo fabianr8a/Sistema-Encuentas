@@ -74,8 +74,5 @@ class RolDAO {
         res.status(400).json({ respuesta: 'Error actualizando el rol' });
       });
   }
-
-
-
 }
 export default RolDAO;

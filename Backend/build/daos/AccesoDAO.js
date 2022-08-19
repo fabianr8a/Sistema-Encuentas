@@ -27,8 +27,7 @@ class AccesoDAO {
                 }
                 else {
                     const miTokencito = jsonwebtoken_1.default.sign({ datos: arreglo, alg: 'HS256', typ: 'JWT' }, 'LaClaveSuperSecreta');
-                    res.status(200).json({ tokenFullStack: miTokencito, nombreRol: arreglo[0].nombreRol });
-                    console.log(fila);
+                    res.status(200).json({ tokenFullStack: miTokencito, nombreRol: arreglo[0].nombreRol, estadoRol: arreglo[0].estadoRol });
                 }
             })
                 .catch((miError) => {
@@ -42,7 +41,6 @@ class AccesoDAO {
             yield conexionBd_1.default.task((consulta) => __awaiter(this, void 0, void 0, function* () {
                 const correito = parametros[0];
                 const correo = yield consulta.one(sqlExiste, correito);
-                //console.log(cantidadCorreos);
                 if (correo.existe == 0) {
                     const nombres = parametros[1];
                     const apellidos = parametros[2];
@@ -51,7 +49,6 @@ class AccesoDAO {
                     const clavecita = parametros[4];
                     yield consulta.none(sqlAgreAcceso, [nuevoUsuario.codUsuario, correito, clavecita]);
                     yield consulta.none(sqlAgreIngreso, [nuevoUsuario.codUsuario]);
-                    console.log(nuevoUsuario);
                     return yield consulta.result(sqlTodoListo, [nuevoUsuario.codUsuario]);
                 }
                 else {
@@ -76,8 +73,13 @@ class AccesoDAO {
                 }
             })
                 .catch((miError) => {
-                console.log(miError);
-                res.status(400).json({ msg: 'Error en la creación del usuario' });
+                if (miError.code == '23505') {
+                    res.status(403).json({ respuesta: 'El documento ya existe' });
+                }
+                else {
+                    console.log(miError);
+                    res.status(400).json({ msg: 'Error en la creación del usuario' });
+                }
             });
         });
     }

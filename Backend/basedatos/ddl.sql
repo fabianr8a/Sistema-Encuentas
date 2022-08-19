@@ -81,6 +81,7 @@ cod_encuesta SERIAL NOT NULL,
 cod_dependencia int not null,
 cod_tipo_dependencia int not null,
 cod_tipo_evento int not null,
+cod_pregunta int not null,
 nombre_encuesta varchar(200) not null,
 fecha_creacion_encuesta DATE not null,
 fecha_cierre_encuesta DATE not null,
@@ -118,7 +119,6 @@ alter table tipo_eventos owner to user_encuestas;
 CREATE TABLE preguntas(
 cod_pregunta SERIAL NOT NULL,
 cod_tipo_pregunta int not null,
-cod_encuesta int not null,
 descripcion_pregunta text not null,
 constraint pk_preguntas primary key (cod_pregunta)
 );
@@ -188,6 +188,8 @@ add constraint fk_encuestas_ref_tipo_dependencias foreign key (cod_tipo_dependen
 references tipo_dependencias (cod_tipo_dependencia),
 add constraint fk_encuestas_ref_tipo_eventos foreign key (cod_tipo_evento)
 references tipo_eventos (cod_tipo_evento)
+add constraint fk_encuestas_ref_preguntas foreign key (cod_pregunta)
+references preguntas (cod_pregunta)
 on delete restrict on update cascade;
 
 alter table tipo_dependencias
@@ -196,8 +198,6 @@ references dependencias (cod_dependencia)
 on delete restrict on update cascade;
 
 alter table preguntas
-add constraint fk_preguntas_ref_encuestas foreign key (cod_encuesta)
-references encuestas (cod_encuesta),
 add constraint fk_preguntas_ref_tipo_pregunta foreign key (cod_tipo_pregunta)
 references tipo_preguntas (cod_tipo_pregunta)
 on delete restrict on update cascade;

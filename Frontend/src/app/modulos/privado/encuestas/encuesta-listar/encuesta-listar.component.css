@@ -1,0 +1,31 @@
+a{
+  text-decoration: none;
+}
+
+.input-group {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  width: 100%;
+}
+
+.input-group-prepend{
+  width: 36%;
+
+}
+
+.form-control{
+  width: 40%;
+}
+
+.buscar{
+  display: flex;
+  justify-content: center
+}
+
+.btn-buscar{
+  cursor: auto;
+}
+
+

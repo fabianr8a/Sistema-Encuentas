@@ -1,6 +1,4 @@
-import { observadorAny } from './../../../../../utilidades/observadores/tipo-any';
 import { Component, OnInit } from '@angular/core';
-import { Subscription, map, catchError, finalize } from 'rxjs';
 import { Acceso } from 'src/app/modelos/acceso';
 import { AccesoService } from 'src/app/servicios/acceso.service';
 

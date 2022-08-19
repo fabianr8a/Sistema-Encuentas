@@ -10,10 +10,8 @@ import { API_REGISTRO } from '../utilidades/dominios/uris';
 })
 export class RegistroService {
   constructor(private http: HttpClient) {}
-  public enviarRegistro(
-    objeto: Registro,
-    imagen: Imagen
-  ): Observable<Registro> {
-    return this.http.post<Registro>(API_REGISTRO, [objeto, imagen]);
+
+  public enviarRegistro(objeto: Registro): Observable<Registro> {
+  return this.http.post<Registro>(API_REGISTRO, [objeto]);
   }
 }

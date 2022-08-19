@@ -14,9 +14,8 @@ class AccesoDAO {
       if (arreglo.length == 0) {
         res.status(400).json({ msg: 'Usuario no encontrado' });
       } else {
-        const miTokencito = jwt.sign({ datos:arreglo, alg: 'HS256', typ: 'JWT' }, 'LaClaveSuperSecreta');
-        res.status(200).json({ tokenFullStack: miTokencito,nombreRol:arreglo[0].nombreRol});
-        console.log(fila)
+        const miTokencito = jwt.sign({ datos: arreglo, alg: 'HS256', typ: 'JWT' }, 'LaClaveSuperSecreta');
+        res.status(200).json({ tokenFullStack: miTokencito, nombreRol: arreglo[0].nombreRol, estadoRol:arreglo[0].estadoRol});
       }
     })
       .catch((miError) => {
@@ -36,8 +35,6 @@ class AccesoDAO {
     await pool.task(async consulta => {
       const correito = parametros[0];
       const correo = await consulta.one(sqlExiste, correito);
-      //console.log(cantidadCorreos);
-
       if (correo.existe == 0) {
         const nombres = parametros[1];
         const apellidos = parametros[2];
@@ -46,7 +43,6 @@ class AccesoDAO {
         const clavecita = parametros[4];
         await consulta.none(sqlAgreAcceso, [nuevoUsuario.codUsuario, correito, clavecita]);
         await consulta.none(sqlAgreIngreso, [nuevoUsuario.codUsuario]);
-        console.log(nuevoUsuario)
         return await consulta.result(sqlTodoListo, [nuevoUsuario.codUsuario]);
       } else {
         return await consulta.result(sqlTodoListo, [-1]);
@@ -66,17 +62,19 @@ class AccesoDAO {
             correoAcceso: correoUsuarioNuevo
           },
             'LaClaveSuperSecreta');
-          res.status(200).json({ token: miTokencito});
+          res.status(200).json({ token: miTokencito });
         } else {
           res.status(400).json({ mensaje: 'No funciona' });
         }
       })
       .catch((miError) => {
-        console.log(miError);
-        res.status(400).json({ msg: 'Error en la creación del usuario' });
+        if (miError.code == '23505') {
+          res.status(403).json({ respuesta: 'El documento ya existe' })
+        } else {
+          console.log(miError);
+          res.status(400).json({ msg: 'Error en la creación del usuario' });
+        }
       });
   }
-
-
 }
 export default AccesoDAO;

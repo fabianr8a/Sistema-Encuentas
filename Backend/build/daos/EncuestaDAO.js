@@ -38,7 +38,7 @@ class EncuestaDAO {
             });
         });
     }
-    static buscarEncuesta(sql, parametros, res) {
+    static listarLasTipoPreguntas(sql, parametros, res) {
         return __awaiter(this, void 0, void 0, function* () {
             yield conexionBd_1.default.result(sql, parametros)
                 .then((resultado) => {
@@ -46,7 +46,61 @@ class EncuestaDAO {
             })
                 .catch((miError) => {
                 console.log(miError);
-                res.status(400).json({ respuesta: 'Error buscando la encuesta' });
+                res.status(400).json({ respuesta: 'Error en la consulta de tipo preguntas' });
+            });
+        });
+    }
+    static listarLasDependencias(sql, parametros, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield conexionBd_1.default.result(sql, parametros)
+                .then((resultado) => {
+                res.status(200).json(resultado.rows);
+            })
+                .catch((miError) => {
+                console.log(miError);
+                res.status(400).json({ respuesta: 'Error en la consulta de dependencias' });
+            });
+        });
+    }
+    static listarLosTiposDependencia(sql, parametros, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield conexionBd_1.default.result(sql, parametros)
+                .then((resultado) => {
+                res.status(200).json(resultado.rows);
+            })
+                .catch((miError) => {
+                console.log(miError);
+                res.status(400).json({ respuesta: 'Error listando el tipo dependencia' });
+            });
+        });
+    }
+    static crearEncuesta(sqlCrear, sqlPregunta, parametros, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield conexionBd_1.default.task((consulta) => __awaiter(this, void 0, void 0, function* () {
+                const codigoEncuesta = yield consulta.one(sqlCrear, parametros);
+                const arregloPregunta = [parametros[7], codigoEncuesta.codEncuesta, parametros[6]];
+                return yield consulta.result(sqlPregunta, arregloPregunta);
+            }))
+                .then((resultado) => {
+                res.status(200).json({ respuesta: "Encuesta creada",
+                    resultado: resultado.rowCount });
+            })
+                .catch((miError) => {
+                console.log(miError);
+                res.status(400).json({ respuesta: 'Error creando la encuesta' });
+            });
+        });
+    }
+    static crearLasPreguntas(sql, parametros, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield conexionBd_1.default.result(sql, parametros)
+                .then((resultado) => {
+                res.status(200).json({ respuesta: "Pregunta creada",
+                    resultado: resultado.rowCount });
+            })
+                .catch((miError) => {
+                console.log(miError);
+                res.status(400).json({ respuesta: 'Error creando las preguntas' });
             });
         });
     }

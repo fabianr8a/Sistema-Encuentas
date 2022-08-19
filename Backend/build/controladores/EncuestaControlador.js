@@ -12,15 +12,39 @@ class EncuestaControlador extends EncuestaDAO_1.default {
     listarEventos(req, res) {
         EncuestaControlador.listarLosEventos(Encuestas_sql_1.SQL_ENCUESTA.LISTAR_EVENTOS, req, res);
     }
-    buscarEncuestas(req, res) {
-        const buscar = req.body.nombreEncuesta;
-        const miParametro = [buscar];
-        if (buscar === '') {
-            EncuestaControlador.listarLasEncuestas(Encuestas_sql_1.SQL_ENCUESTA.LISTAR, req, res);
+    listarTipoPreguntas(req, res) {
+        EncuestaControlador.listarLasTipoPreguntas(Encuestas_sql_1.SQL_ENCUESTA.LISTAR_TIPO_PREGUNTAS, req, res);
+    }
+    listarDependencias(req, res) {
+        EncuestaControlador.listarLasDependencias(Encuestas_sql_1.SQL_ENCUESTA.LISTAR_DEPENDENCIAS, req, res);
+    }
+    listarTiposDependencia(req, res) {
+        const buscarDependencia = req.params.codDependencia;
+        const miParametro = [buscarDependencia];
+        if (!buscarDependencia) {
+            return res.status(400).json({ 'Error': 'No se encontro un parametro' });
         }
-        else {
-            EncuestaControlador.buscarEncuesta(Encuestas_sql_1.SQL_ENCUESTA.BUSCAR, miParametro, res);
-        }
+        EncuestaControlador.listarLosTiposDependencia(Encuestas_sql_1.SQL_ENCUESTA.LISTAR_TIPO_DEPENDENCIAS, miParametro, res);
+    }
+    crearEncuesta(req, res) {
+        const misParametros = [
+            req.body[0].codDependencia,
+            req.body[0].codTipoEvento,
+            req.body[0].nombreEncuesta,
+            req.body[0].descripcionEncuesta,
+            req.body[0].fechaCreacionEncuesta,
+            req.body[0].fechaCierreEncuesta,
+            req.body[1].descripcionPregunta,
+            req.body[1].codTipoPregunta,
+        ];
+        EncuestaControlador.crearEncuesta(Encuestas_sql_1.SQL_ENCUESTA.CREAR_ENCUESTA, Encuestas_sql_1.SQL_ENCUESTA.CREAR_PREGUNTAS, misParametros, res);
+    }
+    crearPreguntas(req, res) {
+        const losParametros = [
+            req.body.codTipoPregunta,
+            req.body.descripcionPregunta,
+        ];
+        EncuestaControlador.crearLasPreguntas(Encuestas_sql_1.SQL_ENCUESTA.CREAR_PREGUNTAS, losParametros, res);
     }
 }
 const encuestaControlador = new EncuestaControlador();

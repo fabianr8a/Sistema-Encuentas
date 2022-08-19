@@ -1,0 +1,75 @@
+<main>
+  <div class="container-fluid px-4">
+    <div class="row">
+      <div class="col-md-6">
+        <h2 style="font-size: 25px; margin-top: 19px">Agregar rol</h2>
+      </div>
+      <div class="col-md-6">
+        <ol
+          class="breadcrumb d-flex justify-content-end"
+          style="background-color: white; margin-top: 24px"
+        >
+          <li class="breadcrumb-item">
+            <a [routerLink]="['/private/inicio-dash']"
+              ><i class="fas fa-home"></i
+            ></a>
+          </li>
+          <li class="breadcrumb-item">
+            <a href="javascript:void(0)">Administrador</a>
+          </li>
+          <li class="breadcrumb-item">
+            <a [routerLink]="['/private/roles/listar-rol']">Listado roles</a>
+          </li>
+          <li class="breadcrumb-item active">Crear roles</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="card mb-4">
+      <div
+        class="card-header"
+        style="padding: 21px; background-color: rgba(17, 17, 17, 0.116)"
+      ></div>
+      <div class="card-body">
+        <form
+          #frmCrearRol="ngForm"
+          (submit)="frmCrearRol.valid && crearRol(frmCrearRol)"
+        >
+          <div class="table-responsive">
+            <label><h5>Nombre del rol</h5></label>
+            <input
+              type="text"
+              class="form-control"
+              id="nomRol"
+              name="nomRol"
+              [(ngModel)]="objRol.nombreRol"
+              #nomRol="ngModel"
+              [ngClass]="{
+                'is-invalid': frmCrearRol.submitted && nomRol.invalid
+              }"
+              required
+            />
+            <div
+              class="text-danger"
+              *ngIf="frmCrearRol.submitted && nomRol.invalid"
+            >
+              <span *ngIf="nomRol.errors?.['required']"
+                >Nombre del rol obligatorio</span
+              >
+            </div>
+            <br />
+          </div>
+          <p style="text-align: center; margin-bottom: 10px">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="clickCrear"
+            >
+              Crear rol
+            </button>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>

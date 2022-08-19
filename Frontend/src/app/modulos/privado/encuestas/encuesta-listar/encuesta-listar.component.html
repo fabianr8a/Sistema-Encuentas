@@ -1,0 +1,127 @@
+<main>
+  <div class="container-fluid px-4">
+    <div class="row">
+      <div class="col-md-6">
+        <h2 style="font-size: 25px; margin-top: 19px">Encuestas</h2>
+      </div>
+      <div class="col-md-6">
+        <ol
+          class="breadcrumb d-flex justify-content-end"
+          style="background-color: white; margin-top: 24px"
+        >
+          <li class="breadcrumb-item">
+            <a [routerLink]="['/private/inicio-dash']"
+              ><i class="fas fa-home"></i
+            ></a>
+          </li>
+          <li class="breadcrumb-item">
+            <a href="javascript:void(0)">Encuestas</a>
+          </li>
+          <li class="breadcrumb-item active">Listado encuestas</li>
+        </ol>
+      </div>
+    </div>
+    <div class="card mb-4">
+      <div
+        class="card-header"
+        style="padding-bottom: 32px; background-color: rgba(17, 17, 17, 0.116)"
+      ></div>
+
+      <div class="card-body">
+        <div class="table-responsive">
+          <div class="row buscar">
+            <div class="col-md-6">
+              <div class="input-group">
+                <button class="btn btn-primary btn-buscar">
+                  <i class="fas fa-search"></i>
+                </button>
+                <input
+                  style="margin-left: auto; margin-right: auto"
+                  class="busqueda-encuesta form-control"
+                  placeholder="Buscar"
+                  id="buscar"
+                  name="buscar"
+                  aria-label="Search"
+                  [(ngModel)]="busqueda"
+                />
+              </div>
+            </div>
+          </div>
+
+          <br />
+          <table
+            class="dataTable-table table-striped table-bordered"
+            id="searchTable"
+          >
+            <thead>
+              <tr>
+                <th style="width: 20%">Fecha</th>
+                <th style="width: 15%">Tipo Evento</th>
+                <th style="width: 40%">Nombre Evento</th>
+                <th style="width: 10%"></th>
+                <th style="width: 10%"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let objEncuesta of arregloEncuesta
+                    | filterBy: ['nombreEncuesta', 'nombreTipoEvento']:busqueda
+                    | paginate
+                      : {
+                          id: 'codiguitoPaginacion',
+                          itemsPerPage: cantidadMostrar,
+                          currentPage: paginaActual,
+                          totalItems: cantidadTotalRegistros
+                        }
+                "
+              >
+                <td>
+                  {{ objEncuesta.fechaCreacionEncuesta | date: "longDate" }}
+                </td>
+                <td>{{ objEncuesta.nombreTipoEvento }}</td>
+                <td>{{ objEncuesta.nombreEncuesta }}</td>
+                <td>
+                  <p style="text-align: center; margin: 0">
+                    <a
+                      [routerLink]="['/private/encuestas/resultados-encuesta']"
+                    >
+                      <i class="fa fa-chart-area"></i>&nbsp;Resultados
+                    </a>
+                  </p>
+                </td>
+                <td>
+                  <p style="text-align: center; margin: 0">
+                    <a [routerLink]="['/private/encuestas/editar-encuesta']"
+                      ><i class="far fa-edit" title="Modificar encuesta"></i
+                    ></a>
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="row" style="width: 100%">
+            <div class="col-md-6" style="padding-left: 38px">
+              <small
+                ><strong>{{ cantidadTotalRegistros }} </strong>registros
+                encontados en <strong>{{ cantidadPaginas }}</strong> páginas
+              </small>
+            </div>
+            <div class="col-md-6 d-flex justify-content-end">
+              <small>
+                <pagination-controls
+                  id="codiguitoPaginacion"
+                  (pageChange)="paginaActual = $event"
+                  [directionLinks]="true"
+                  previousLabel="Anterior"
+                  nextLabel="Siguiente"
+                >
+                </pagination-controls>
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

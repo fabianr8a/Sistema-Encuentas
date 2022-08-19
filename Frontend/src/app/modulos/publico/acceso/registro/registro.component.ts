@@ -1,14 +1,10 @@
-import { Imagen } from './../../../../modelos/imagen';
 import { ToastrService } from 'ngx-toastr';
 import { RegistroService } from './../../../../servicios/registro.service';
-import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Registro } from 'src/app/modelos/registro';
 import { catchError, map, Subscription } from 'rxjs';
 import { NgForm } from '@angular/forms';
-import {
-  TOKEN_SISTEMA,
-} from 'src/app/utilidades/dominios/sesiones';
+import { TOKEN_SISTEMA } from 'src/app/utilidades/dominios/sesiones';
 import { mostrarMensaje } from 'src/app/utilidades/mensajes/toas.func';
 import { observadorAny } from 'src/app/utilidades/observadores/tipo-any';
 import * as miEncriptado from 'js-sha512';
@@ -22,21 +18,18 @@ export class RegistroComponent implements OnInit {
   //Propiedades de la clase
   // ********************************************/
   public temporal: any;
-  public tmpBase64: any;
   public Click: boolean;
-  public imagenRegistro: Imagen;
   public objRegistro: Registro;
   public miSuscripcionRegistro: Subscription;
+  public patronCorreo = '^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$';
 
   constructor(
-    // private router: Router,
     private registroService: RegistroService,
     public toastrService: ToastrService
   ) {
     this.miSuscripcionRegistro = this.temporal;
     this.objRegistro = this.inicializarRegistro();
     this.Click = false;
-    this.imagenRegistro = this.inicializarImagen();
   }
 
   ngOnDestroy(): void {
@@ -49,52 +42,18 @@ export class RegistroComponent implements OnInit {
   //Métodos obligatorios
   // ********************************************/
   public inicializarRegistro(): Registro {
-    return new Registro('', '', '', '', '','');
-  }
-  public inicializarImagen(): Imagen {
-    return new Imagen(0, '', '', '');
-  }
-
-  public seleccionarFoto(input: any): any {
-    if (!input.target.files[0] || input.target.files[0].length === 0) {
-      return;
-    }
-    const mimeType = input.target.files[0].type;
-    if (mimeType.match(/image\/*/) == null) {
-      const parametros = {
-        closeButton: true,
-        enableHtml: true,
-        progressBar: true,
-        positionClass: 'toast-top-right',
-        timeOut: 8000,
-      };
-      this.toastrService.error(
-        'Solo se permiten <strong>imágenes</strong>',
-        'Advertencia',
-        parametros
-      );
-      return;
-    }
-    const reader = new FileReader();
-    reader.readAsDataURL(input.target.files[0]);
-    reader.onload = () => {
-      this.tmpBase64 = reader.result;
-      this.imagenRegistro.nombrepublicoImagen = input.target.files[0].name;
-      this.imagenRegistro.tipoImagen = input.target.files[0].type;
-    };
+    return new Registro('', '', '', '', '', '');
   }
 
   //Lógica del negocio
   // ********************************************/
 
   public crearUsuario(formulario: NgForm): void {
-    console.log(this.objRegistro);
     const miHash = miEncriptado.sha512(this.objRegistro.claveRegistro);
     this.objRegistro.claveRegistro = miHash;
     this.objRegistro.confirmarClaveRegistro = miHash;
-
     this.miSuscripcionRegistro = this.registroService
-      .enviarRegistro(this.objRegistro, this.imagenRegistro)
+      .enviarRegistro(this.objRegistro)
       .pipe(
         map((resultado: any) => {
           formulario.resetForm();
@@ -107,14 +66,23 @@ export class RegistroComponent implements OnInit {
           );
         }),
         catchError((miError) => {
+
+          if (miError.status===403) {
+            mostrarMensaje(
+              'error',
+              'El documento ya existe',
+              'Error',
+              this.toastrService
+            );
+          } else {
+            mostrarMensaje(
+              'error',
+              'No se puede crear el registro',
+              'Error',
+              this.toastrService
+            );
+          }
           formulario.resetForm();
-          mostrarMensaje(
-            'error',
-            'No se puede crear el registro',
-            'Error',
-            this.toastrService
-          );
-          console.log(miError);
           throw miError;
         })
       )

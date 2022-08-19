@@ -17,10 +17,29 @@ export const API_ROL_BUSCAR=API_URL + 'api/private/rol/buscar';
 export const API_ROL_MODIFICAR=API_URL+'api/private/rol/actualizar';
 export const API_ROL_BUSCAR_ROL=API_URL + 'api/private/rol/buscar-rol'
 
-/*********************Encuestas**************/
+/*********************Listar encuestas**************/
 export const API_ENCUESTA = API_URL + 'api/private/encuesta/getAll';
-export const API_ENCUESTA_EVENTOS = API_URL + 'api/private/encuesta/eventos'; //listar tipo de eventos
-export const API_ENCUESTA_BUSCAR = API_URL + 'api/private/encuesta/buscar'; //buscar encuestas
+
+/******************Listar tipo de eventos********************/
+export const API_ENCUESTA_EVENTOS = API_URL + 'api/private/encuesta/eventos';
+
+/*********************Listar tipo de preguntas******************/
+export const API_ENCUESTA_TIPO_PREGUNTAS = API_URL + 'api/private/encuesta/tipoPreguntas';
+
+/**********************Listar dependencias**************************/
+export const API_ENCUESTA_DEPENDENCIAS = API_URL + 'api/private/encuesta/dependencias';
+
+/**********************Listar tipos de dependencias***********************/
+export const API_ENCUESTA_TIPO_DEPENDENCIAS = API_URL + 'api/private/encuesta/tipoDependencias';
+
+/***********************Crear encuesta******************/
+export const API_CREAR_ENCUESTA=API_URL + 'api/private/encuesta/crear';
+
+
+
+
+
+
 
 
 

@@ -1,0 +1,565 @@
+<main>
+  <div class="container-fluid px-4">
+    <div class="row">
+      <div class="col-md-6">
+        <h2 style="font-size: 25px; margin-top: 19px">Crear Encuestas</h2>
+      </div>
+      <div class="col-md-6">
+        <ol
+          class="breadcrumb d-flex justify-content-end"
+          style="background-color: white; margin-top: 24px"
+        >
+          <li class="breadcrumb-item">
+            <a [routerLink]="['/private/inicio-dash']"
+              ><i class="fas fa-home"></i
+            ></a>
+          </li>
+          <li class="breadcrumb-item">
+            <a href="javascript:void(0)">Encuestas</a>
+          </li>
+          <li class="breadcrumb-item active">Crear encuestas</li>
+        </ol>
+      </div>
+    </div>
+    <form
+      #frmCrearEncuesta="ngForm"
+      (submit)="frmCrearEncuesta.valid && crearEncuesta(frmCrearEncuesta)"
+    >
+      <div class="card mb-4 encabezado">
+        <div
+          class="card-header"
+          style="
+            padding-bottom: 32px;
+            background-color: rgba(17, 17, 17, 0.116);
+          "
+        ></div>
+
+        <div class="card-body">
+          <div class="tiulo-encuesta">
+            <p style="text-align: center">
+              <input
+                type="text"
+                id="titulo"
+                name="titulo"
+                [(ngModel)]="objEncuesta.nombreEncuesta"
+                #titulo="ngModel"
+                [ngClass]="{
+                  'is-invalid': frmCrearEncuesta.submitted && titulo.invalid
+                }"
+                class="titulo-formulario"
+                placeholder="Nombre de la encuesta"
+                required
+              />
+            </p>
+          </div>
+          <div
+            class="text-danger"
+            *ngIf="frmCrearEncuesta.submitted && titulo.invalid"
+          >
+            <span class="error-titulo" *ngIf="titulo.errors?.['required']"
+              >Campo obligatorio</span
+            >
+          </div>
+          <br />
+          <br />
+          <div class="row mb-3">
+            <div class="col-md-13">
+              <div class="form-group">
+                <div class="form-floating mb-3 mb-md-0">
+                  <div class="input-group mb-2 mr-sm-2">
+                    <div class="input-group-prepend">
+                      <label>Fecha de inicio:</label>
+                      <input
+                        class="fecha-encuesta"
+                        type="date"
+                        id="fecha_inicio"
+                        name="fecha_inicio"
+                        value="2022-07-22"
+                        min="2022-01-01"
+                        max="2040-12-31"
+                        [(ngModel)]="objEncuesta.fechaCreacionEncuesta"
+                        #fecha_inicio="ngModel"
+                        [ngClass]="{
+                          'is-invalid':
+                            frmCrearEncuesta.submitted && fecha_inicio.invalid
+                        }"
+                        required
+                      />
+                    </div>
+                    <div
+                      class="text-danger"
+                      *ngIf="frmCrearEncuesta.submitted && fecha_inicio.invalid"
+                    >
+                      <span *ngIf="fecha_inicio.errors?.['required']"
+                        >Campo obligatorio</span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-13">
+              <div class="form-group">
+                <div class="form-floating mb-3 mb-md-0">
+                  <div class="input-group mb-2 mr-sm-2">
+                    <div class="input-group-prepend">
+                      <label>Fecha de cierre:</label>
+                      <input
+                        class="fecha-encuesta"
+                        type="date"
+                        id="fecha_cierre"
+                        name="fecha_cierre"
+                        value="2022-07-22"
+                        min="2022-01-01"
+                        max="2040-12-31"
+                        [(ngModel)]="objEncuesta.fechaCierreEncuesta"
+                        #fecha_cierre="ngModel"
+                        [ngClass]="{
+                          'is-invalid':
+                            frmCrearEncuesta.submitted && fecha_cierre.invalid
+                        }"
+                        required
+                      />
+                    </div>
+                    <div
+                      class="text-danger"
+                      *ngIf="frmCrearEncuesta.submitted && fecha_cierre.invalid"
+                    >
+                      <span *ngIf="fecha_cierre.errors?.['required']"
+                        >Campo obligatorio</span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-13">
+              <label>Tipo de evento:</label>
+              <div class="form-group">
+                <div class="form-floating mb-3 mb-md-0">
+                  <div class="input-group mb-2 mr-sm-2">
+                    <select
+                      name="eventos"
+                      id="eventos"
+                      class="fecha-encuesta"
+                      [(ngModel)]="objEncuesta.codTipoEvento"
+                      aria-label="Default select example"
+                      #eventos="ngModel"
+                      [ngClass]="{
+                        'is-invalid':
+                          frmCrearEncuesta.submitted && eventos.invalid
+                      }"
+                      required
+                    >
+                      <div
+                        class="text-danger"
+                        *ngIf="frmCrearEncuesta.submitted && eventos.invalid"
+                      >
+                        <span *ngIf="eventos?.errors?.['required']"
+                          >Campo obligatorio</span
+                        >
+                      </div>
+
+                      <option value="0">Elija una opción</option>
+                      <option
+                        *ngFor="let objEventos of arregloEvento"
+                        value="{{ objEventos.codTipoEvento }}"
+                      >
+                        {{ objEventos.nombreTipoEvento }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-13">
+              <label>Dependencias:</label>
+              <div class="form-group">
+                <div class="form-floating mb-3 mb-md-0">
+                  <div class="input-group mb-2 mr-sm-2">
+                    <select
+                      (click)="
+                        obtenerTiposDependencia(objEncuesta.codDependencia)
+                      "
+                      id="dependencia"
+                      name="dependencia"
+                      class="fecha-encuesta"
+                      aria-label="Default select example"
+                      [(ngModel)]="objEncuesta.codDependencia"
+                      #dependencia="ngModel"
+                      [ngClass]="{
+                        'is-invalid':
+                          frmCrearEncuesta.submitted && dependencia.invalid
+                      }"
+                      required
+                    >
+                      <option value="0">Elija una opción</option>
+                      <option
+                        *ngFor="let objDependencia of arregloDependencias"
+                        value="{{ objDependencia.codDependencia }}"
+                      >
+                        {{ objDependencia.nombreDependencia }}
+                      </option>
+                    </select>
+                    <div
+                      class="text-danger"
+                      *ngIf="frmCrearEncuesta.submitted && dependencia.invalid"
+                    >
+                      <span *ngIf="dependencia.errors?.['required']"
+                        >Campo obligatorio</span
+                      >
+                    </div>
+                  </div>
+
+                  <select
+                    name="tipo_dependencia"
+                    id="tipo_dependencia"
+                    class="fecha-encuesta"
+                    aria-label="Default select example"
+                    required
+                  >
+                    <option value="0">Elija una opción</option>
+                    <option
+                      *ngFor="let objTipoDependencia of arregloTiposDependencia"
+                      value="{{ objTipoDependencia.codTipoDependencia }}"
+                    >
+                      {{ objTipoDependencia.nombreTipoDependencia }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tiulo-encuesta">
+            <textarea
+              class="descripcion-formulario"
+              placeholder="Descripción del formulario"
+              id="descripcion"
+              name="descripcion"
+              [(ngModel)]="objEncuesta.descripcionEncuesta"
+              #descripcion="ngModel"
+              [ngClass]="{
+                'is-invalid': frmCrearEncuesta.submitted && descripcion.invalid
+              }"
+              required
+            ></textarea>
+          </div>
+          <div
+            class="text-danger"
+            *ngIf="frmCrearEncuesta.submitted && descripcion.invalid"
+          >
+            <span *ngIf="descripcion.errors?.['required']"
+              >Campo obligatorio</span
+            >
+          </div>
+          <br />
+          <div class="row mb-3 tipo-pregunta">
+            <div class="col-5">
+              <div class="form-floating mb-3 mb-md-0">
+                <div class="input-group mb-2 mr-sm-2 tipo-pregunta">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">Tipo de pregunta</div>
+                  </div>
+                  <select
+                    class="form-control"
+                    name="tipo_pregunta"
+                    [(ngModel)]="objPregunta.codTipoPregunta"
+                    #tipo_pregunta="ngModel"
+                    aria-label="Default select example"
+                    [ngClass]="{
+                      'is-invalid':
+                        frmCrearEncuesta.submitted && tipo_pregunta.invalid
+                    }"
+                    required
+                  >
+                    <option value="0">Elija una opción</option>
+                    <option
+                      *ngFor="let objTipoPregunta of arregloTipoPreguntas"
+                      value="{{ objTipoPregunta.codTipoPregunta }}"
+                    >
+                      {{ objTipoPregunta.nombreTipoPregunta }}
+                    </option></select
+                  >&nbsp;&nbsp;
+                  <i
+                    class="fa fa-circle-plus fa-2x"
+                    title="Agregar pregunta"
+                    (click)="listarPreguntas(objPregunta.codTipoPregunta)"
+                  ></i>
+                  <div
+                    class="text-danger"
+                    *ngIf="frmCrearEncuesta.submitted && tipo_pregunta.invalid"
+                  >
+                    <span *ngIf="descripcion.errors?.['required']"
+                      >Campo obligatorio</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--///////////////////////////////////Seccion de preguntas y respuestas///////////////////////////////-->
+      <div *ngFor="let objPreguntita of pregunt">
+        <!--Pregunta y respuesta abierta-->
+        <div
+          *ngIf="objPreguntita == 2"
+          class="card mb-4 seccion-preguntas"
+          id="pregunta"
+          [(ngModel)]="objPregunta.codTipoPregunta"
+        >
+          <i
+            class="fas fa-trash-can"
+            title="Eliminar pregunta"
+            appOcultarComponente
+            idPregunta="pregunta"
+          ></i>
+          <div class="form-floating">
+            <textarea
+              class="pregunta"
+              placeholder="Pregunta"
+              id="floatingTextarea2"
+              name="abierta"
+              [(ngModel)]="objPregunta.descripcionPregunta"
+              #abierta="ngModel"
+              [ngClass]="{
+                'is-invalid': frmCrearEncuesta.submitted && abierta.invalid
+              }"
+              required
+            ></textarea>
+            <div
+              class="text-danger"
+              *ngIf="frmCrearEncuesta.submitted && abierta.invalid"
+            >
+              <span *ngIf="descripcion.errors?.['required']"
+                >Campo obligatorio</span
+              >
+            </div>
+          </div>
+          <div>
+            <textarea
+              placeholder="Escriba aquí su respuesta"
+              class="respuesta-abierta"
+            >
+            </textarea>
+          </div>
+        </div>
+        <!--Pregunta y respuesta de fecha-->
+        <div
+          *ngIf="objPreguntita == 1"
+          class="card mb-4 seccion-preguntas"
+          id="pregunta"
+        >
+          <i
+            class="fas fa-trash-can"
+            title="Eliminar pregunta"
+            appOcultarComponente
+            idPregunta="pregunta"
+          ></i>
+          <div class="form-floating">
+            <textarea
+              class="pregunta"
+              placeholder="Pregunta"
+              id="floatingTextarea2"
+              name="fecha"
+              [(ngModel)]="objPregunta.descripcionPregunta"
+              #fecha="ngModel"
+              [ngClass]="{
+                'is-invalid': frmCrearEncuesta.submitted && fecha.invalid
+              }"
+              required
+            ></textarea>
+            <div
+              class="text-danger"
+              *ngIf="frmCrearEncuesta.submitted && fecha.invalid"
+            >
+              <span *ngIf="descripcion.errors?.['required']"
+                >Campo obligatorio</span
+              >
+            </div>
+          </div>
+          <br />
+          <div>
+            <input
+              class="fecha-encuesta"
+              type="date"
+              id="fecha_cierre"
+              name="fecha_cierre"
+              min="2022-01-01"
+              max="2040-12-31"
+              required
+            />
+          </div>
+        </div>
+
+        <!--Pregunta y respuesta de selección multiple-->
+        <div
+          *ngIf="objPreguntita == 3"
+          class="card mb-4 seccion-preguntas"
+          id="pregunta"
+
+        >
+          <i
+            class="fas fa-trash-can"
+            title="Eliminar pregunta"
+            appOcultarComponente
+            idPregunta="pregunta"
+          ></i>
+          <div class="form-floating">
+            <textarea
+              class="pregunta"
+              placeholder="Pregunta"
+              id="floatingTextarea2"
+              name="opcioness"
+              [(ngModel)]="objPregunta.descripcionPregunta"
+              #opcioness="ngModel"
+              [ngClass]="{
+                'is-invalid': frmCrearEncuesta.submitted && opcioness.invalid
+              }"
+              required
+            ></textarea>
+            <div
+              class="text-danger"
+              *ngIf="frmCrearEncuesta.submitted && opcioness.invalid"
+            >
+              <span *ngIf="opcioness.errors?.['required']"
+                >Campo obligatorio</span
+              >
+            </div>
+          </div>
+          <div class="row" id="opcion" *ngFor="let objOpcion of opciones">
+            <div class="col-md-9 custom-control custom-radio">
+              <input
+                type="radio"
+                name="customRadio"
+                class="custom-control-input"
+              />&nbsp;
+              <input
+                type="text"
+                class="custom-control-label"
+                for="customRadio1"
+                placeholder="{{ objOpcion.placeholder }}"
+              />
+            </div>
+            <div
+              class="col-md-3 custom-control custom-radio"
+            >
+              <i
+              *ngIf="objOpcion.id!=1"
+                class="fas fa-xmark"
+                title="Eliminar opción"
+                tooltip-dir="left"
+                (click)="eliminarOpciones(objOpcion.id)"
+              ></i>
+            </div>
+            <br />
+            <br />
+            <span
+              (click)="agregarOpciones(objOpcion.opcion)"
+              class="otra-opcion"
+              >Añadir otra opción</span
+            >
+          </div>
+        </div>
+
+        <!--Pregunta y respuesta de escala-->
+        <div
+          class="card mb-4 seccion-preguntas"
+          *ngIf="objPreguntita == 4"
+          id="pregunta"
+        >
+          <i
+            class="fas fa-trash-can"
+            title="Eliminar pregunta"
+            appOcultarComponente
+            idPregunta="pregunta"
+          ></i>
+          <div class="form-floating">
+            <textarea
+              class="pregunta"
+              placeholder="Pregunta"
+              id="floatingTextarea2"
+              name="escala"
+              [(ngModel)]="objPregunta.descripcionPregunta"
+              #escala="ngModel"
+              [ngClass]="{
+                'is-invalid': frmCrearEncuesta.submitted && escala.invalid
+              }"
+              required
+            ></textarea>
+            <div
+              class="text-danger"
+              *ngIf="frmCrearEncuesta.submitted && escala.invalid"
+            >
+              <span *ngIf="escala.errors?.['required']">Campo obligatorio</span>
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col-md-9">
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="inlineRadioOptions"
+                  id="inlineRadio1"
+                  value="option1"
+                />
+                <label class="form-check-label" for="inlineRadio1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="inlineRadioOptions"
+                  id="inlineRadio2"
+                  value="option2"
+                />
+                <label class="form-check-label" for="inlineRadio2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="inlineRadioOptions"
+                  id="inlineRadio3"
+                  value="option3"
+                />
+                <label class="form-check-label" for="inlineRadio3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="inlineRadioOptions"
+                  id="inlineRadio4"
+                  value="option4"
+                />
+                <label class="form-check-label" for="inlineRadio4">4</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="inlineRadioOptions"
+                  id="inlineRadio5"
+                  value="option5"
+                />
+                <label class="form-check-label" for="inlineRadio4">5</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p style="text-align: center; margin-bottom: 10px">
+        <button type="submit" class="btn btn-primary crear">
+          Crear encuesta
+        </button>
+      </p>
+    </form>
+  </div>
+</main>

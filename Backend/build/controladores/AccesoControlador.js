@@ -22,6 +22,20 @@ class AccesoControlador extends AccesoDAO_1.default {
         ];
         AccesoControlador.crearElUsuario(RegistrarUsuario_sql_1.SQL_REG_USU.EXISTE_CORREO, RegistrarUsuario_sql_1.SQL_REG_USU.AGREGAR_USUARIO, RegistrarUsuario_sql_1.SQL_REG_USU.AGREGAR_ACCESO, RegistrarUsuario_sql_1.SQL_REG_USU.AGREGAR_INGRESO, RegistrarUsuario_sql_1.SQL_REG_USU.TODO_LISTO, parametros, res);
     }
+    buscarUnAcceso(req, res) {
+        const codUsu = req.params.codUsuario;
+        const losParametros = [codUsu];
+        AccesoControlador.obtenerUnAcceso(Acceso_sql_1.SQL_ACCESO.BUSCAR, losParametros, res);
+    }
+    actualizarAcceso(req, res) {
+        const codUsu = req.params.codUsuario;
+        const misParametros = [
+            codUsu,
+            req.body.correoAcceso,
+            req.body.claveAcceso,
+        ];
+        AccesoControlador.actualizarAcceso(Acceso_sql_1.SQL_ACCESO.MODIFICAR, misParametros, res);
+    }
 }
 const accesoControlador = new AccesoControlador();
 exports.default = accesoControlador;

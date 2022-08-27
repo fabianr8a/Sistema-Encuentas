@@ -1,0 +1,11 @@
+.input-group-text{
+    width: 179px;
+}
+.text_input{
+    background-color: rgba(17, 17, 17, 0.116);
+}
+.foto_usuario{
+    width: 20%; height: 20%;
+    display: block;
+    margin: 0px auto;
+}

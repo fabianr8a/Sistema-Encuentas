@@ -91,6 +91,7 @@ ng g c modulos/privado/rol/rolListar --skip-tests=true
 ng g c modulos/privado/encuestas/encuestaCrear --skip-tests=true
 ng g c modulos/privado/encuestas/encuestaEditar --skip-tests=true
 ng g c modulos/privado/encuestas/encuestaListar --skip-tests=true
+ng g c modulos/privado/encuestas/crearPregunta --skip-tests=true
 
 ng g c modulos/privado/estudiante/encuestas/responderEncuesta --skip-tests=true
 ng g c modulos/privado/estudiante/encuestas/listarEncuestas --skip-tests=true

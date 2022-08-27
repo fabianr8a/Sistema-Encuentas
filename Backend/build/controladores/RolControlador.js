@@ -12,7 +12,6 @@ class RolControlador extends RolDAO_1.default {
     buscarRoles(req, res) {
         const buscar = req.body.nombreRol;
         const miParametro = [buscar];
-        console.log(req.body, 'este es el buscar');
         if (buscar === '') {
             RolControlador.obtenerTodos(Roles_sql_1.SQL_ROL.TODOS, req, res);
         }
@@ -40,11 +39,13 @@ class RolControlador extends RolDAO_1.default {
     buscarUnosRoles(req, res) {
         const buscarRol = req.params.codRol;
         const miParametro = [buscarRol];
-        console.log(req.body, 'este es el buscar');
         if (!buscarRol) {
             return res.status(400).json({ 'Error': 'No se encontro un parametro' });
         }
         RolControlador.buscarUnRolModificar(Roles_sql_1.SQL_ROL.BUSCAR_ROL_MODIFICAR, miParametro, res);
+    }
+    buscarNombreRoles(req, res) {
+        RolControlador.obtenerNombresRol(Roles_sql_1.SQL_ROL.BUSCAR_ROL, req, res);
     }
 }
 const rolControlador = new RolControlador();

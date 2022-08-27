@@ -2,12 +2,12 @@ import {Observer} from 'rxjs';
 
 export const observadorAny: Observer<any> ={
   next(respuesta){
-    console.log(respuesta);
+    /* console.log(respuesta); */
   },
   error(miError){
-    console.log(miError);
+    /* console.log(miError); */
   },
   complete(){
-    console.log('Completo todo');
+    /* console.log('Completo todo'); */
   }
 }

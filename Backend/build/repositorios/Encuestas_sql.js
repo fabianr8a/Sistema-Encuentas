@@ -2,28 +2,23 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SQL_ENCUESTA = void 0;
 exports.SQL_ENCUESTA = {
-    LISTAR: 'select  e.nombre_encuesta, e.fecha_creacion_encuesta, tdepen.nombre_tipo_dependencia, te.nombre_tipo_evento  from dependencias depen \
+    LISTAR: 'select e.cod_encuesta, e.descripcion_encuesta, e.nombre_encuesta, \
+  to_char(e.fecha_creacion_encuesta::date,\'dd/mm/yyyy\') as fecha_creacion_encuesta ,e.fecha_cierre_encuesta, te.nombre_tipo_evento  from tipo_eventos te \
   inner join encuestas e \
-  on e.cod_dependencia = depen.cod_dependencia \
-  inner join tipo_dependencias tdepen \
-  on depen.cod_dependencia = tdepen.cod_dependencia \
-  inner join encuestas \
-  on tdepen.cod_tipo_dependencia = encuestas.cod_tipo_dependencia \
-  inner join tipo_eventos te \
-  on te.cod_tipo_evento = e.cod_tipo_evento',
-    LISTAR_EVENTOS: 'SELECT cod_tipo_evento, nombre_tipo_evento \
-  	FROM tipo_eventos;',
-    CREAR: 'INSERT INTO roles(nombre_rol, estado_rol) VALUES ($1, 1) RETURNING cod_rol',
-    MODIFICAR: 'UPDATE roles SET nombre_rol=$2, estado_rol=$3 WHERE cod_rol=$1;',
-    BUSCAR_ROL_MODIFICAR: 'select * from roles where cod_rol=$1',
-    BUSCAR: 'select  e.nombre_encuesta, e.fecha_creacion_encuesta, tdepen.nombre_tipo_dependencia, te.nombre_tipo_evento  from dependencias depen \
-  inner join encuestas e \
-  on e.cod_dependencia = depen.cod_dependencia \
-  inner join tipo_dependencias tdepen \
-  on depen.cod_dependencia = tdepen.cod_dependencia \
-  inner join encuestas \
-  on tdepen.cod_tipo_dependencia = encuestas.cod_tipo_dependencia \
-  inner join tipo_eventos te \
   on te.cod_tipo_evento = e.cod_tipo_evento \
-  where e.nombre_encuesta like $1'
+  order by e.fecha_creacion_encuesta DESC',
+    LISTAR_EVENTOS: 'SELECT * FROM tipo_eventos',
+    LISTAR_TIPO_PREGUNTAS: 'select * from tipo_preguntas',
+    LISTAR_DEPENDENCIAS: 'select * from dependencias',
+    LISTAR_TIPO_DEPENDENCIAS: 'select * from tipo_dependencias \
+  where cod_dependencia =$1',
+    CREAR_ENCUESTA: 'INSERT INTO encuestas(cod_dependencia, cod_tipo_evento, nombre_encuesta, descripcion_encuesta, fecha_creacion_encuesta, fecha_cierre_encuesta) \
+	VALUES ($1, $2, $3, $4, $5, $6) RETURNING cod_encuesta',
+    CREAR_PREGUNTAS: 'INSERT INTO preguntas(cod_tipo_pregunta, cod_encuesta, descripcion_pregunta) \
+	VALUES ($1,$2,$3) RETURNING cod_pregunta',
+    SELECCIONAR_ENCUESTA_MODIFICAR: 'SELECT cod_encuesta, cod_dependencia, cod_tipo_evento, nombre_encuesta,\
+   descripcion_encuesta,  to_char(fecha_creacion_encuesta::date,\'yyyy-MM-dd\') as fecha_creacion_encuesta, \
+  to_char(fecha_cierre_encuesta::date,\'yyyy-MM-dd\') as fecha_cierre_encuesta FROM encuestas where cod_encuesta=$1;',
+    MODIFICAR_ENCUESTA: 'UPDATE encuestas SET cod_dependencia=$2, cod_tipo_evento=$3, nombre_encuesta=$4, descripcion_encuesta=$5, fecha_creacion_encuesta=$6, fecha_cierre_encuesta=$7\
+  WHERE cod_encuesta=$1',
 };

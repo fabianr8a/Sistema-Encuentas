@@ -15,8 +15,18 @@ class EncuestaRutas {
         this.miRutaEncuesta.get('/getAll', EncuestaControlador_1.default.listarEncuestas);
         //obtener tipo de eventos
         this.miRutaEncuesta.get('/eventos', EncuestaControlador_1.default.listarEventos);
-        //buscar una encuesta
-        this.miRutaEncuesta.post('/buscar', EncuestaControlador_1.default.buscarEncuestas);
+        //obtener tipo de preguntas
+        this.miRutaEncuesta.get('/tipoPreguntas', EncuestaControlador_1.default.listarTipoPreguntas);
+        //obtener dependencias
+        this.miRutaEncuesta.get('/dependencias', EncuestaControlador_1.default.listarDependencias);
+        //obtener tipo dependencias
+        this.miRutaEncuesta.get('/tipoDependencias/:codDependencia', EncuestaControlador_1.default.listarTiposDependencia);
+        //crear encuestas
+        this.miRutaEncuesta.post('/crear', EncuestaControlador_1.default.crearEncuesta);
+        //seleccionar encuesta para modificar
+        this.miRutaEncuesta.get('/encuestas/:codEncuesta', EncuestaControlador_1.default.seleccionarEncuestaModificar);
+        //modificar encuesta
+        this.miRutaEncuesta.put('/modificar/:codEncuesta', EncuestaControlador_1.default.modificarEncuesta);
     }
 }
 const encuestaRutas = new EncuestaRutas();

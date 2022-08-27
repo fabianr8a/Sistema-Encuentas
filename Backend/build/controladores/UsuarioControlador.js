@@ -5,13 +5,52 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const UsuarioDAO_1 = __importDefault(require("../daos/UsuarioDAO"));
 const Usuario_sql_1 = require("../repositorios/Usuario_sql");
-const CrearUsuario_sql_1 = require("../repositorios/CrearUsuario_sql");
+const RegistrarUsuario_sql_1 = require("../repositorios/RegistrarUsuario_sql");
 class UsuarioControlador extends UsuarioDAO_1.default {
-
-    obtenerTodosLosUsuarios(req, res) {
-        UsuarioControlador.obtenerTodosUsuarios(Usuario_sql_1.SQL_USUARIO.LISTAR, req, res);
+    obtenerTodosUsuario(req, res) {
+        UsuarioControlador.obtenerTodosUsu(Usuario_sql_1.SQL_USUARIO.TODOS, req, res);
     }
-  
+    buscarUsuario(req, res) {
+        const buscar = req.body.nombresUsuario;
+        const miParametro = [buscar];
+        if (buscar === '') {
+            UsuarioControlador.obtenerTodosUsu(Usuario_sql_1.SQL_USUARIO.TODOS, req, res);
+        }
+        else {
+            UsuarioControlador.buscarUsuario(Usuario_sql_1.SQL_USUARIO.BUSCAR, miParametro, res);
+        }
+    }
+    crearUsuario(req, res) {
+        const misParametros = [
+            req.body.codRol,
+            req.body.documentoUsuario,
+            req.body.tipoDocumentoUsuario,
+            req.body.nombresUsuario,
+            req.body.apellidosUsuario,
+            req.body.telefonoUsuario,
+            req.body.correoAcceso,
+            req.body.claveUsuario,
+        ];
+        UsuarioControlador.crearUsuario(RegistrarUsuario_sql_1.SQL_REG_USU.EXISTE_CORREO, Usuario_sql_1.SQL_USUARIO.CREAR, RegistrarUsuario_sql_1.SQL_REG_USU.AGREGAR_ACCESO, RegistrarUsuario_sql_1.SQL_REG_USU.TODO_LISTO, misParametros, res);
+    }
+    actualizarUsuario(req, res) {
+        const misParametros = [
+            req.body.codRol,
+            req.body.documentoUsuario,
+            req.body.tipoDocumentoUsuario,
+            req.body.nombresUsuario,
+            req.body.apellidosUsuario,
+            req.body.telefonoUsuario,
+            req.body.estadoUsuario,
+            req.body.codUsuario
+        ];
+        UsuarioControlador.actualizarUsuario(Usuario_sql_1.SQL_USUARIO.MODIFICAR, misParametros, res);
+    }
+    buscarUnUsuario(req, res) {
+        const codUsu = req.params.codUsuario;
+        const losParametros = [codUsu];
+        UsuarioControlador.buscarUnUsuario(Usuario_sql_1.SQL_USUARIO.BUSCAR_USUARIO, losParametros, res);
+    }
 }
 const usuarioControlador = new UsuarioControlador();
 exports.default = usuarioControlador;

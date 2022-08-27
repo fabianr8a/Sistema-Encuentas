@@ -22,6 +22,7 @@ export class InicioComponent implements OnInit, OnDestroy {
   public temporal: any;
   public usuarioSeleccionado: Acceso;
   public patronCorreo = '^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$';
+  public respuestaToken:Acceso;
 
   //Propiedad de tipo suscripcion
   public miSuscripcion: Subscription;
@@ -31,8 +32,9 @@ export class InicioComponent implements OnInit, OnDestroy {
     public route: ActivatedRoute,
     public accesoService: AccesoService
   ) {
-    this.usuarioSeleccionado = this.inicializarUsuario();
+    this.usuarioSeleccionado = this.inicializarAcceso();
     this.miSuscripcion = this.temporal;
+    this.respuestaToken = this.accesoService.objAcceso;
   }
 
   ngOnDestroy(): void {
@@ -46,66 +48,51 @@ export class InicioComponent implements OnInit, OnDestroy {
   // Métodos obligatorios
   // **********************************************************
 
-  public inicializarUsuario(): Acceso {
-    return new Acceso(0, '', '', '');
+  public inicializarAcceso(): Acceso {
+    return new Acceso(0, '', '', '', 0, 0);
   }
+
 
   // Lógica del negocio
   // **********************************************************
+
 
   public verificarDatos(formulario: NgForm): void {
     const miHashcito = cifrado.sha512(this.usuarioSeleccionado.claveAcceso);
     const correo = this.usuarioSeleccionado.correoAcceso;
     const rol = this.usuarioSeleccionado.nombreRol;
-    const acceso = new Acceso(0, correo, miHashcito, rol);
-
-    this.miSuscripcion = this.accesoService
-      .iniciarSesion(acceso)
-      .pipe(
-        map((resultado: RespuestaAcceso) => {
-          localStorage.setItem(TOKEN_SISTEMA, resultado.tokenFullStack);
-          switch (resultado.nombreRol) {
-            case 'Administrador':
-              this.router.navigate(['/administrador']);
-              break;
-            case 'Docente':
-              this.router.navigate(['/docente']);
-              break;
-            case 'Estudiante':
-              this.router.navigate(['/estudiante']);
-              break;
-            case 'Secretaria':
-              this.router.navigate(['/secretaria']);
-              break;
-            case 'Invitado':
-              this.router.navigate(['/invitado']);
-              break;
-
-            default:
-              break;
-          }
-          mostrarMensaje(
-            'success',
-            'Bienvenido al sistema',
-            'Sesión iniciada',
-            this.toastr
-          );
-          formulario.resetForm();
-          return resultado;
-        }),
-        catchError((miError) => {
-          mostrarMensaje(
-            'error',
-            'Error de autenticación',
-            'Error',
-            this.toastr
-          );
-          console.log(miError);
-          formulario.resetForm();
-          throw miError;
-        })
-      )
-      .subscribe(observadorAny);
+    const estado = this.usuarioSeleccionado.estadoRol;
+    const estadoUsu = this.usuarioSeleccionado.estadoUsuario;
+    console.log(estadoUsu);
+    const acceso = new Acceso(0, correo, miHashcito, rol, estado, estadoUsu);
+      this.miSuscripcion = this.accesoService
+        .iniciarSesion(acceso)
+        .pipe(
+          map((resultado: RespuestaAcceso) => {
+            localStorage.setItem(TOKEN_SISTEMA, resultado.tokenFullStack);
+            this.router.navigate(['/private/inicio-dash']);
+            mostrarMensaje(
+              'success',
+              'Bienvenido al sistema',
+              'Sesión iniciada',
+              this.toastr
+            );
+            formulario.resetForm();
+            return resultado;
+          }),
+          catchError((miError) => {
+            mostrarMensaje(
+              'error',
+              'Error de autenticación',
+              'Error',
+              this.toastr
+            );
+            console.log(miError);
+            formulario.resetForm();
+            throw miError;
+          })
+        )
+        .subscribe(observadorAny);
   }
 
   public opcionCancelar(): void {

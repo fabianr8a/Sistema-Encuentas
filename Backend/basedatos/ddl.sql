@@ -79,7 +79,6 @@ alter table roles owner to user_encuestas;
 CREATE TABLE encuestas(
 cod_encuesta SERIAL NOT NULL,
 cod_dependencia int not null,
-cod_tipo_dependencia int not null,
 cod_tipo_evento int not null,
 nombre_encuesta varchar(200) not null,
 fecha_creacion_encuesta DATE not null,
@@ -128,7 +127,7 @@ alter table preguntas owner to user_encuestas;
 CREATE TABLE tipo_preguntas(
 cod_tipo_pregunta SERIAL NOT NULL,
 nombre_tipo_pregunta varchar(100) not null,
-constraint pk_tipo_preguntas primary key (cod_tipo_preguntas)
+constraint pk_tipo_preguntas primary key (cod_tipo_pregunta)
 );
 
 alter table tipo_preguntas owner to user_encuestas;
@@ -169,7 +168,7 @@ on delete restrict on update cascade;
 
 alter table usuarios
 add constraint fk_usuarios_ref_roles foreign key (cod_rol)
-references roles (cod_rol)
+references roles (cod_rol),
 add constraint fk_usuarios_ref_imagenes foreign key (cod_imagen)
 references imagenes (cod_imagen)
 on delete restrict on update cascade;
@@ -178,14 +177,12 @@ alter table asignados
 add constraint fk_asignados_ref_usuarios foreign key (cod_usuario)
 references usuarios (cod_usuario),
 add constraint fk_asignados_ref_encuestas foreign key (cod_encuesta)
-references encuestas (cod_encuesta),
+references encuestas (cod_encuesta)
 on delete restrict on update cascade;
 
 alter table encuestas
 add constraint fk_encuestas_ref_dependencias foreign key (cod_dependencia)
 references dependencias (cod_dependencia),
-add constraint fk_encuestas_ref_tipo_dependencias foreign key (cod_tipo_dependencia)
-references tipo_dependencias (cod_tipo_dependencia),
 add constraint fk_encuestas_ref_tipo_eventos foreign key (cod_tipo_evento)
 references tipo_eventos (cod_tipo_evento)
 on delete restrict on update cascade;
@@ -196,10 +193,10 @@ references dependencias (cod_dependencia)
 on delete restrict on update cascade;
 
 alter table preguntas
-add constraint fk_preguntas_ref_encuestas foreign key (cod_encuesta)
-references encuestas (cod_encuesta),
 add constraint fk_preguntas_ref_tipo_pregunta foreign key (cod_tipo_pregunta)
-references tipo_preguntas (cod_tipo_pregunta)
+references tipo_preguntas (cod_tipo_pregunta),
+add constraint fk_preguntas_ref_encuestas foreign key (cod_encuesta)
+references encuestas (cod_encuesta)
 on delete restrict on update cascade;
 
 alter table opciones

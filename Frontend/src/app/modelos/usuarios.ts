@@ -1,9 +1,10 @@
 export class Usuarios {
   public codUsuario: number;
+  public codRol: number;
   public nombresUsuario: string;
   public documentoUsuario:string;
   public apellidosUsuario: string;
-  public correoUsuario:string;
+  public correoAcceso:string;
   public nombreRol:string;
   public telefonoUsuario:string;
   public estadoUsuario:number;
@@ -14,6 +15,7 @@ export class Usuarios {
 
   constructor(
     cod:number,
+    codiRol: number,
     doc:string,
     nomUsu:string,
     apeUsu:string,
@@ -28,10 +30,11 @@ export class Usuarios {
 
   ){
     this.codUsuario=cod;
+    this.codRol = codiRol;
     this.documentoUsuario=doc;
     this.nombresUsuario=nomUsu;
     this.apellidosUsuario=apeUsu;
-    this.correoUsuario=correoUsu;
+    this.correoAcceso=correoUsu;
     this.telefonoUsuario=teleUsu;
     this.claveUsuario=clave;
     this.reclaveUsuario=reclave;

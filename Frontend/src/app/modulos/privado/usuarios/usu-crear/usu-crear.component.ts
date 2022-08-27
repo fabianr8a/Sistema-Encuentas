@@ -1,0 +1,128 @@
+import { Usuarios } from '../../../../modelos/usuarios';
+import { NgForm } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { Imagen } from 'src/app/modelos/imagen';
+import { catchError, finalize, map, Subscription } from 'rxjs';
+import { mostrarMensaje } from 'src/app/utilidades/mensajes/toas.func';
+import * as miEncriptado from 'js-sha512';
+import { observadorAny } from 'src/app/utilidades/observadores/tipo-any';
+import { TOKEN_SISTEMA } from 'src/app/utilidades/dominios/sesiones';
+import { UsuarioService } from 'src/app/servicios/usuario.service';
+import { Acceso } from 'src/app/modelos/acceso';
+import { Rol } from 'src/app/modelos/rol';
+
+@Component({
+  selector: 'app-usu-crear',
+  templateUrl: './usu-crear.component.html',
+  styleUrls: ['./usu-crear.component.css'],
+})
+export class UsuCrearComponent implements OnInit {
+
+  tipoDocumentos = [
+    {id: 1 ,nombre: 'Cédula de Ciudadanía'},
+    {id: 2 ,nombre: 'Tarjeta de Identidad'},
+    {id: 3 ,nombre: 'Tarjeta Extranjería'},
+    {id: 4 ,nombre: 'Pasaporte Nacional'},
+    {id: 5 ,nombre: 'Tarjeta Residente'},
+    {id: 6 ,nombre: 'Registro Civil'},
+  ];
+
+  public tmpBase64: any;
+  public temporal: any;
+  public objUsuario: Usuarios;
+  public objAcceso: Acceso;
+  public arregloRoles: Rol[];
+  public miSuscripcionUsu: Subscription;
+  public cargaFinalizada: boolean;
+
+  constructor(
+    public toastrService: ToastrService,
+    private usuarioService: UsuarioService
+  ) {
+    this.miSuscripcionUsu = this.temporal;
+    this.objUsuario = this.inicializarUsuario();
+    this.objAcceso = this.inicializarAcceso();
+    this.arregloRoles = [];
+    this.cargaFinalizada = false;
+  }
+
+  ngOnInit(): void {
+    this.obtenerTodosRoles();
+  }
+
+  ngOnDestroy(): void {
+    if (this.miSuscripcionUsu) {
+      this.miSuscripcionUsu.unsubscribe();
+    }
+  }
+
+  //Métodos obligatorios
+  // ****************/
+
+  public inicializarUsuario(): Usuarios {
+    return new Usuarios(0, 0,'','','','','','',0,'','',0,0);
+  }
+
+  public inicializarAcceso():Acceso{
+    return new Acceso(0,'','','',0, 0);
+  }  
+
+  //Lógica del negocio
+
+  public crearUsuario(formulario: NgForm): void {
+    const miHash = miEncriptado.sha512(this.objUsuario.claveUsuario);
+    this.objUsuario.claveUsuario = miHash;
+    this.objUsuario.reclaveUsuario = miHash;
+    const miClon = { ... this.objUsuario };
+    this.miSuscripcionUsu = this.usuarioService
+      .crearUsuarios(miClon)
+      .pipe(
+        map((resultado: any) => {
+          formulario.resetForm();
+          localStorage.setItem(TOKEN_SISTEMA, resultado.tokenFullStack);
+          mostrarMensaje(
+            'success',
+            'Se creó el Usuario',
+            'Exito',
+            this.toastrService
+          );
+        }),
+        catchError((miError) => {
+
+          if(miError.status === 403){
+            mostrarMensaje(
+              'error',
+              'el documento ya existe',
+              'Error',
+              this.toastrService
+            );
+          }else{
+            mostrarMensaje(
+              'error',
+              'No se puede crear el Usuario',
+              'Error',
+              this.toastrService
+            );
+          }
+          formulario.resetForm();
+          throw miError;
+        })
+      )
+      .subscribe(observadorAny);
+  }
+
+  public obtenerTodosRoles(): void {
+    this.miSuscripcionUsu = this.usuarioService
+      .obtenerRol()
+      .pipe(
+        map((resultado: Rol[]) => {
+          this.arregloRoles = resultado;
+        }),
+        finalize(() => {
+          this.cargaFinalizada = true;
+        })
+      )
+      .subscribe(observadorAny);
+  }
+}

@@ -124,7 +124,7 @@
                                   >
                                 </div>
                                 <input
-                                  type="text"
+                                  type="number"
                                   class="form-control"
                                   id="doc"
                                   name="doc"
@@ -137,14 +137,13 @@
                                   }"
                                 />
                               </div>
-                              <span
-                                class="text-danger"
-                                *ngIf="frmRegistrar.submitted && doc.invalid"
-                              >
-                                <span *ngIf="doc.errors?.['required']">
-                                  Número de documento obligatorio
-                                </span>
-                              </span>
+                              <div
+                              class="text-danger"
+                              *ngIf="frmRegistrar.submitted && doc.invalid"
+                            >
+                              <span class="numero_doc" *ngIf="doc.errors?.['required']">
+                                Número de documento obligatorio</span>
+                            </div>
                             </div>
                           </div>
                         </div>
@@ -167,7 +166,7 @@
                                   id="cor"
                                   name="cor"
                                   required
-                                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"
+                                  [pattern]="patronCorreo"
                                   [(ngModel)]="objRegistro.correoRegistro"
                                   #cor="ngModel"
                                   [ngClass]="{
@@ -183,6 +182,9 @@
                                 <span *ngIf="cor.errors?.['required']">
                                   Correo obligatorio
                                 </span>
+                                <span class="correo-invalido" *ngIf="cor.errors?.['pattern']"
+                            >Correo inválido</span
+                          >
                               </span>
                             </div>
                           </div>

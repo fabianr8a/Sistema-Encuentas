@@ -2,6 +2,22 @@
   width: 179px;
 }
 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] { -moz-appearance:textfield; }
+
+.numero_doc{
+  margin-left: 18%;
+}
+
+.correo-invalido{
+  margin-left: -10%;
+}
+
 .user-edit>img {
   max-width: 100%;
 }

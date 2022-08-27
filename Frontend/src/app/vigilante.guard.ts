@@ -11,7 +11,7 @@ export class VigilanteGuard implements CanActivate {
     if (this.accesoService.verificarUsuario()) {
       return true;
     }
-    this.router.navigate(['/public/login']);
+    this.router.navigate(['/land/public/login']);
     return false;
   }
 }

@@ -28,6 +28,24 @@ class AccesoControlador extends AccesoDAO {
       parametros, res);
   }
 
+  public buscarUnAcceso(req: Request, res: Response) {
+    const codUsu = req.params.codUsuario;
+    const losParametros = [codUsu];
+    AccesoControlador.obtenerUnAcceso(
+      SQL_ACCESO.BUSCAR, losParametros, res);
+  }
+
+  public actualizarAcceso(req: Request, res: Response) {
+    const codUsu = req.params.codUsuario;
+    const misParametros = [
+      codUsu,
+      req.body.correoAcceso,
+      req.body.claveAcceso,
+    ];
+      AccesoControlador.actualizarAcceso(SQL_ACCESO.MODIFICAR,
+      misParametros, res);
+  }
+
 }
 const accesoControlador = new AccesoControlador();
 export default accesoControlador;

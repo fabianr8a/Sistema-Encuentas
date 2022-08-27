@@ -1,6 +1,6 @@
 export default {
   user: 'user_encuestas',
-  password: 'melissa123',
+  password: '12345',
   host: 'localhost',
   port: 5432,
   database: 'bd_sistemaencuestas'

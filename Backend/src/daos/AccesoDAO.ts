@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { Response } from 'express';
 import pool from '../configuracion/conexion/conexionBd';
-import { nanoid } from 'nanoid';
 
 class AccesoDAO {
 
@@ -15,7 +14,12 @@ class AccesoDAO {
         res.status(400).json({ msg: 'Usuario no encontrado' });
       } else {
         const miTokencito = jwt.sign({ datos: arreglo, alg: 'HS256', typ: 'JWT' }, 'LaClaveSuperSecreta');
-        res.status(200).json({ tokenFullStack: miTokencito, nombreRol: arreglo[0].nombreRol, estadoRol:arreglo[0].estadoRol});
+        res.status(200).json({
+          tokenFullStack: miTokencito,
+          nombreRol: arreglo[0].nombreRol,
+          estadoRol:arreglo[0].estadoRol,
+          estadoUsuario:arreglo[0].estadoUsuario
+        });
       }
     })
       .catch((miError) => {
@@ -74,6 +78,33 @@ class AccesoDAO {
           console.log(miError);
           res.status(400).json({ msg: 'Error en la creación del usuario' });
         }
+      });
+  }
+
+  protected static async obtenerUnAcceso(sqlBuscar: string, parametro: any, res: Response): Promise<any> {
+    await pool.result(sqlBuscar, parametro)
+      .then((resultado: any) => {
+        const arreglo = resultado.rows;
+        if(arreglo.length != 0){
+          res.status(200).json(arreglo[0]);
+        } else {
+          res.status(400).json({ respuesta: 'Error buscando el Acceso' })
+        }
+      })
+      .catch((miError: any) => {
+        console.log(miError);
+        res.status(400).json({ respuesta: 'Error buscando el Acceso' });
+      });
+  }
+
+  protected static async actualizarAcceso(sqlBuscar: string, parametros: any, res: Response): Promise<any> {
+    await pool.oneOrNone(sqlBuscar, parametros)
+      .then((resultado: any) => {
+        res.status(200).json(resultado);
+      })
+      .catch((miError: any) => {
+        console.log(miError);
+        res.status(400).json({ respuesta: 'Error al actualizar el Acceso' });
       });
   }
 }

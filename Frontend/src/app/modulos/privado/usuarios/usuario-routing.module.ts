@@ -10,9 +10,8 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   { path: 'listar-usuario', component: UsuListarComponent  },
   { path: 'crear-usuario', component: UsuCrearComponent  },
-
-
-
+  { path: 'editar-usuario/:codUsuario', component: UsuEditarComponent  },
+  { path: 'perfil-usuario/:codUsuario', component: UsuDatosComponent  },
 
   { path: '', redirectTo: 'listar-usuario', pathMatch: 'full' },
   { path: '**', component: ErrorDashComponent },

@@ -44,6 +44,9 @@ class RolControlador extends RolDAO_1.default {
         }
         RolControlador.buscarUnRolModificar(Roles_sql_1.SQL_ROL.BUSCAR_ROL_MODIFICAR, miParametro, res);
     }
+    buscarNombreRoles(req, res) {
+        RolControlador.obtenerNombresRol(Roles_sql_1.SQL_ROL.BUSCAR_ROL, req, res);
+    }
 }
 const rolControlador = new RolControlador();
 exports.default = rolControlador;

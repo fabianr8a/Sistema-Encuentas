@@ -127,7 +127,7 @@ alter table preguntas owner to user_encuestas;
 CREATE TABLE tipo_preguntas(
 cod_tipo_pregunta SERIAL NOT NULL,
 nombre_tipo_pregunta varchar(100) not null,
-constraint pk_tipo_preguntas primary key (cod_tipo_preguntas)
+constraint pk_tipo_preguntas primary key (cod_tipo_pregunta)
 );
 
 alter table tipo_preguntas owner to user_encuestas;
@@ -168,7 +168,7 @@ on delete restrict on update cascade;
 
 alter table usuarios
 add constraint fk_usuarios_ref_roles foreign key (cod_rol)
-references roles (cod_rol)
+references roles (cod_rol),
 add constraint fk_usuarios_ref_imagenes foreign key (cod_imagen)
 references imagenes (cod_imagen)
 on delete restrict on update cascade;
@@ -177,7 +177,7 @@ alter table asignados
 add constraint fk_asignados_ref_usuarios foreign key (cod_usuario)
 references usuarios (cod_usuario),
 add constraint fk_asignados_ref_encuestas foreign key (cod_encuesta)
-references encuestas (cod_encuesta),
+references encuestas (cod_encuesta)
 on delete restrict on update cascade;
 
 alter table encuestas
@@ -194,7 +194,7 @@ on delete restrict on update cascade;
 
 alter table preguntas
 add constraint fk_preguntas_ref_tipo_pregunta foreign key (cod_tipo_pregunta)
-references tipo_preguntas (cod_tipo_pregunta)
+references tipo_preguntas (cod_tipo_pregunta),
 add constraint fk_preguntas_ref_encuestas foreign key (cod_encuesta)
 references encuestas (cod_encuesta)
 on delete restrict on update cascade;

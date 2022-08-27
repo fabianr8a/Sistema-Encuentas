@@ -32,7 +32,7 @@ export class InicioComponent implements OnInit, OnDestroy {
     public route: ActivatedRoute,
     public accesoService: AccesoService
   ) {
-    this.usuarioSeleccionado = this.inicializarUsuario();
+    this.usuarioSeleccionado = this.inicializarAcceso();
     this.miSuscripcion = this.temporal;
     this.respuestaToken = this.accesoService.objAcceso;
   }
@@ -48,9 +48,10 @@ export class InicioComponent implements OnInit, OnDestroy {
   // Métodos obligatorios
   // **********************************************************
 
-  public inicializarUsuario(): Acceso {
-    return new Acceso(0, '', '', '', 0);
+  public inicializarAcceso(): Acceso {
+    return new Acceso(0, '', '', '', 0, 0);
   }
+
 
   // Lógica del negocio
   // **********************************************************
@@ -61,7 +62,9 @@ export class InicioComponent implements OnInit, OnDestroy {
     const correo = this.usuarioSeleccionado.correoAcceso;
     const rol = this.usuarioSeleccionado.nombreRol;
     const estado = this.usuarioSeleccionado.estadoRol;
-    const acceso = new Acceso(0, correo, miHashcito, rol, estado);
+    const estadoUsu = this.usuarioSeleccionado.estadoUsuario;
+    console.log(estadoUsu);
+    const acceso = new Acceso(0, correo, miHashcito, rol, estado, estadoUsu);
       this.miSuscripcion = this.accesoService
         .iniciarSesion(acceso)
         .pipe(

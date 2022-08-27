@@ -4,6 +4,7 @@ import express from 'express';
 
 import rutaAcceso from '../../rutas/AccesoRutas';
 import miRutaRol from '../../rutas/RolRutas';
+import miRutaUsuario from '../../rutas/UsuarioRutas';
 import miRutaEncuesta from '../../rutas/EncuestaRutas';
 
 
@@ -31,6 +32,7 @@ class Servidor {
 
     // Rutas privadas
     this.app.use('/api/private/rol', miRutaRol);
+    this.app.use('/api/private/usuario', miRutaUsuario);
     this.app.use('/api/private/encuesta', miRutaEncuesta);
   }
 

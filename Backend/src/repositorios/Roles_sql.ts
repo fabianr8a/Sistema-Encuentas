@@ -13,9 +13,11 @@ export const SQL_ROL = {
   BUSCAR_ROL_MODIFICAR:'select * from roles where cod_rol=$1 ',
 
   BUSCAR:'select * from \
-(select r.cod_rol, r.nombre_rol, r.estado_rol, \
+  (select r.cod_rol, r.nombre_rol, r.estado_rol, \
   (select count(cod_usuario) from usuarios where cod_rol = r.cod_rol ) as cant_usuarios \
   from roles  as r \
    order by cod_rol) as prueba \
-   where nombre_rol  LIKE $1 '
+   where nombre_rol  LIKE $1 ',
+
+   BUSCAR_ROL:'select * from roles'
 }

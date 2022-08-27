@@ -1,11 +1,10 @@
-
 import { UsuarioService } from 'src/app/servicios/usuario.service';
 import { Component, OnInit } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { Usuarios } from 'src/app/modelos/usuarios';
 import { observadorAny } from 'src/app/utilidades/observadores/tipo-any';
-import { finalize, map, Subscription } from 'rxjs';
+import { catchError, finalize, map, Subscription } from 'rxjs';
 import { ARREGLO_ESTADOS_ROL } from 'src/app/utilidades/dominios/estado';
 
 
@@ -18,6 +17,8 @@ export class UsuListarComponent implements OnInit {
   //Atributos requeridos
   public arregloUsuarios: Usuarios[];
   public arregloEstados: any[];
+  public arregloBuscar: string[];
+  public cadena: string = '';
   public usuario_selec: Usuarios;
   public modalRef: BsModalRef;
   public modalTitle: String;
@@ -44,6 +45,7 @@ export class UsuListarComponent implements OnInit {
 
     //Inicializar atributos requeridos
     this.arregloUsuarios = [];
+    this.arregloBuscar = [];
     this.arregloEstados=ARREGLO_ESTADOS_ROL;
     this.usuario_selec = this.inicializarUsuario();
 
@@ -62,6 +64,7 @@ export class UsuListarComponent implements OnInit {
     this.cantidadMostrar = 0;
     this.cantidadPaginas = 0;
     this.cantidadTotalRegistros = 0;
+    this.cadena = '';
   }
 
   //Metodo paginacion
@@ -76,7 +79,7 @@ export class UsuListarComponent implements OnInit {
 
   //Métodos obligatorios
   public inicializarUsuario(): Usuarios {
-    return new Usuarios(0, '','','','','','',0,'','',0,0);
+    return new Usuarios(0,0,'','','','','','',0,'','',0,0);
   }
 
   ngOnInit(): void {
@@ -97,7 +100,9 @@ export class UsuListarComponent implements OnInit {
       .pipe(
         map((resultado: Usuarios[]) => {
           this.arregloUsuarios = resultado;
-          console.log(this.arregloUsuarios);
+          this.arregloUsuarios.map((usu) => {
+            this.arregloBuscar.push(usu.nombresUsuario);
+          });
         }),
         finalize(() => {
           this.cargaFinalizada = true;

@@ -1,7 +1,7 @@
-export class Imagen {
+class Imagen {
   public codImagen: number;
-  public nombrepublicoImagen: string;
-  public nombreprivadoImagen: string;
+  public nombrePublicoImagen: string;
+  public nombrePrivadoImagen: string;
   public tipoImagen: string;
   public base64: string;
 
@@ -14,9 +14,11 @@ export class Imagen {
     ba64: string,
   ) {
     this.codImagen = cod;
-    this.nombrepublicoImagen = nomPub;
-    this.nombreprivadoImagen = nomPri;
+    this.nombrePublicoImagen = nomPub;
+    this.nombrePrivadoImagen = nomPri;
     this.tipoImagen = tip;
     this.base64 = ba64;
   }
 }
+
+export default Imagen;

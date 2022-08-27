@@ -23,7 +23,7 @@ export class AccesoService {
 
   // Métodos obligatorios
   public inicializarAcceso(): Acceso {
-    return new Acceso(0, '', '', '',0);
+    return new Acceso(0, '', '', '', 0, 0);
   }
 
   public obtenerAcceso(): Acceso {
@@ -54,13 +54,13 @@ export class AccesoService {
         this.objAcceso.nombresUsuario =objetoVerificado.datos[0].nombresUsuario;
         this.objAcceso.apellidosUsuario =objetoVerificado.datos[0].apellidosUsuario;
         this.objAcceso.estadoRol=objetoVerificado.datos[0].estadoRol;
+        this.objAcceso.estadoUsuario = objetoVerificado.datos[0].estadoUsuario;
         return true;
       }
       catch (error) {
         return false;
       }
     }
-
     return false;
   }
 }

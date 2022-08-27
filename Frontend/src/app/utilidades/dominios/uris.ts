@@ -8,6 +8,18 @@ export const API_REGISTRO = API_URL + 'api/public/access/register';
 // Servicios privados
 /*********************Usuarios************/
 export const API_USUARIO = API_URL + 'api/private/usuario/getAll';
+export const API_USUARIO_CREAR = API_URL + 'api/private/usuario/create';
+export const API_USUARIO_BUSCAR = API_URL + 'api/private/usuario/buscar';
+export const API_USUARIO_MODIFICAR = API_URL + 'api/private/usuario/actualizar';
+export const API_USUARIO_MODIFICAR_ACCESO = API_URL + 'api/private/usuario/actualizar-acceso';
+export const API_USUARIO_BUSCAR_USUARIO = API_URL + 'api/private/usuario/buscar-usuario';
+export const API_USUARIO_BUSCAR_ROL = API_URL + 'api/private/usuario/buscar-roles';
+export const API_USUARIO_BUSCAR_ACCESO = API_URL + 'api/private/usuario/buscar-acceso';
+
+
+/*********************Imagenes**************/
+export const API_USUARIO_BUSCAR_IMAGEN = API_URL + 'api/private/usuario/buscar-imagen';
+export const API_USUARIO_MODIFICAR_IMAGEN = API_URL + 'api/private/usuario/actualizar-imagen';
 
 /*********************Roles**************/
 export const API_ROL = API_URL + 'api/private/rol/getAll';

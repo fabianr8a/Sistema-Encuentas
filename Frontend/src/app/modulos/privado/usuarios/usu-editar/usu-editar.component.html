@@ -1,1 +1,363 @@
-<p>usu-editar works!</p>
+<main>
+    <div class="container-fluid px-4">
+        <div class="row">
+            <div class="col-md-6">
+                <h2 style="font-size: 25px; padding-top: 10px">Editar Usuario</h2>
+            </div>
+            <div class="col-md-6" style="padding-right: 15px">
+                <ol class="breadcrumb d-flex justify-content-end" style="background-color: white; margin-top: 11px">
+                    <li class="breadcrumb-item">
+                        <a [routerLink]="['/private/inicio-dash']"><i class="fas fa-home"></i></a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="javascript:void(0)">Administrador</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a [routerLink]="['/private/usuario/listar-usuario']">Listar Usuarios</a>
+                    </li>
+                    <li class="breadcrumb-item active">Editar usuarios</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header" style="background-color: rgba(17, 17, 17, 0.116)">
+                <br />
+            </div>
+            <br />
+
+            <div class="card-body">
+                <form #frmUsuModi="ngForm" (submit)="
+                frmUsuModi.form.valid">
+                    <div class="row-mb-3 form-group" style="border-bottom: 1px solid rgba(0, 0, 0, 0.19)"></div>
+                    <br />
+
+                    <div class="row g-4 align-items-center">
+                        <div class="col-md-5">
+                            <div>
+                                <img class="foto_usuario" [src]="'data:image/png;base64,'+objImagen.base64"
+                                    alt="foto_usuario">
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <h6>{{objUsuario.nombresUsuario + ' ' + objUsuario.apellidosUsuario}}</h6>
+                            <h6>{{objUsuario.documentoUsuario }}</h6>
+                            <h6>{{objUsuario.telefonoUsuario}}</h6>
+                        </div>
+                    </div><br>
+                    <!-- Tabs navs -->
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
+                                type="button" role="tab" aria-controls="home" aria-selected="true">
+                                <i class="fa-solid fa-user"></i>
+                                Información Personal</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
+                                type="button" role="tab" aria-controls="profile" aria-selected="false">
+                                <i class="fa-solid fa-key"></i>
+                                Usuario</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact"
+                                type="button" role="tab" aria-controls="contact" aria-selected="false">
+                                <i class="fa-solid fa-images"></i>
+                                Foto</button>
+                        </li>
+                    </ul>
+                    <!-- Tabs navs -->
+
+                    <!-- Tabs content -->
+                    <div class="tab-content" id="myTabContent">
+                        <!------- Datos Personales ------->
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <br>
+                            <div class="row g-4 align-items-center">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <div class="input-group mb-2 mr-sm-2">
+                                            <div class="input-group-prepend">
+                                                <label for="nomUsu" class="input-group-text"
+                                                    id="text_input">Nombres</label>
+                                            </div>
+                                            <input type="text" class="form-control" id="nom" name="nom"
+                                                [(ngModel)]="objUsuario.nombresUsuario" #nomUsu="ngModel" [ngClass]="{
+                                              'is-invalid': frmUsuModi.submitted && nomUsu.invalid
+                                            }" required />
+                                        </div>
+                                        <span class="text-danger" *ngIf="frmUsuModi.submitted && nomUsu.invalid">
+                                            <span *ngIf="nomUsu?.errors?.['required']">
+                                                Nombre obligatorio
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <div class="input-group mb-2 mr-sm-2">
+                                            <div class="input-group-prepend">
+                                                <label for="apeUsu" class="input-group-text"
+                                                    id="text_input">Apellidos</label>
+                                            </div>
+                                            <input type="text" class="form-control" id="ape" name="ape"
+                                                [(ngModel)]="objUsuario.apellidosUsuario" #apeUsu="ngModel" [ngClass]="{
+                                              'is-invalid': frmUsuModi.submitted && apeUsu.invalid
+                                            }" required />
+                                        </div>
+                                        <span class="text-danger" *ngIf="frmUsuModi.submitted && apeUsu.invalid">
+                                            <span *ngIf="apeUsu?.errors?.['required']">
+                                                Apellidos obligatorios
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!---->
+                            <div class="row g-4 align-items-center">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <div class="input-group mb-2 mr-sm-2">
+                                            <div class="input-group-prepend">
+                                                <label for="docUsu" class="input-group-text"
+                                                    id="text_input">Documento</label>
+                                            </div>
+                                            <input type="text" class="form-control" id="doc" name="doc"
+                                                [(ngModel)]="objUsuario.documentoUsuario" #docUsu="ngModel" [ngClass]="{
+                                              'is-invalid': frmUsuModi.submitted && docUsu.invalid
+                                            }" required />
+                                        </div>
+                                        <span class="text-danger" *ngIf="frmUsuModi.submitted && docUsu.invalid">
+                                            <span *ngIf="docUsu?.errors?.['required']">
+                                                Número de documento obligatorio
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <div class="input-group mb-2 mr-sm-2">
+                                            <div class="input-group-prepend">
+                                                <label for="tipDocUsu" class="input-group-text" id="text_input">Tipo
+                                                    Documento</label>
+                                            </div>
+                                            <select class="form-select" id="tipdoc" name="tipdoc"
+                                                [(ngModel)]="objUsuario.tipoDocumentoUsuario" #tipdoc="ngModel"
+                                                [ngClass]="{'is-invalid': frmUsuModi.submitted && tipdoc.invalid
+                                                    }" required>
+                                                <option *ngFor="let objtipdocument of tipoDocumentos"
+                                                    value="{{objtipdocument.id}}">
+                                                    {{objtipdocument.nombre}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <span class="text-danger" *ngIf="frmUsuModi.submitted && tipdoc.invalid">
+                                            <span *ngIf="tipdoc?.errors?.['required']">
+                                                Tipo de documento obligatorio
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!---->
+                            <div class="row g-4 align-items-center">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <div class="input-group mb-2 mr-sm-2">
+                                            <div class="input-group-prepend">
+                                                <label for="nombreRol" class="input-group-text" id="text_input">Rol
+                                                    Asignado</label>
+                                            </div>
+                                            <select class="form-select" name="nomRol" [(ngModel)]="objUsuario.codRol"
+                                                #nombreRol="ngModel" [ngClass]="{
+                                                'is-invalid': frmUsuModi.submitted && nombreRol.invalid }" required>
+                                                <option *ngFor="let objNomRol of arregloRoles"
+                                                    value="{{objNomRol.codRol}}">
+                                                    {{objNomRol.nombreRol}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <span class="text-danger" *ngIf="frmUsuModi.submitted && nombreRol.invalid">
+                                            <span *ngIf="nombreRol?.errors?.['required']">
+                                                Rol obligatorio
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <div class="input-group mb-2 mr-sm-2">
+                                            <div class="input-group-prepend">
+                                                <label for="telUsu" class="input-group-text"
+                                                    id="text_input">Teléfono</label>
+                                            </div>
+                                            <input type="text" class="form-control" id="tel" name="tel"
+                                                [(ngModel)]="objUsuario.telefonoUsuario" #tel="ngModel" [ngClass]="{
+                                                'is-invalid': frmUsuModi.submitted && tel.invalid
+                                              }" required />
+                                        </div>
+                                        <span class="text-danger" *ngIf="frmUsuModi.submitted && tel.invalid">
+                                            <span *ngIf="tel?.errors?.['required']">
+                                                Teléfono obligatorio
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row g-4 align-items-center">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <div class="input-group mb-2 mr-sm-2">
+                                            <div class="input-group-prepend">
+                                                <label for="telUsu" class="input-group-text"
+                                                    id="text_input">Estado</label>
+                                            </div>
+                                            <select class="form-select" id="estado" name="estado"
+                                                [(ngModel)]="objUsuario.estadoUsuario" #estado="ngModel" [ngClass]="{'is-invalid': frmUsuModi.submitted && estado.invalid
+                                                    }" required>
+                                                <option *ngFor="let objEstados of estados" value="{{objEstados.id}}">
+                                                    {{objEstados.nombre}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <span class="text-danger" *ngIf="frmUsuModi.submitted && estado.invalid">
+                                            <span *ngIf="estado?.errors?.['required']">
+                                                Teléfono obligatorio
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="d-grid gap-2 d-md-block margin-bottom 0" style="text-align: center;">
+                                <button type="button" class="btn btn-primary me-md-2" (click)="modificarUsuario()">
+                                    Actualizar
+                                </button>
+                                <button type="button" class="btn btn-danger"
+                                    [routerLink]="['/private/usuario/listar-usuario']">
+                                    Cancelar
+                                </button>
+                            </div>
+                            <!---->
+                        </div>
+                        <!------- Usuario ------->
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <br>
+                            <div class="row-mb-3 align-items-center">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <div class="input-group mb-2 mr-sm-2">
+                                            <div class="input-group-prepend">
+                                                <label for="corUsu" class="input-group-text"
+                                                    id="text_input">Correo</label>
+                                            </div>
+                                            <input type="text" class="form-control" id="cor" name="cor"
+                                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"
+                                                [(ngModel)]="objAcceso.correoAcceso" #corre="ngModel" [ngClass]="{
+                                                'is-invalid': frmUsuModi.submitted && corre.invalid
+                                              }" required />
+                                        </div>
+                                        <span class="text-danger" *ngIf="frmUsuModi.submitted && corre.invalid">
+                                            <span *ngIf="corre?.errors?.['required']">
+                                                Correo obligatorio
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <div class="input-group mb-2 mr-sm-2">
+                                            <div class="input-group-prepend">
+                                                <label for="clave" class="input-group-text"
+                                                    id="text_input">Contraseña</label>
+                                            </div>
+                                            <input type="password" class="form-control" id="contr" name="contr"
+                                                [(ngModel)]="objAcceso.claveAcceso" #clave="ngModel" [ngClass]="{
+                                                'is-invalid': frmUsuModi.submitted && clave.invalid
+                                              }" required />
+                                        </div>
+                                        <span class="text-danger" *ngIf="frmUsuModi.submitted && clave.invalid">
+                                            <span *ngIf="clave?.errors?.['required']">
+                                                Contraseña obligatorio
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <div class="input-group mb-2 mr-sm-2">
+                                            <div class="input-group-prepend">
+                                                <label for="reclave" class="input-group-text" id="text_input">Confirmar
+                                                    Contraseña</label>
+                                            </div>
+                                            <input type="password" class="form-control" id="cla" name="cla"
+                                                [(ngModel)]="objAcceso.reclaveAcceso" [pattern]="objAcceso.claveAcceso"
+                                                #cla="ngModel" [ngClass]="{'is-invalid':
+                                                        frmUsuModi.submitted && cla.invalid
+                                                      }" required />
+                                        </div>
+                                        <span class="text-danger" *ngIf="frmUsuModi.submitted && cla.invalid">
+                                            <span *ngIf="cla?.errors?.['required']">
+                                                Contraseña obligatoria
+                                            </span>
+                                            <span *ngIf="cla?.errors?.['pattern']">
+                                                Contraseña Diferente
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="d-grid gap-2 d-md-block margin-bottom 0" style="text-align: center;">
+                                    <button type="button" class="btn btn-primary me-md-2" (click)="modificarAcceso()">
+                                        Actualizar
+                                    </button>
+                                    <button type="button" class="btn btn-danger"
+                                        [routerLink]="['/private/usuario/listar-usuario']">
+                                        Cancelar
+                                    </button>
+                                </div>
+                            </div>
+                            <!---->
+                        </div>
+                        <!------ Imagen -------->
+                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                            <div class="col-md-12">
+                                <div>
+                                    <div>
+                                        <br />
+                                        <div style="text-align: center">
+                                            <div *ngIf="tmpBase64">
+                                                <img class="foto_usuario" [src]="tmpBase64" alt="foto_usuario" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <p style="text-align: center; margin-top: -12px">
+                                        <button type="button" class=" btn btn-primary" (click)="fileInput.click()">
+                                            <span>Agregar foto</span>
+                                            <input #fileInput type="file" (change)="seleccionarFoto($event)"
+                                                style="display: none" />
+                                        </button>
+                                    </p>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="d-grid gap-2 d-md-block margin-bottom 0" style="text-align: center;">
+                                <button type="button" class="btn btn-primary me-md-2" (click)="modificarImagen()">
+                                    Actualizar
+                                </button>
+                                <button type="button" class="btn btn-danger"
+                                    [routerLink]="['/private/usuario/listar-usuario']">
+                                    Cancelar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tabs content -->
+                </form>
+            </div>
+        </div>
+    </div>
+</main>

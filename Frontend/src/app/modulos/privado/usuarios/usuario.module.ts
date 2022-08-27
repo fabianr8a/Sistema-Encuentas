@@ -7,6 +7,7 @@ import { UsuCrearComponent } from './usu-crear/usu-crear.component';
 import { UsuEditarComponent } from './usu-editar/usu-editar.component';
 import { UsuListarComponent } from './usu-listar/usu-listar.component';
 import { UsuDatosComponent } from './usu-datos/usu-datos.component';
+import { NgPipesModule } from 'ngx-pipes';
 
 
 
@@ -21,7 +22,8 @@ import { UsuDatosComponent } from './usu-datos/usu-datos.component';
     CommonModule,
     UsuarioRoutingModule,
     FormsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgPipesModule
   ]
 })
 export class UsuarioModule { }

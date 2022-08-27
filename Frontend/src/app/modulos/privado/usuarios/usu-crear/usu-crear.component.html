@@ -5,22 +5,15 @@
         <h2 style="font-size: 25px; padding-top: 10px">Crear Usuario</h2>
       </div>
       <div class="col-md-6" style="padding-right: 15px">
-        <ol
-          class="breadcrumb d-flex justify-content-end"
-          style="background-color: white; margin-top: 11px"
-        >
+        <ol class="breadcrumb d-flex justify-content-end" style="background-color: white; margin-top: 11px">
           <li class="breadcrumb-item">
-            <a [routerLink]="['/private/inicio-dash']"
-              ><i class="fas fa-home"></i
-            ></a>
+            <a [routerLink]="['/private/inicio-dash']"><i class="fas fa-home"></i></a>
           </li>
           <li class="breadcrumb-item">
             <a href="javascript:void(0)">Administrador</a>
           </li>
           <li class="breadcrumb-item">
-            <a [routerLink]="['/private/usuario/listar-usuario']"
-              >Listado usuarios</a
-            >
+            <a [routerLink]="['/private/usuario/listar-usuario']">Listado usuarios</a>
           </li>
           <li class="breadcrumb-item active">Crear usuarios</li>
         </ol>
@@ -28,73 +21,32 @@
     </div>
 
     <div class="card mb-4">
-      <div
-        class="card-header"
-        style="background-color: rgba(17, 17, 17, 0.116)"
-      >
+      <div class="card-header" style="background-color: rgba(17, 17, 17, 0.116)">
         <br />
       </div>
       <div class="card-body">
-        <form>
-          <div
-            class="row-mb-3 form-group"
-            style="border-bottom: 1px solid rgba(0, 0, 0, 0.19)"
-          >
-            <div class="col-md-12">
-              <div>
-                <div>
-                  <div>
-                    <div style="text-align: center">
-                      <div>
-                        <img
-                          class="img-edit"
-                          onerror="this.src='../../../../assets/img/crear.usuario.png';"
-                          style="width: 150px; height: 150px"
-                        />
-                      </div>
-                      <div>
-                        <input class="form-control1" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <br />
-                <p style="text-align: center; margin-top: -12px">
-                  <button
-                    type="button"
-                    style="
-                      background-color: #0c778d;
-                      border-color: #0c778d;
-                      color: white;
-                      border-bottom-right-radius: 1px;
-                    "
-                    (click)="fileInput.click()"
-                  >
-                    <span>Agregar foto</span>
-                    <input
-                      #fileInput
-                      type="file"
-                      (change)="seleccionarFoto($event)"
-                      style="display: none"
-                    />
-                  </button>
-                </p>
-              </div>
-            </div>
-          </div>
+        <form #frmCrear="ngForm" (submit)="frmCrear.form.valid && crearUsuario(frmCrear)">
           <br />
-          <div class="row mb-3">
+          <div class="row mb-2">
+
             <div class="col-md-6">
               <div class="form-group">
                 <div class="form-floating mb-3 mb-md-0">
                   <div class="input-group mb-2 mr-sm-2">
                     <div class="input-group-prepend">
-                      <label for="nomPro" class="input-group-text"
-                        >Nombre</label
-                      >
+                      <label for="nomPro" class="input-group-text">Nombre</label>
                     </div>
-                    <input class="form-control" />
+                    <input type="text" class="form-control" id="nom" name="nom" [(ngModel)]="objUsuario.nombresUsuario"
+                      #nom="ngModel" [ngClass]="{
+                                    'is-invalid':
+                                    frmCrear.submitted && nom.invalid 
+                                  }" required />
                   </div>
+                  <span class="text-danger" *ngIf="frmCrear.submitted && nom.invalid">
+                    <span *ngIf="nom?.errors?.['required']">
+                      Nombre obligatorio
+                    </span>
+                  </span>
                 </div>
               </div>
             </div>
@@ -104,139 +56,193 @@
                 <div class="form-floating mb-3 mb-md-0">
                   <div class="input-group mb-2 mr-sm-2">
                     <div class="input-group-prepend">
-                      <label for="docUsu" class="input-group-text"
-                        >Documento</label
-                      >
+                      <label for="apeUsu" class="input-group-text">Apellidos</label>
                     </div>
-                    <input class="form-control" />
+                    <input type="text" class="form-control" id="ape" name="ape"
+                      [(ngModel)]="objUsuario.apellidosUsuario" #ape="ngModel" [ngClass]="{
+                                    'is-invalid':
+                                    frmCrear.submitted && ape.invalid
+                                  }" required />
                   </div>
+                  <span class="text-danger" *ngIf="frmCrear.submitted && ape.invalid">
+                    <span *ngIf="ape?.errors?.['required']">
+                      Apellidos obligatorios
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row mb-2">
+            <div class="col-md-6">
+              <div class="form-group">
+                <div class="form-floating mb-3 mb-md-0">
+                  <div class="input-group mb-2 mr-sm-2">
+                    <div class="input-group-prepend">
+                      <label for="docUsu" class="input-group-text">Documento</label>
+                    </div>
+                    <input type="text" class="form-control" id="doc" name="doc"
+                      [(ngModel)]="objUsuario.documentoUsuario" #doc="ngModel" [ngClass]="{
+                                    'is-invalid':
+                                    frmCrear.submitted && doc.invalid
+                                  }" required />
+                  </div>
+                  <span class="text-danger" *ngIf="frmCrear.submitted && doc.invalid">
+                    <span *ngIf="doc?.errors?.['required']">
+                      Número de documento obligatorio
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-floating mb-3 mb-md-0">
+                <div class="input-group mb-2 mr-sm-2">
+                  <div class="input-group-prepend">
+                    <label for="tipoDocumento" class="input-group-text">Tipo de documento</label>
+                  </div>
+                  <select class="form-select" name="tipdoc" [(ngModel)]="objUsuario.tipoDocumentoUsuario"
+                    #tipdoc="ngModel" [ngClass]="{
+                    'is-invalid':
+                    frmCrear.submitted && tipdoc.invalid
+                    }" required>
+                    <option *ngFor="let objtipdocument of tipoDocumentos" value="{{objtipdocument.id}}">
+                      {{objtipdocument.nombre}}
+                    </option>
+                  </select>
+                </div>
+                <span class="text-danger" *ngIf="frmCrear.submitted && tipdoc.invalid">
+                  <span *ngIf="tipdoc?.errors?.['required']">
+                    Tipo de documento obligatorio
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-2">
+            <div class="col-md-6">
+              <div class="form-group">
+                <div class="form-floating mb-3 mb-md-0">
+                  <div class="input-group mb-2 mr-sm-2">
+                    <div class="input-group-prepend">
+                      <label for="corUsu" class="input-group-text">Correo</label>
+                    </div>
+                    <input type="text" class="form-control" id="cor" name="cor" required
+                      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$" [(ngModel)]="objUsuario.correoAcceso"
+                      #cor="ngModel" [ngClass]="{
+                      'is-invalid': frmCrear.submitted && cor.invalid}" />
+                  </div>
+                  <span class="text-danger" *ngIf="frmCrear.submitted && cor.invalid">
+                    <span *ngIf="cor?.errors?.['required']">
+                      Correo obligatorio
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <div class="form-floating mb-3 mb-md-0">
+                  <div class="input-group mb-2 mr-sm-2">
+                    <div class="input-group-prepend">
+                      <label for="telUsu" class="input-group-text">Teléfono</label>
+                    </div>
+                    <input type="text" class="form-control" id="tel" name="tel" required
+                      [(ngModel)]="objUsuario.telefonoUsuario" #tel="ngModel" [ngClass]="{
+                                  'is-invalid': frmCrear.submitted && tipdoc.invalid}" />
+                  </div>
+                  <span class="text-danger" *ngIf="frmCrear.submitted && tel.invalid">
+                    <span *ngIf="tel?.errors?.['required']">
+                      Teléfono obligatorio
+                    </span>
+                  </span>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="row mb-3">
+          <div class="row mb-2">
             <div class="col-md-6">
               <div class="form-group">
                 <div class="form-floating mb-3 mb-md-0">
                   <div class="input-group mb-2 mr-sm-2">
                     <div class="input-group-prepend">
-                      <label for="apeUsu" class="input-group-text"
-                        >Apellidos</label
-                      >
+                      <label for="clave" class="input-group-text">Contraseña</label>
                     </div>
-                    <input class="form-control" />
+                    <input type="password" class="form-control" id="contr" name="contr" required
+                      [(ngModel)]="objUsuario.claveUsuario" #contr="ngModel" [ngClass]="{
+                                  'is-invalid':
+                                  frmCrear.submitted && tipdoc.invalid
+                                }" />
                   </div>
+                  <span class="text-danger" *ngIf="frmCrear.submitted && contr.invalid">
+                    <span *ngIf="contr?.errors?.['required']">
+                      Contraseña obligatorio
+                    </span>
+                  </span>
                 </div>
               </div>
             </div>
 
             <div class="col-md-6">
-              <div class="form-group">
-                <div class="form-floating mb-3 mb-md-0">
-                  <div class="input-group mb-2 mr-sm-2">
-                    <div class="input-group-prepend">
-                      <label for="telUsu" class="input-group-text"
-                        >Teléfono</label
-                      >
-                    </div>
-                    <input class="form-control" />
+              <div class="form-floating mb-3 mb-md-0">
+                <div class="input-group mb-2 mr-sm-2">
+                  <div class="input-group-prepend">
+                    <label for="reclave" class="input-group-text">Confirmar contraseña</label>
                   </div>
+                  <input type="password" class="form-control" id="cla" name="cla" required
+                    [(ngModel)]="objUsuario.reclaveUsuario" [pattern]="objUsuario.claveUsuario" #cla="ngModel"
+                    [ngClass]="{
+                                'is-invalid':
+                                frmCrear.submitted && cla.invalid
+                              }" />
                 </div>
+                <span class="text-danger" *ngIf="frmCrear.submitted && cla.invalid">
+                  <span *ngIf="cla?.errors?.['required']">
+                    Contraseña obligatoria
+                  </span>
+                  <span *ngIf="cla?.errors?.['pattern']">
+                    Contraseña Diferente
+                  </span>
+                </span>
               </div>
             </div>
-
-            <div class="row mb-3">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <div class="form-floating mb-3 mb-md-0">
-                    <div class="input-group mb-2 mr-sm-2">
-                      <div class="input-group-prepend">
-                        <label for="corUsu" class="input-group-text"
-                          >Correo</label
-                        >
-                      </div>
-                      <input class="form-control" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-6">
-                <div class="form-floating mb-3 mb-md-0">
-                  <div class="input-group mb-2 mr-sm-2">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">Estado</div>
-                    </div>
-                    <select class="form-control"></select>
-                  </div>
-                </div>
-              </div>
-
-
-            </div>
-
-            <div class="row mb-3">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <div class="form-floating mb-3 mb-md-0">
-                    <div class="input-group mb-2 mr-sm-2">
-                      <div class="input-group-prepend">
-                        <label for="claveUsu" class="input-group-text"
-                          >Contraseña</label
-                        >
-                      </div>
-                      <input class="form-control" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-6">
-                <div class="form-floating mb-3 mb-md-0">
-                  <div class="input-group mb-2 mr-sm-2">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text" for="reclave">
-                        Confirmar contraseña
-                      </div>
-                    </div>
-                    <input class="form-control" />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="row mb-3">
-              <div class="col-md-6">
-                <div class="form-floating mb-3 mb-md-0">
-                  <div class="input-group mb-2 mr-sm-2">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">Tipo de documento</div>
-                    </div>
-                    <select class="form-control">
-                      <option value>Seleccione un tipo de documento</option>
-                      <option></option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-6">
-                <div class="form-floating mb-3 mb-md-0">
-                  <div class="input-group mb-2 mr-sm-2">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">Rol asignado</div>
-                    </div>
-                    <select class="form-control"></select>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <p style="text-align: center; margin-bottom: 0">
-              <button type="submit" class="btn btn-primary">Crear</button>
-            </p>
           </div>
+
+          <div class="row mb-2">
+            <div class="col-md-6">
+              <div class="form-floating mb-3 mb-md-0">
+                <div class="input-group mb-2 mr-sm-2">
+                  <div class="input-group-prepend">
+                    <label for="codRol" class="input-group-text">Rol asignado</label>
+                  </div>
+                  <select class="form-select" name="nomRol" [(ngModel)]="objUsuario.codRol" #nombreRol="ngModel"
+                    [ngClass]="{'is-invalid': frmCrear.submitted && nombreRol.invalid }" required>
+                    <option *ngFor="let objNomRol of arregloRoles" value="{{objNomRol.codRol}}">
+                      {{objNomRol.nombreRol}}
+                    </option>
+                  </select>
+                </div>
+                <span class="text-danger" *ngIf="frmCrear.submitted && nombreRol.invalid">
+                  <span *ngIf="nombreRol?.errors?.['required']">
+                    Rol obligatorio
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <br />
+          <p style="text-align: center; margin-bottom: 0">
+            <button type="submit" class="btn btn-primary">
+              Crear
+            </button>
+          </p>
         </form>
       </div>
     </div>

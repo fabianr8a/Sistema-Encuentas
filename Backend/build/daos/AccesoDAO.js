@@ -27,7 +27,12 @@ class AccesoDAO {
                 }
                 else {
                     const miTokencito = jsonwebtoken_1.default.sign({ datos: arreglo, alg: 'HS256', typ: 'JWT' }, 'LaClaveSuperSecreta');
-                    res.status(200).json({ tokenFullStack: miTokencito, nombreRol: arreglo[0].nombreRol, estadoRol: arreglo[0].estadoRol });
+                    res.status(200).json({
+                        tokenFullStack: miTokencito,
+                        nombreRol: arreglo[0].nombreRol,
+                        estadoRol: arreglo[0].estadoRol,
+                        estadoUsuario: arreglo[0].estadoUsuario
+                    });
                 }
             })
                 .catch((miError) => {
@@ -80,6 +85,36 @@ class AccesoDAO {
                     console.log(miError);
                     res.status(400).json({ msg: 'Error en la creación del usuario' });
                 }
+            });
+        });
+    }
+    static obtenerUnAcceso(sqlBuscar, parametro, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield conexionBd_1.default.result(sqlBuscar, parametro)
+                .then((resultado) => {
+                const arreglo = resultado.rows;
+                if (arreglo.length != 0) {
+                    res.status(200).json(arreglo[0]);
+                }
+                else {
+                    res.status(400).json({ respuesta: 'Error buscando el Acceso' });
+                }
+            })
+                .catch((miError) => {
+                console.log(miError);
+                res.status(400).json({ respuesta: 'Error buscando el Acceso' });
+            });
+        });
+    }
+    static actualizarAcceso(sqlBuscar, parametros, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield conexionBd_1.default.oneOrNone(sqlBuscar, parametros)
+                .then((resultado) => {
+                res.status(200).json(resultado);
+            })
+                .catch((miError) => {
+                console.log(miError);
+                res.status(400).json({ respuesta: 'Error al actualizar el Acceso' });
             });
         });
     }

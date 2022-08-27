@@ -1,6 +1,7 @@
 import fs from 'fs';
 import Imagen from '../modelos/imagenes';
 
+
 class ImagenControladorVerificar {
 
   public static crearImagen (nomPrivado: string, ba64: string){

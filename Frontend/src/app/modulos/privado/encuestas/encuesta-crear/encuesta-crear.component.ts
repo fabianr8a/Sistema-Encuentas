@@ -20,9 +20,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./encuesta-crear.component.css'],
 })
 export class EncuestaCrearComponent implements OnInit {
-  pregunt: number[] = [];
-  nuevaPregunta=[{id:0, descripcion:'', tipoPregunta:0}]
-  opciones = [{ id: 1, opcion: '', placeholder: 'Opción' }];
+  arregloPreguntas: Preguntas[] = [];
+  opciones = [{ id: 0, opcion: '', placeholder: 'Opción' }];
+  text = ((document.getElementById("pregunFecha") as HTMLTextAreaElement));
 
   public arregloEvento: TipoEventos[];
   public arregloTipoPreguntas: TipoPreguntas[];
@@ -146,15 +146,27 @@ export class EncuestaCrearComponent implements OnInit {
   }
 
   //agregar preguntas en un array
-  public listarPreguntas(pregunta: number): void {
-    this.pregunt.push(pregunta);
+  public agregarPreguntas(tipoPregunta: any): void {
+    let indice=this.arregloPreguntas.length;
+    let objPreguntica = new Preguntas(indice, tipoPregunta, '', 0);
+    this.arregloPreguntas.push(objPreguntica);
+    console.log(this.arregloPreguntas);
   }
+
+
+
+  public getInputValue(inputValue:string){
+    console.log(inputValue);
+  }
+
+
+
 
   //agregar opciones al tipo de pregunta de seleccion en un json
   public agregarOpciones(opcion: string): void {
-    const generateId = () => Math.random();
+    let indice=this.opciones.length;
     this.opciones.push({
-      id: generateId(),
+      id: indice,
       opcion: opcion,
       placeholder: 'Opción',
     });
@@ -170,10 +182,18 @@ export class EncuestaCrearComponent implements OnInit {
     }
   }
 
+  public eliminarPreguntas(id: number) {
+    for (var i = 0; i < this.arregloPreguntas.length; i++) {
+      if (this.arregloPreguntas[i].codPregunta == id) {
+        this.arregloPreguntas.splice(i, 1);
+        break;
+      }
+    }
+  }
 
   public crearEncuesta(formulario: NgForm): void {
     this.miSuscripcion = this.encuestaService
-      .crearEncuesta(this.objEncuesta, this.objPregunta)
+      .crearEncuesta(this.objEncuesta, this.arregloPreguntas)
       .pipe(
         map(() => {
           formulario.resetForm();
@@ -198,6 +218,4 @@ export class EncuestaCrearComponent implements OnInit {
       )
       .subscribe(observadorAny);
   }
-
-
 }

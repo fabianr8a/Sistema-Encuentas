@@ -35,6 +35,11 @@ export const API_ENCUESTA_TIPO_DEPENDENCIAS = API_URL + 'api/private/encuesta/ti
 /***********************Crear encuesta******************/
 export const API_CREAR_ENCUESTA=API_URL + 'api/private/encuesta/crear';
 
+/***********************Seleccionar encuesta a modificar******************/
+export const API_ENCUESTA_SELECCIONADA_MODIFICAR=API_URL + 'api/private/encuesta/encuestas';
+
+/***********************Modificar encuesta******************/
+export const API_MODIFICAR_ENCUESTA=API_URL + 'api/private/encuesta/modificar';
 
 
 

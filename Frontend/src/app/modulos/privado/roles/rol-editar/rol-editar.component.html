@@ -32,11 +32,9 @@
       ></div>
       <div class="card-body">
         <form
-
         #frmModificar="ngForm"
         (ngSubmit)="frmModificar.form.valid && modificarRol(frmModificar)"
         novalidate
-        ng-init="obtenerRolesBuscar()"
         >
           <div class="table-responsive">
             <div class="row mb-3" style="width: 100%">

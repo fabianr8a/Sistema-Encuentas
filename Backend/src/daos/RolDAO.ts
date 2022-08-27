@@ -65,7 +65,7 @@ class RolDAO {
     await pool.task(async(consulta:any)=>{
       return await consulta.result(sqlModificar,parametros);
     })
-      .then((resultado: any) => {
+      .then(() => {
         res.status(200).json({respuesta: "Rol actualizado",
         });
       })

@@ -49,6 +49,25 @@ class EncuestaControlador extends RolDAO {
     EncuestaControlador.crearLasPreguntas(SQL_ENCUESTA.CREAR_PREGUNTAS, losParametros, res);
   }
 
+  public seleccionarEncuestaModificar(req: Request, res: Response) {
+    const seleccionarEncuesta = req.params.codEncuesta;
+    const miParametro = [seleccionarEncuesta];
+    if(!seleccionarEncuesta){return res.status(400).json({'Error':'No se encontro un parametro'})}
+    EncuestaControlador.seleccionEncuestaModificar(SQL_ENCUESTA.SELECCIONAR_ENCUESTA_MODIFICAR, miParametro, res);
+  }
+
+  public modificarEncuesta(req: Request, res: Response) {
+    const codigoEncuesta = req.params.codEncuesta;
+    const codigoDependencia = req.body.codDependencia;
+    const codigoEvento = req.body.codTipoEvento;
+    const nombreEncuesta = req.body.nombreEncuesta;
+    const descripcionEncuesta = req.body.descripcionEncuesta;
+    const fechaCreacion = req.body.fechaCreacionEncuesta;
+    const fechaCierre = req.body.fechaCierreEncuesta;
+    const misParametros = [codigoEncuesta, codigoDependencia, codigoEvento, nombreEncuesta, descripcionEncuesta, fechaCreacion, fechaCierre];
+    EncuestaControlador.modificarLaEncuesta(SQL_ENCUESTA.MODIFICAR_ENCUESTA, misParametros, res);
+  }
+
 }
 const encuestaControlador = new EncuestaControlador();
 export default encuestaControlador;

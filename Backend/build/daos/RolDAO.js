@@ -84,7 +84,7 @@ class RolDAO {
             yield conexionBd_1.default.task((consulta) => __awaiter(this, void 0, void 0, function* () {
                 return yield consulta.result(sqlModificar, parametros);
             }))
-                .then((resultado) => {
+                .then(() => {
                 res.status(200).json({ respuesta: "Rol actualizado",
                 });
             })

@@ -104,5 +104,37 @@ class EncuestaDAO {
             });
         });
     }
+    //encuesta que se va a modificar
+    static seleccionEncuestaModificar(sqlBuscar, parametros, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield conexionBd_1.default.oneOrNone(sqlBuscar, parametros)
+                .then((resultado) => {
+                if (!resultado) {
+                    res.status(400).json({ respuesta: 'Error seleccionando la encuesta a modificar' });
+                }
+                res.status(200).json(resultado);
+            })
+                .catch((miError) => {
+                console.log(miError);
+                res.status(400).json({ respuesta: 'Error seleccionando la encuesta a modificar' });
+            });
+        });
+    }
+    //modificar la encuesta seleccionada
+    static modificarLaEncuesta(sqlModificar, parametros, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield conexionBd_1.default.task((consulta) => __awaiter(this, void 0, void 0, function* () {
+                return yield consulta.result(sqlModificar, parametros);
+            }))
+                .then(() => {
+                res.status(200).json({ respuesta: "Encuesta modificada",
+                });
+            })
+                .catch((miError) => {
+                console.log(miError);
+                res.status(400).json({ respuesta: 'Error modificando la encuesta' });
+            });
+        });
+    }
 }
 exports.default = EncuestaDAO;

@@ -286,7 +286,7 @@
                   <i
                     class="fa fa-circle-plus fa-2x"
                     title="Agregar pregunta"
-                    (click)="listarPreguntas(objPregunta.codTipoPregunta)"
+                    (click)="agregarPreguntas(objPregunta.codTipoPregunta)"
                   ></i>
                   <div
                     class="text-danger"
@@ -304,27 +304,20 @@
       </div>
 
       <!--///////////////////////////////////Seccion de preguntas y respuestas///////////////////////////////-->
-      <div *ngFor="let objPreguntita of pregunt">
+      <div *ngFor="let objPreguntita of arregloPreguntas; let gg = index">
         <!--Pregunta y respuesta abierta-->
         <div
-          *ngIf="objPreguntita == 2"
+          *ngIf="objPreguntita.codTipoPregunta == 2"
           class="card mb-4 seccion-preguntas"
-          id="pregunta"
-          [(ngModel)]="objPregunta.codTipoPregunta"
         >
-          <i
-            class="fas fa-trash-can"
-            title="Eliminar pregunta"
-            appOcultarComponente
-            idPregunta="pregunta"
-          ></i>
+          <i class="fas fa-trash-can" title="Eliminar pregunta"></i>
           <div class="form-floating">
             <textarea
               class="pregunta"
               placeholder="Pregunta"
               id="floatingTextarea2"
               name="abierta"
-              [(ngModel)]="objPregunta.descripcionPregunta"
+              [(ngModel)]="objPreguntita.descripcionPregunta"
               #abierta="ngModel"
               [ngClass]="{
                 'is-invalid': frmCrearEncuesta.submitted && abierta.invalid
@@ -350,37 +343,39 @@
         </div>
         <!--Pregunta y respuesta de fecha-->
         <div
-          *ngIf="objPreguntita == 1"
+          *ngIf="objPreguntita.codTipoPregunta == 1"
           class="card mb-4 seccion-preguntas"
           id="pregunta"
         >
-          <i
-            class="fas fa-trash-can"
-            title="Eliminar pregunta"
-            appOcultarComponente
-            idPregunta="pregunta"
-          ></i>
+          <i class="fas fa-trash-can" title="Eliminar pregunta"></i>
           <div class="form-floating">
-            <textarea
+            <input
+            #pregunFecha
               class="pregunta"
-              placeholder="Pregunta"
-              id="floatingTextarea2"
+              placeholder=""
               name="fecha"
-              [(ngModel)]="objPregunta.descripcionPregunta"
-              #fecha="ngModel"
-              [ngClass]="{
-                'is-invalid': frmCrearEncuesta.submitted && fecha.invalid
-              }"
               required
-            ></textarea>
-            <div
-              class="text-danger"
-              *ngIf="frmCrearEncuesta.submitted && fecha.invalid"
-            >
-              <span *ngIf="descripcion.errors?.['required']"
-                >Campo obligatorio</span
-              >
-            </div>
+
+
+            />
+
+
+            <input
+            name="fecha"
+            [(ngModel)]="arregloPreguntas[gg].descripcionPregunta"
+            #fecha="ngModel"
+            #identificador
+            type="text"
+            placeholder="Para testear"
+            autocomplete="off"
+            (click)="getInputValue(pregunFecha.value)"
+
+          />
+          <button type="button" (click)="getInputValue(identificador.value)">
+            TEST
+          </button>
+
+
           </div>
           <br />
           <div>
@@ -396,18 +391,18 @@
           </div>
         </div>
 
+
+
         <!--Pregunta y respuesta de selección multiple-->
         <div
-          *ngIf="objPreguntita == 3"
+          *ngIf="objPreguntita.codTipoPregunta == 3"
           class="card mb-4 seccion-preguntas"
           id="pregunta"
-
         >
           <i
             class="fas fa-trash-can"
             title="Eliminar pregunta"
-            appOcultarComponente
-            idPregunta="pregunta"
+            (click)="eliminarPreguntas(objPreguntita.codPregunta)"
           ></i>
           <div class="form-floating">
             <textarea
@@ -415,7 +410,7 @@
               placeholder="Pregunta"
               id="floatingTextarea2"
               name="opcioness"
-              [(ngModel)]="objPregunta.descripcionPregunta"
+              [(ngModel)]="objPreguntita.descripcionPregunta"
               #opcioness="ngModel"
               [ngClass]="{
                 'is-invalid': frmCrearEncuesta.submitted && opcioness.invalid
@@ -445,11 +440,9 @@
                 placeholder="{{ objOpcion.placeholder }}"
               />
             </div>
-            <div
-              class="col-md-3 custom-control custom-radio"
-            >
+            <div class="col-md-3 custom-control custom-radio">
               <i
-              *ngIf="objOpcion.id!=1"
+                *ngIf="objOpcion.id != 0"
                 class="fas fa-xmark"
                 title="Eliminar opción"
                 tooltip-dir="left"
@@ -469,22 +462,17 @@
         <!--Pregunta y respuesta de escala-->
         <div
           class="card mb-4 seccion-preguntas"
-          *ngIf="objPreguntita == 4"
+          *ngIf="objPreguntita.codTipoPregunta == 4"
           id="pregunta"
         >
-          <i
-            class="fas fa-trash-can"
-            title="Eliminar pregunta"
-            appOcultarComponente
-            idPregunta="pregunta"
-          ></i>
+          <i class="fas fa-trash-can" title="Eliminar pregunta"></i>
           <div class="form-floating">
             <textarea
               class="pregunta"
               placeholder="Pregunta"
               id="floatingTextarea2"
               name="escala"
-              [(ngModel)]="objPregunta.descripcionPregunta"
+              [(ngModel)]="objPreguntita.descripcionPregunta"
               #escala="ngModel"
               [ngClass]="{
                 'is-invalid': frmCrearEncuesta.submitted && escala.invalid

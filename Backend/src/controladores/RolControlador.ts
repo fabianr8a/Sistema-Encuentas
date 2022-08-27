@@ -11,7 +11,6 @@ class RolControlador extends RolDAO {
   public buscarRoles(req: Request, res: Response) {
     const buscar = req.body.nombreRol;
     const miParametro = [buscar];
-    console.log(req.body, 'este es el buscar');
     if (buscar === '') {
       RolControlador.obtenerTodos(SQL_ROL.TODOS, req, res);
     } else {
@@ -42,7 +41,6 @@ class RolControlador extends RolDAO {
   public buscarUnosRoles(req: Request, res: Response) {
     const buscarRol = req.params.codRol;
     const miParametro = [buscarRol];
-    console.log(req.body, 'este es el buscar');
     if(!buscarRol){return res.status(400).json({'Error':'No se encontro un parametro'})}
     RolControlador.buscarUnRolModificar(SQL_ROL.BUSCAR_ROL_MODIFICAR, miParametro, res);
   }

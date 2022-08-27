@@ -9,12 +9,12 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-listar-encuestas',
   templateUrl: './listar-encuestas.component.html',
-  styleUrls: ['./listar-encuestas.component.css']
+  styleUrls: ['./listar-encuestas.component.css'],
 })
 export class ListarEncuestasComponent implements OnInit {
-
   public arregloEncuesta: Encuesta[];
   public encuestaSeleccionada: Encuesta;
+  public output: string;
 
   //Atributos paginación
   public paginaActual: number;
@@ -34,16 +34,15 @@ export class ListarEncuestasComponent implements OnInit {
   public miSuscripcionEliminar: Subscription;
   public cargaFinalizada: boolean;
 
-
   constructor(
     public encuestaService: EncuestaService,
     public modalService: BsModalService,
-    private toastr: ToastrService,
-
+    private toastr: ToastrService
   ) {
     //Inicializar atributos requeridos
     this.arregloEncuesta = [];
     this.encuestaSeleccionada = this.inicializarEncuesta();
+    this.output = '';
 
     //Inicializar modales
     this.modalTitulo = '';
@@ -51,11 +50,11 @@ export class ListarEncuestasComponent implements OnInit {
     this.modalCuerpo = '';
     this.modalRef = this.tmp;
 
-     //Inicializar atributos paginación
-     this.paginaActual = 0;
-     this.cantidadMostrar = 0;
-     this.cantidadPaginas = 0;
-     this.cantidadTotalRegistros = 0;
+    //Inicializar atributos paginación
+    this.paginaActual = 0;
+    this.cantidadMostrar = 0;
+    this.cantidadPaginas = 0;
+    this.cantidadTotalRegistros = 0;
 
     //Inicializar consumo de servicios
     this.miSuscripcion = this.tmp;
@@ -65,11 +64,12 @@ export class ListarEncuestasComponent implements OnInit {
 
   //Metodos obligatorios
   public inicializarEncuesta(): Encuesta {
-    return new Encuesta(0, 0, 0, '', '','', '',0,'');
+    return new Encuesta(0, 0, 0, '', '', '', '', 0, '');
   }
 
   ngOnInit(): void {
     this.listarEncuestas();
+    this.probandoFecha();
   }
 
   ngOnDestroy(): void {
@@ -82,6 +82,34 @@ export class ListarEncuestasComponent implements OnInit {
   }
 
   //Lógica del negocio - Servicios
+
+  public probandoFecha() {
+    let fecha = new Date();
+
+   // console.log(fecha);
+
+    let desdeStr = `${fecha.getFullYear()}-${
+      fecha.getMonth() + 1
+    }-${fecha.getDate()}`;
+
+    //console.log(desdeStr);
+  }
+
+  public compararFechas(fechita: any) {
+
+    let date = new Date();
+let output2=String(date.getFullYear()+'-'+ String(date.getMonth() + 1).padStart(2, '0')+'-'+date.getDate()).padStart(2, '0')
+
+console.log(output2);
+console.log("fechita"+fechita)
+
+
+    if (fechita === output2) {
+      console.log('es igual');
+    } else {
+      console.log('es diferente');
+    }
+  }
 
   public listarEncuestas(): void {
     this.miSuscripcion = this.encuestaService
@@ -98,8 +126,8 @@ export class ListarEncuestasComponent implements OnInit {
       .subscribe(observadorAny);
   }
 
-   // Paginador
-   public verificarPaginador(): void {
+  // Paginador
+  public verificarPaginador(): void {
     this.paginaActual = 1;
     this.cantidadMostrar = 5;
     this.cantidadTotalRegistros = this.arregloEncuesta.length;
@@ -107,10 +135,4 @@ export class ListarEncuestasComponent implements OnInit {
       this.cantidadTotalRegistros / this.cantidadMostrar
     );
   }
-
-
-
-
-
-
 }

@@ -2,10 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SQL_ENCUESTA = void 0;
 exports.SQL_ENCUESTA = {
-    LISTAR: 'select  e.nombre_encuesta, e.fecha_creacion_encuesta,e.fecha_cierre_encuesta, te.nombre_tipo_evento  from tipo_eventos te \
+    LISTAR: 'select e.cod_encuesta, e.descripcion_encuesta, e.nombre_encuesta, \
+  to_char(e.fecha_creacion_encuesta::date,\'dd/mm/yyyy\') as fecha_creacion_encuesta ,e.fecha_cierre_encuesta, te.nombre_tipo_evento  from tipo_eventos te \
   inner join encuestas e \
   on te.cod_tipo_evento = e.cod_tipo_evento \
-  order by e.fecha_creacion_encuesta',
+  order by e.fecha_creacion_encuesta DESC',
     LISTAR_EVENTOS: 'SELECT * FROM tipo_eventos',
     LISTAR_TIPO_PREGUNTAS: 'select * from tipo_preguntas',
     LISTAR_DEPENDENCIAS: 'select * from dependencias',
@@ -15,4 +16,9 @@ exports.SQL_ENCUESTA = {
 	VALUES ($1, $2, $3, $4, $5, $6) RETURNING cod_encuesta',
     CREAR_PREGUNTAS: 'INSERT INTO preguntas(cod_tipo_pregunta, cod_encuesta, descripcion_pregunta) \
 	VALUES ($1,$2,$3) RETURNING cod_pregunta',
+    SELECCIONAR_ENCUESTA_MODIFICAR: 'SELECT cod_encuesta, cod_dependencia, cod_tipo_evento, nombre_encuesta,\
+   descripcion_encuesta,  to_char(fecha_creacion_encuesta::date,\'yyyy-MM-dd\') as fecha_creacion_encuesta, \
+  to_char(fecha_cierre_encuesta::date,\'yyyy-MM-dd\') as fecha_cierre_encuesta FROM encuestas where cod_encuesta=$1;',
+    MODIFICAR_ENCUESTA: 'UPDATE encuestas SET cod_dependencia=$2, cod_tipo_evento=$3, nombre_encuesta=$4, descripcion_encuesta=$5, fecha_creacion_encuesta=$6, fecha_cierre_encuesta=$7\
+  WHERE cod_encuesta=$1',
 };

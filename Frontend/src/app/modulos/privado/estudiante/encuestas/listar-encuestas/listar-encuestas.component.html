@@ -10,7 +10,9 @@
           style="background-color: white; margin-top: 24px"
         >
           <li class="breadcrumb-item">
-            <a [routerLink]="['/private/inicio-dash']"><i class="fas fa-home"></i></a>
+            <a [routerLink]="['/private/inicio-dash']"
+              ><i class="fas fa-home"></i
+            ></a>
           </li>
           <li class="breadcrumb-item">
             <a href="javascript:void(0)">Encuestas</a>
@@ -54,13 +56,13 @@
                 "
               >
                 <td>
-                  {{ objEncuesta.fechaCierreEncuesta | date: "longDate" }}
+                  {{ objEncuesta.fechaCierreEncuesta | date: "shortDate" }}
                 </td>
                 <td>{{ objEncuesta.nombreTipoEvento }}</td>
                 <td>{{ objEncuesta.nombreEncuesta }}</td>
                 <td>
-                  <a [routerLink]="['/private/estudiante/responder-encuesta']">
-                    <i class="fa-solid fa-spell-check"></i>
+                  <a  [routerLink]="['/private/estudiante/responder-encuesta']">
+                    <i  class="fa-solid fa-spell-check"></i><button type="submit" (click)="compararFechas(objEncuesta.fechaCierreEncuesta)">aqui</button>
                     Responder
                   </a>
                 </td>

@@ -22,6 +22,10 @@ class EncuestaRutas {
     this.miRutaEncuesta.get('/tipoDependencias/:codDependencia',encuestaControlador.listarTiposDependencia);
     //crear encuestas
     this.miRutaEncuesta.post('/crear', encuestaControlador.crearEncuesta);
+    //seleccionar encuesta para modificar
+    this.miRutaEncuesta.get('/encuestas/:codEncuesta', encuestaControlador.seleccionarEncuestaModificar);
+    //modificar encuesta
+    this.miRutaEncuesta.put('/modificar/:codEncuesta',encuestaControlador.modificarEncuesta);
   }
 }
 const encuestaRutas = new EncuestaRutas();

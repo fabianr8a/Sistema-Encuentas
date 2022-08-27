@@ -31,6 +31,7 @@
               </div>
             </div>
           </div>
+          <div *ngIf="respuestaToken.estadoRol===1">
           <div class="sb-sidenav-menu-heading">Menú principal</div>
           <a class="nav-link" [routerLink]="['inicio-dash']">
             <div class="sb-nav-link-icon">
@@ -130,6 +131,7 @@
               >
 
               <!---Menu solo para invitado-->
+
               <a
                 *ngIf="respuestaToken.nombreRol === 'Invitado'"
                 class="nav-link"
@@ -158,6 +160,7 @@
               >
 
               <!---Menu solo para estudiantes-->
+
               <a
                 *ngIf="respuestaToken.nombreRol === 'Estudiante'"
                 class="nav-link"
@@ -166,7 +169,10 @@
               >
             </nav>
           </div>
+          </div>
         </div>
+        <div *ngIf="respuestaToken.estadoRol===2" #falseBlock class="alert alert-danger" role="alert">
+          <strong>Rol Inactivo:</strong>  <br> Comuniquese con el administrador</div>
       </div>
     </nav>
   </div>

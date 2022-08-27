@@ -13,8 +13,8 @@ INSERT INTO roles(nombre_rol, estado_rol) VALUES ('Secretaria', 1);
 INSERT INTO roles(nombre_rol, estado_rol) VALUES ('Estudiante', 1);
 INSERT INTO roles(nombre_rol, estado_rol) VALUES ('Invitado', 1);
 
-INSERT INTO encuestas(cod_dependencia,cod_tipo_evento,nombre_encuesta,fecha_creacion_encuesta,fecha_cierre_encuesta,descripcion_encuesta,cod_tipo_dependencias)
-values (3,2,'Inteligencia artificial en la actualidad','12-07-2022','14-07-2022','Seminario sobre la conferencia impartida por el ingeniero Pepito Perez'3)
+INSERT INTO encuestas(cod_dependencia,cod_tipo_evento,nombre_encuesta,fecha_creacion_encuesta,fecha_cierre_encuesta,descripcion_encuesta)
+values (3,2,'Inteligencia artificial en la actualidad','12-07-2022','14-07-2022','Seminario sobre la conferencia impartida por el ingeniero Pepito Perez')
 
 INSERT INTO dependencias(nombre_dependencia) values ('Departamentos');
 INSERT INTO dependencias(nombre_dependencia) values ('Direcciones');

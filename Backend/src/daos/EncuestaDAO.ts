@@ -85,5 +85,33 @@ class EncuestaDAO {
         res.status(400).json({ respuesta: 'Error creando las preguntas' });
       });
   }
+
+//encuesta que se va a modificar
+  protected static async seleccionEncuestaModificar(sqlBuscar: string, parametros: any, res: Response): Promise<any> {
+    await pool.oneOrNone(sqlBuscar, parametros)
+     .then((resultado: any) => {
+      if(!resultado){ res.status(400).json({ respuesta: 'Error seleccionando la encuesta a modificar' });}
+      res.status(200).json(resultado);
+    })
+     .catch((miError: any) => {
+     console.log(miError);
+    res.status(400).json({ respuesta: 'Error seleccionando la encuesta a modificar' });
+     });
+  }
+
+//modificar la encuesta seleccionada
+  protected static async modificarLaEncuesta(sqlModificar: string, parametros: any, res: Response): Promise<any> {
+    await pool.task(async(consulta:any)=>{
+      return await consulta.result(sqlModificar,parametros);
+    })
+      .then(() => {
+        res.status(200).json({respuesta: "Encuesta modificada",
+        });
+      })
+      .catch((miError: any) => {
+        console.log(miError);
+        res.status(400).json({ respuesta: 'Error modificando la encuesta' });
+      });
+  }
 }
 export default EncuestaDAO;

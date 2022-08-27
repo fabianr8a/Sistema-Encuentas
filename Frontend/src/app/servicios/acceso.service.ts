@@ -53,6 +53,7 @@ export class AccesoService {
         this.objAcceso.nombreRol = objetoVerificado.datos[0].nombreRol;
         this.objAcceso.nombresUsuario =objetoVerificado.datos[0].nombresUsuario;
         this.objAcceso.apellidosUsuario =objetoVerificado.datos[0].apellidosUsuario;
+        this.objAcceso.estadoRol=objetoVerificado.datos[0].estadoRol;
         return true;
       }
       catch (error) {

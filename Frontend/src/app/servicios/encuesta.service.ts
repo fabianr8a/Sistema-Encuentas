@@ -8,6 +8,8 @@ import {
   API_ENCUESTA_DEPENDENCIAS,
   API_ENCUESTA_TIPO_DEPENDENCIAS,
   API_CREAR_ENCUESTA,
+  API_MODIFICAR_ENCUESTA,
+  API_ENCUESTA_SELECCIONADA_MODIFICAR,
 } from './../utilidades/dominios/uris';
 import { TipoEventos } from './../modelos/tipo_eventos';
 import { Encuesta } from '../modelos/encuesta';
@@ -25,6 +27,9 @@ export class EncuestaService {
   public apiTipoPregunta: string = API_ENCUESTA_TIPO_PREGUNTAS;
   public apiDependencias: string = API_ENCUESTA_DEPENDENCIAS;
   public apiTipoDependencias: string = API_ENCUESTA_TIPO_DEPENDENCIAS;
+  public apiCrearEncuesta:string=API_CREAR_ENCUESTA;
+  public apiModificarEncuesta:string=API_MODIFICAR_ENCUESTA;
+  public apiSeleccionarEncuestaModificar:string=API_ENCUESTA_SELECCIONADA_MODIFICAR;
 
   constructor(private http: HttpClient) {}
 
@@ -52,8 +57,16 @@ export class EncuestaService {
     );
   }
 
-  public crearEncuesta(objeto: Encuesta,pregunta:Preguntas): Observable<Encuesta> {
-    return this.http.post<Encuesta>(API_CREAR_ENCUESTA, [objeto,pregunta]);
+  public crearEncuesta(objeto: Encuesta,preguntas:Preguntas[]): Observable<Encuesta> {
+    return this.http.post<Encuesta>(this.apiCrearEncuesta, [objeto,preguntas]);
+  }
+
+  public seleccionarEncuestaModificar(idEncuesta: number): Observable<Encuesta> {
+    return this.http.get<Encuesta>(`${this.apiSeleccionarEncuestaModificar}/${idEncuesta}`);
+  }
+
+  public modificarEncuesta(objEncuesta:Encuesta): Observable<Encuesta>{
+    return this.http.put<Encuesta>(this.apiModificarEncuesta+'/'+ objEncuesta.codEncuesta, objEncuesta);
   }
 
 

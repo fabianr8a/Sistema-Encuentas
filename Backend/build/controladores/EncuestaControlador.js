@@ -46,6 +46,25 @@ class EncuestaControlador extends EncuestaDAO_1.default {
         ];
         EncuestaControlador.crearLasPreguntas(Encuestas_sql_1.SQL_ENCUESTA.CREAR_PREGUNTAS, losParametros, res);
     }
+    seleccionarEncuestaModificar(req, res) {
+        const seleccionarEncuesta = req.params.codEncuesta;
+        const miParametro = [seleccionarEncuesta];
+        if (!seleccionarEncuesta) {
+            return res.status(400).json({ 'Error': 'No se encontro un parametro' });
+        }
+        EncuestaControlador.seleccionEncuestaModificar(Encuestas_sql_1.SQL_ENCUESTA.SELECCIONAR_ENCUESTA_MODIFICAR, miParametro, res);
+    }
+    modificarEncuesta(req, res) {
+        const codigoEncuesta = req.params.codEncuesta;
+        const codigoDependencia = req.body.codDependencia;
+        const codigoEvento = req.body.codTipoEvento;
+        const nombreEncuesta = req.body.nombreEncuesta;
+        const descripcionEncuesta = req.body.descripcionEncuesta;
+        const fechaCreacion = req.body.fechaCreacionEncuesta;
+        const fechaCierre = req.body.fechaCierreEncuesta;
+        const misParametros = [codigoEncuesta, codigoDependencia, codigoEvento, nombreEncuesta, descripcionEncuesta, fechaCreacion, fechaCierre];
+        EncuestaControlador.modificarLaEncuesta(Encuestas_sql_1.SQL_ENCUESTA.MODIFICAR_ENCUESTA, misParametros, res);
+    }
 }
 const encuestaControlador = new EncuestaControlador();
 exports.default = encuestaControlador;

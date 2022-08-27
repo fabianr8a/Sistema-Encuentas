@@ -12,10 +12,10 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
   styleUrls: ['./encuesta-listar.component.css'],
 })
 export class EncuestaListarComponent implements OnInit {
- //Atributos requeridos
+  //Atributos requeridos
   public arregloEncuesta: Encuesta[];
   public encuestaSeleccionada: Encuesta;
-  public busqueda:string='';
+  public busqueda: string = '';
 
   //Atributos paginación
   public paginaActual: number;
@@ -35,12 +35,10 @@ export class EncuestaListarComponent implements OnInit {
   public miSuscripcionEliminar: Subscription;
   public cargaFinalizada: boolean;
 
-
   constructor(
     public encuestaService: EncuestaService,
     public modalService: BsModalService,
-    private toastr: ToastrService,
-
+    private toastr: ToastrService
   ) {
     //Inicializar atributos requeridos
     this.arregloEncuesta = [];
@@ -66,7 +64,7 @@ export class EncuestaListarComponent implements OnInit {
 
   //Metodos obligatorios
   public inicializarEncuesta(): Encuesta {
-    return new Encuesta(0, 0, 0, '', '','', '',0,'');
+    return new Encuesta(0, 0, 0, '', '', '', '', 0, '');
   }
 
   ngOnInit(): void {
@@ -77,12 +75,13 @@ export class EncuestaListarComponent implements OnInit {
     if (this.miSuscripcion) {
       this.miSuscripcion.unsubscribe();
     }
-    if (this.miSuscripcionEliminar) {
-      this.miSuscripcionEliminar.unsubscribe();
-    }
   }
 
   //Lógica del negocio - Servicios
+
+
+
+
   public listarEncuestas(): void {
     this.miSuscripcion = this.encuestaService
       .listarEncuestas()
@@ -107,6 +106,4 @@ export class EncuestaListarComponent implements OnInit {
       this.cantidadTotalRegistros / this.cantidadMostrar
     );
   }
-
-
 }

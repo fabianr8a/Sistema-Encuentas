@@ -13,10 +13,8 @@ export class SidebarDashComponent implements OnInit {
   public respuestaToken:Acceso;
 
 
-
 constructor( private acceso:AccesoService ) {
   this.respuestaToken = this.acceso.objAcceso;
-
 }
 
 

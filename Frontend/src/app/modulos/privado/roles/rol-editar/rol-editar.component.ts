@@ -50,7 +50,7 @@ export class RolEditarComponent implements OnInit {
     this.miSuscripcion = this.rolService
       .modificarRol(this.objRol)
       .pipe(
-        map((respuesta) => {
+        map(() => {
           mostrarMensaje(
             'success',
             'Rol actualizado correctamente',
@@ -58,7 +58,6 @@ export class RolEditarComponent implements OnInit {
             this.toastrService
           );
           this.router.navigate(['/private/roles/listar-rol']);
-          //miFormulario.resetForm();
           this.clickCrear = false;
         }),
         catchError((miError) => {

@@ -78,11 +78,11 @@ export class EncuestaEditarComponent implements OnInit {
 
   //Metodos obligatorios
   public inicializarEncuesta(): Encuesta {
-    return new Encuesta(0, 0, 0, '', '', '', '', 0, '');
+    return new Encuesta(0, 0, 0, '', '', '', '',0, 0, '');
   }
 
   public inicializarPregunta() {
-    return new Preguntas(0, 0, '', 0);
+    return new Preguntas(0, 0,'', 0,[]);
   }
 
   //Lógica del negocio - Servicios

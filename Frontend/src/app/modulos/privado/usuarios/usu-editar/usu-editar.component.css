@@ -1,11 +1,31 @@
-.input-group-text{
-    width: 179px;
+.input-group-text {
+  width: 179px;
 }
-.text_input{
-    background-color: rgba(17, 17, 17, 0.116);
+
+.text_input {
+  background-color: rgba(17, 17, 17, 0.116);
 }
-.foto_usuario{
-    width: 20%; height: 20%;
-    display: block;
-    margin: 0px auto;
+
+.foto_usuario {
+  width: 17%;
+  height: 17%;
+  display: block;
+  margin-right: 20px;
+  border-radius: 5px;
+}
+
+.foto_usuario-2 {
+  width: 17%;
+  height: 17%;
+  display: block;
+  margin: 0px auto;
+  border-radius: 5px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.datos-perfil {
+  align-items: center;
 }

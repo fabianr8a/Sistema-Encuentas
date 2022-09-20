@@ -79,7 +79,7 @@ export class UsuListarComponent implements OnInit {
 
   //Métodos obligatorios
   public inicializarUsuario(): Usuarios {
-    return new Usuarios(0,0,'','','','','','',0,'','',0,0);
+    return new Usuarios(0, 0, '', '', '', '', '', '', 0, '', '', 0, 0);
   }
 
   ngOnInit(): void {

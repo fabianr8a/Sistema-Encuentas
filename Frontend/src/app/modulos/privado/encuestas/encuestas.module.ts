@@ -7,7 +7,6 @@ import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { EncuestaCrearComponent } from '../encuestas/encuesta-crear/encuesta-crear.component';
 import { EncuestaListarComponent } from '../encuestas/encuesta-listar/encuesta-listar.component';
 import { EncuestaEditarComponent } from '../encuestas/encuesta-editar/encuesta-editar.component';
-import { OcultarComponenteDirective } from './directivas/ocultar-componente.directive';
 import { NgPipesModule } from 'ngx-pipes';
 
 
@@ -16,7 +15,6 @@ import { NgPipesModule } from 'ngx-pipes';
     EncuestaCrearComponent,
     EncuestaEditarComponent,
     EncuestaListarComponent,
-    OcultarComponenteDirective,
   ],
   imports: [
     CommonModule,
@@ -24,7 +22,6 @@ import { NgPipesModule } from 'ngx-pipes';
     NgxPaginationModule,
     FormsModule,
     NgPipesModule,
-    TypeaheadModule.forRoot()
   ]
 })
 export class EncuestasModule { }

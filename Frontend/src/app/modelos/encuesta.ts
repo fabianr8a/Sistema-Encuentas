@@ -3,9 +3,10 @@ export class Encuesta {
   public codDependencia: number;
   public codTipoEvento: number;
   public nombreEncuesta: string;
-  public descripcionEncuesta: string;
   public fechaCreacionEncuesta: Date | string;
   public fechaCierreEncuesta: Date | string;
+  public descripcionEncuesta: string;
+  public codUsuario:number;
   public codTipoPregunta: number;
   public nombreTipoEvento:string;
 
@@ -14,9 +15,10 @@ export class Encuesta {
     codDependencia: number,
     codTipoEvento: number,
     nombreEncuesta: string,
-    descripcionEncuesta: string,
     fechaCreacionEncuesta: Date | string,
     fechaCierreEncuesta: Date | string,
+    descripcionEncuesta: string,
+    codUsuario:number,
     codTipoPregunta: number,
     nombreTipoEvento:string,
   ) {
@@ -24,9 +26,10 @@ export class Encuesta {
     this.codDependencia = codDependencia;
     this.codTipoEvento = codTipoEvento;
     this.nombreEncuesta = nombreEncuesta;
-    this.descripcionEncuesta = descripcionEncuesta;
     this.fechaCreacionEncuesta = fechaCreacionEncuesta;
     this.fechaCierreEncuesta = fechaCierreEncuesta;
+    this.descripcionEncuesta = descripcionEncuesta;
+    this.codUsuario=codUsuario;
     this.codTipoPregunta = codTipoPregunta;
     this.nombreTipoEvento=nombreTipoEvento;
   }

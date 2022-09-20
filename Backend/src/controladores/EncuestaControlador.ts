@@ -5,7 +5,10 @@ import { SQL_ENCUESTA } from '../repositorios/Encuestas_sql';
 class EncuestaControlador extends RolDAO {
 
   public listarEncuestas(req: Request, res: Response) {
-    EncuestaControlador.listarLasEncuestas(SQL_ENCUESTA.LISTAR, req, res);
+    const codigoUsuario = req.params.codUsuario;
+    const miParametro = [codigoUsuario];
+    if (!codigoUsuario) { return res.status(400).json({ 'Error': 'No se encontro un parametro' }) }
+    EncuestaControlador.listarLasEncuestas(SQL_ENCUESTA.LISTAR, miParametro, res);
   }
 
   public listarEventos(req: Request, res: Response) {
@@ -29,16 +32,17 @@ class EncuestaControlador extends RolDAO {
 
   public crearEncuesta(req: Request, res: Response) {
     const misParametros = [
-      req.body[0].codDependencia,
-      req.body[0].codTipoEvento,
-      req.body[0].nombreEncuesta,
-      req.body[0].descripcionEncuesta,
-      req.body[0].fechaCreacionEncuesta,
-      req.body[0].fechaCierreEncuesta,
-      req.body[1].descripcionPregunta,
-      req.body[1].codTipoPregunta,
+    req.body[0].codDependencia,
+    req.body[0].codTipoEvento,
+    req.body[0].nombreEncuesta,
+    req.body[0].fechaCreacionEncuesta,
+    req.body[0].fechaCierreEncuesta,
+    req.body[0].descripcionEncuesta,
+    req.body[0].codUsuario,
     ];
-    EncuestaControlador.crearEncuesta(SQL_ENCUESTA.CREAR_ENCUESTA, SQL_ENCUESTA.CREAR_PREGUNTAS, misParametros, res);
+    console.log(misParametros)
+    const arregloPreguntas=req.body[1];
+    EncuestaControlador.crearEncuesta(SQL_ENCUESTA.CREAR_ENCUESTA, SQL_ENCUESTA.CREAR_PREGUNTAS, SQL_ENCUESTA.CREAR_OPCIONES, SQL_ENCUESTA.CREAR_USUARIO_ENCUESTAS, misParametros, arregloPreguntas,res);
   }
 
   public crearPreguntas(req: Request, res: Response) {
@@ -47,6 +51,14 @@ class EncuestaControlador extends RolDAO {
       req.body.descripcionPregunta,
     ];
     EncuestaControlador.crearLasPreguntas(SQL_ENCUESTA.CREAR_PREGUNTAS, losParametros, res);
+  }
+
+  public crearOpciones(req: Request, res: Response) {
+    const losParametros = [
+      req.body.textoOpcion,
+      req.body.codPregunta,
+    ];
+    EncuestaControlador.crearLasPreguntas(SQL_ENCUESTA.CREAR_OPCIONES, losParametros, res);
   }
 
   public seleccionarEncuestaModificar(req: Request, res: Response) {

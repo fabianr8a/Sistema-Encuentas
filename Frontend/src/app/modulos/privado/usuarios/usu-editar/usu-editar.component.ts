@@ -73,7 +73,7 @@ export class UsuEditarComponent implements OnInit {
       this.iniIma();
       this.obtenerTodosRoles();
     })
-    
+
   }
 
   ngOnDestroy(): void {
@@ -135,7 +135,7 @@ export class UsuEditarComponent implements OnInit {
         )
       .subscribe(observadorAny);
   }
-  
+
   public obtenerTodosRoles(): void {
     this.miSuscripcion = this.usuarioService
       .obtenerRol()

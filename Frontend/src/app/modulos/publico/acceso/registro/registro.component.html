@@ -201,6 +201,45 @@
                                     for="claveUsu"
                                     class="input-group-text"
                                     style="background-color: #cfd3d4"
+                                    >Telefono</label
+                                  >
+                                </div>
+                                <input
+                                  type="number"
+                                  class="form-control"
+                                  id="telefono"
+                                  name="telefono"
+                                  required
+                                  [(ngModel)]="objRegistro.telefonoRegistro"
+                                  #telefono="ngModel"
+                                  [ngClass]="{
+                                    'is-invalid':
+                                      frmRegistrar.submitted && telefono.invalid
+                                  }"
+                                />
+                              </div>
+
+                              <span
+                                class="text-danger"
+                                *ngIf="frmRegistrar.submitted && telefono.invalid"
+                              >
+                                <span *ngIf="telefono.errors?.['required']">
+                                  Teléfono obligatorio
+                                </span>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-6" style="width: 50%">
+                          <div class="form-group">
+                            <div class="form-floating mb-3 mb-md-0">
+                              <div class="input-group mb-2 mr-sm-2">
+                                <div class="input-group-prepend">
+                                  <label
+                                    for="claveUsu"
+                                    class="input-group-text"
+                                    style="background-color: #cfd3d4"
                                     >Contraseña</label
                                   >
                                 </div>
@@ -230,7 +269,9 @@
                             </div>
                           </div>
                         </div>
+                      </div>
 
+                      <div class="row mb-3">
                         <div class="col-md-6" style="width: 50%">
                           <div class="form-floating mb-3 mb-md-0">
                             <div class="input-group mb-2 mr-sm-2">

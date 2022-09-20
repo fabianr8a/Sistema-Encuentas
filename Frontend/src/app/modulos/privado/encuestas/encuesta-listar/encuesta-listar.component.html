@@ -1,27 +1,31 @@
+<div id="layoutSidenav">
+  <div id="layoutSidenav_content">
 <main>
   <div class="container-fluid px-4">
-    <div class="row">
-      <div class="col-md-6">
-        <h2 style="font-size: 25px; margin-top: 19px">Encuestas</h2>
-      </div>
-      <div class="col-md-6">
+
+
+        <h2 class="mt-4" style="font-size: 27px">Encuestas</h2>
+
+
         <ol
           class="breadcrumb d-flex justify-content-end"
-          style="background-color: white; margin-top: 24px"
+          style="background-color: white; "
         >
           <li class="breadcrumb-item">
             <a [routerLink]="['/private/inicio-dash']"
               ><i class="fas fa-home"></i
             ></a>
           </li>
+
           <li class="breadcrumb-item">
             <a href="javascript:void(0)">Encuestas</a>
           </li>
+
           <li class="breadcrumb-item active">Listado encuestas</li>
         </ol>
-      </div>
-    </div>
-    <div class="card mb-4">
+
+
+    <div class="card mb-4" >
       <div
         class="card-header"
         style="padding-bottom: 32px; background-color: rgba(17, 17, 17, 0.116)"
@@ -55,10 +59,10 @@
           >
             <thead>
               <tr>
-                <th style="width: 20%">Fecha</th>
+                <th style="width: 15%">Fecha de creación</th>
                 <th style="width: 15%">Tipo Evento</th>
                 <th style="width: 40%">Nombre Evento</th>
-                <th style="width: 10%"></th>
+                <th style="width: 15%"></th>
                 <th style="width: 10%"></th>
               </tr>
             </thead>
@@ -77,7 +81,7 @@
                 "
               >
                 <td>
-                  {{ objEncuesta.fechaCreacionEncuesta}}
+                  {{ objEncuesta.fechaCreacionEncuesta }}
                 </td>
                 <td>{{ objEncuesta.nombreTipoEvento }}</td>
                 <td>{{ objEncuesta.nombreEncuesta }}</td>
@@ -92,7 +96,11 @@
                 </td>
                 <td>
                   <p style="text-align: center; margin: 0">
-                    <a [routerLink]="['/private/encuestas/editar-encuesta',objEncuesta.codEncuesta]"
+                    <a
+                      [routerLink]="[
+                        '/private/encuestas/editar-encuesta',
+                        objEncuesta.codEncuesta
+                      ]"
                       ><i class="far fa-edit" title="Modificar encuesta"></i
                     ></a>
                   </p>
@@ -125,3 +133,6 @@
     </div>
   </div>
 </main>
+</div>
+</div>
+

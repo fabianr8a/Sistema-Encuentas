@@ -63,7 +63,7 @@ class EncuestaDAO {
       const codigoEncuesta = await consulta.one(sqlCrear, parametros);
       parametrosPregunta.map(async (pregunta: any) => {
         const arregloPregunta = [pregunta.codTipoPregunta, codigoEncuesta.codEncuesta, pregunta.descripcionPregunta];
-        let codigoPregunta = await consulta.one(sqlPregunta, arregloPregunta);
+        const codigoPregunta = await consulta.one(sqlPregunta, arregloPregunta);
         if (pregunta.codTipoPregunta === 3) {
           pregunta.arregloOpciones.map(async (opcion: any) => {
             const arregloOpciones = [codigoPregunta.codPregunta, opcion.textoOpcion];

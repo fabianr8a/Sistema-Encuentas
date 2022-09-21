@@ -9,6 +9,7 @@ export class Encuesta {
   public codUsuario:number;
   public codTipoPregunta: number;
   public nombreTipoEvento:string;
+  public nombreTipoDependencia:string;
 
   constructor(
     codEncuesta: number,
@@ -21,6 +22,7 @@ export class Encuesta {
     codUsuario:number,
     codTipoPregunta: number,
     nombreTipoEvento:string,
+    nombreTipoDependencia:string,
   ) {
     this.codEncuesta = codEncuesta;
     this.codDependencia = codDependencia;
@@ -32,5 +34,6 @@ export class Encuesta {
     this.codUsuario=codUsuario;
     this.codTipoPregunta = codTipoPregunta;
     this.nombreTipoEvento=nombreTipoEvento;
+    this.nombreTipoDependencia=nombreTipoDependencia;
   }
 }

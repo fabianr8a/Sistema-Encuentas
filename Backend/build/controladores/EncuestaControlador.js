@@ -41,7 +41,6 @@ class EncuestaControlador extends EncuestaDAO_1.default {
             req.body[0].descripcionEncuesta,
             req.body[0].codUsuario,
         ];
-        console.log(misParametros);
         const arregloPreguntas = req.body[1];
         EncuestaControlador.crearEncuesta(Encuestas_sql_1.SQL_ENCUESTA.CREAR_ENCUESTA, Encuestas_sql_1.SQL_ENCUESTA.CREAR_PREGUNTAS, Encuestas_sql_1.SQL_ENCUESTA.CREAR_OPCIONES, Encuestas_sql_1.SQL_ENCUESTA.CREAR_USUARIO_ENCUESTAS, misParametros, arregloPreguntas, res);
     }

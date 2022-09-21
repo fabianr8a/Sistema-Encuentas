@@ -73,7 +73,7 @@ export class ListarEncuestasComponent implements OnInit {
 
   //Metodos obligatorios
   public inicializarEncuesta(): Encuesta {
-    return new Encuesta(0, 0, 0, '', '', '', '',0, 0, '');
+    return new Encuesta(0, 0, 0, '', '', '', '',0, 0, '','');
   }
 
   ngOnInit(): void {

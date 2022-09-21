@@ -13,9 +13,8 @@ import { OnInit } from '@angular/core';
 import { TipoEventos } from 'src/app/modelos/tipo_eventos';
 import { EncuestaService } from 'src/app/servicios/encuesta.service';
 import { Component } from '@angular/core';
-import { Opciones } from 'src/app/modelos/opciones';
-import { Acceso } from 'src/app/modelos/acceso';
 import { AccesoService } from 'src/app/servicios/acceso.service';
+import { Opciones } from 'src/app/modelos/opciones';
 
 
 @Component({
@@ -85,7 +84,7 @@ export class EncuestaCrearComponent implements OnInit {
 
   //Metodos obligatorios
   public inicializarEncuesta(): Encuesta {
-    return new Encuesta(0, 0, 0, '', '', '', '',this.acceso.objAcceso.codUsuario, 0, '');
+    return new Encuesta(0, 0, 0, '', '', '', '',this.acceso.objAcceso.codUsuario, 0, '','');
   }
 
 
@@ -187,9 +186,9 @@ export class EncuestaCrearComponent implements OnInit {
      console.log(this.arregloPreguntas[codPregunta]);
     }
 
-  public eliminarOpciones(descripcion: string) {
+  public eliminarOpciones(textOp: string) {
     for (var i = 0; i < this.arregloOpciones.length; i++) {
-      if (this.arregloOpciones[i].textoOpcion == descripcion) {
+      if (this.arregloOpciones[i].textoOpcion === textOp) {
         this.arregloOpciones.splice(i, 1);
         break;
       }

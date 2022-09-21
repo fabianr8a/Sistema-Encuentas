@@ -40,7 +40,6 @@ class EncuestaControlador extends RolDAO {
     req.body[0].descripcionEncuesta,
     req.body[0].codUsuario,
     ];
-    console.log(misParametros)
     const arregloPreguntas=req.body[1];
     EncuestaControlador.crearEncuesta(SQL_ENCUESTA.CREAR_ENCUESTA, SQL_ENCUESTA.CREAR_PREGUNTAS, SQL_ENCUESTA.CREAR_OPCIONES, SQL_ENCUESTA.CREAR_USUARIO_ENCUESTAS, misParametros, arregloPreguntas,res);
   }

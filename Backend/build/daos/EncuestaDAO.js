@@ -80,7 +80,7 @@ class EncuestaDAO {
                 const codigoEncuesta = yield consulta.one(sqlCrear, parametros);
                 parametrosPregunta.map((pregunta) => __awaiter(this, void 0, void 0, function* () {
                     const arregloPregunta = [pregunta.codTipoPregunta, codigoEncuesta.codEncuesta, pregunta.descripcionPregunta];
-                    let codigoPregunta = yield consulta.one(sqlPregunta, arregloPregunta);
+                    const codigoPregunta = yield consulta.one(sqlPregunta, arregloPregunta);
                     if (pregunta.codTipoPregunta === 3) {
                         pregunta.arregloOpciones.map((opcion) => __awaiter(this, void 0, void 0, function* () {
                             const arregloOpciones = [codigoPregunta.codPregunta, opcion.textoOpcion];

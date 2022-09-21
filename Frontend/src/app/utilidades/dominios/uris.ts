@@ -54,7 +54,6 @@ export const API_ENCUESTA_SELECCIONADA_MODIFICAR=API_URL + 'api/private/encuesta
 /***********************Modificar encuesta******************/
 export const API_MODIFICAR_ENCUESTA=API_URL + 'api/private/encuesta/modificar';
 
-
 /********************************Estudiante************************************/
 export const API_LISTAR_ENCUESTAS = API_URL + 'api/private/estudiante/getAll';
 

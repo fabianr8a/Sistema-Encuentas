@@ -25,9 +25,10 @@ export const API_USUARIO_MODIFICAR_IMAGEN = API_URL + 'api/private/usuario/actua
 export const API_ROL = API_URL + 'api/private/rol/getAll';
 export const API_ROL_ELIMINAR = API_URL + 'api/private/rol/delete';
 export const API_ROL_CREAR = API_URL + 'api/private/rol/create';
-export const API_ROL_BUSCAR=API_URL + 'api/private/rol/buscar';
 export const API_ROL_MODIFICAR=API_URL+'api/private/rol/actualizar';
 export const API_ROL_BUSCAR_ROL=API_URL + 'api/private/rol/buscar-rol'
+
+/********************************Encuestas************************************/
 
 /*********************Listar encuestas**************/
 export const API_ENCUESTA = API_URL + 'api/private/encuesta/getAll';
@@ -52,6 +53,10 @@ export const API_ENCUESTA_SELECCIONADA_MODIFICAR=API_URL + 'api/private/encuesta
 
 /***********************Modificar encuesta******************/
 export const API_MODIFICAR_ENCUESTA=API_URL + 'api/private/encuesta/modificar';
+
+
+/********************************Estudiante************************************/
+export const API_LISTAR_ENCUESTAS = API_URL + 'api/private/estudiante/getAll';
 
 
 

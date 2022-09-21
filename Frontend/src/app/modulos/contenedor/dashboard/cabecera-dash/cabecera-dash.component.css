@@ -1,5 +1,5 @@
 .alineacion{
-  justify-content: flex-end
+  align-items: right;
 }
 
 .small1{
@@ -8,7 +8,7 @@
 }
 
 .drop-down-cabecera{
-  margin-top: 0px;
+  margin-top: -4px;
     --bs-bg-opacity: 1;
     background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
 }

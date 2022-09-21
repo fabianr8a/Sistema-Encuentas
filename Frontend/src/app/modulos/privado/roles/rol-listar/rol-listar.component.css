@@ -40,5 +40,16 @@ a{
   text-decoration: none;
 }
 
+.inactivo{
+  color: rgb(139, 18, 18);
+  margin: 0;
+}
+
+.activo{
+  color: green;
+  margin: 0;
+}
+
+
 
 

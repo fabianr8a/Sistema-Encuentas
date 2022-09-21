@@ -50,7 +50,6 @@ export class UsuDatosComponent implements OnInit {
     public toastrService: ToastrService,
     private route: ActivatedRoute,
     private usuarioService: UsuarioService,
-    private router: Router,
   ) {
     this.miSuscripcionUsu = this.temporal;
     this.objUsuario = this.inicializarUsuario();
@@ -72,7 +71,7 @@ export class UsuDatosComponent implements OnInit {
       this.iniIma();
       this.obtenerTodosRoles();
     })
-    
+
   }
 
   ngOnDestroy(): void {
@@ -134,7 +133,7 @@ export class UsuDatosComponent implements OnInit {
         )
       .subscribe(observadorAny);
   }
-  
+
   public obtenerTodosRoles(): void {
     this.miSuscripcion = this.usuarioService
       .obtenerRol()
@@ -198,7 +197,6 @@ export class UsuDatosComponent implements OnInit {
             'exito',
             this.toastrService
           );
-          this.router.navigate(['/private/usuario/listar-usuario']);
           this.clickCrear = false;
         }),
         catchError((miError) => {
@@ -230,7 +228,6 @@ export class UsuDatosComponent implements OnInit {
             'exito',
             this.toastrService
           );
-          this.router.navigate(['/private/usuario/listar-usuario']);
           this.clickCrear = false;
         }),
         catchError((miError) => {
@@ -258,7 +255,6 @@ export class UsuDatosComponent implements OnInit {
             'exito',
             this.toastrService
           );
-          this.router.navigate(['/private/usuario/listar-usuario']);
           this.clickCrear = false;
         }),
         catchError((miError) => {

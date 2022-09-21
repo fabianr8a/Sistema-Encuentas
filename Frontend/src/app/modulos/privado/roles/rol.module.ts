@@ -7,6 +7,7 @@ import { RolCrearComponent } from './rol-crear/rol-crear.component';
 import { RolEditarComponent } from './rol-editar/rol-editar.component';
 import { RolListarComponent } from './rol-listar/rol-listar.component';
 import { TypeaheadModule} from 'ngx-bootstrap/typeahead';
+import { NgPipesModule } from 'ngx-pipes';
 
 
 
@@ -22,7 +23,7 @@ import { TypeaheadModule} from 'ngx-bootstrap/typeahead';
     RolRoutingModule,
     NgxPaginationModule,
     FormsModule,
-    TypeaheadModule.forRoot()
+    NgPipesModule,
   ]
 })
 export class RolModule { }

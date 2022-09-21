@@ -63,7 +63,6 @@ export class InicioComponent implements OnInit, OnDestroy {
     const rol = this.usuarioSeleccionado.nombreRol;
     const estado = this.usuarioSeleccionado.estadoRol;
     const estadoUsu = this.usuarioSeleccionado.estadoUsuario;
-    console.log(estadoUsu);
     const acceso = new Acceso(0, correo, miHashcito, rol, estado, estadoUsu);
       this.miSuscripcion = this.accesoService
         .iniciarSesion(acceso)

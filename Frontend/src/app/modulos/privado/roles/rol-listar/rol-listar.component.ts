@@ -16,10 +16,9 @@ import { Component, OnInit, OnDestroy, TemplateRef } from '@angular/core';
 export class RolListarComponent implements OnInit, OnDestroy {
   //Atributos requeridos
   public arregloRoles: Rol[];
-  public arregloBuscar: string[];
   public arregloEstados: any[];
   public rolSeleccionado: Rol;
-  public cadena: string;
+  public cadena: string='';
 
   //Atributos paginación
   public paginaActual: number;
@@ -47,7 +46,6 @@ export class RolListarComponent implements OnInit, OnDestroy {
   ) {
     //Inicializar atributos requeridos
     this.arregloRoles = [];
-    this.arregloBuscar = [];
     this.arregloEstados = ARREGLO_ESTADOS_ROL;
     this.rolSeleccionado = this.inicializarRol();
 
@@ -56,7 +54,7 @@ export class RolListarComponent implements OnInit, OnDestroy {
     this.cantidadMostrar = 0;
     this.cantidadPaginas = 0;
     this.cantidadTotalRegistros = 0;
-    this.cadena = '';
+
     //Inicializar modales
     this.modalTitulo = '';
     this.modalContenido = '';
@@ -97,7 +95,6 @@ export class RolListarComponent implements OnInit, OnDestroy {
         map((resultado: Rol[]) => {
           this.arregloRoles = resultado;
           this.arregloRoles.map((rol) => {
-            this.arregloBuscar.push(rol.nombreRol);
           });
         }),
         finalize(() => {
@@ -108,23 +105,6 @@ export class RolListarComponent implements OnInit, OnDestroy {
       .subscribe(observadorAny);
   }
 
-  public obtenerRolesBuscar(textico: string): void {
-    this.miSuscripcion = this.rolService
-      .buscarRoles(textico)
-      .pipe(
-        map((respuesta) => {
-          this.arregloRoles = respuesta;
-        }),
-        catchError((err) => {
-          throw err;
-        }),
-        finalize(() => {
-          this.cargaFinalizada = true;
-          this.verificarPaginador();
-        })
-      )
-      .subscribe(observadorAny);
-  }
 
   public eliminarRol(codigo: number): void {
     this.miSuscripcionEliminar = this.rolService

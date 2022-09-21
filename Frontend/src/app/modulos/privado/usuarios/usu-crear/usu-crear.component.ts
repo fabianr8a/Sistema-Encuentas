@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Usuarios } from '../../../../modelos/usuarios';
 import { NgForm } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
@@ -38,7 +39,8 @@ export class UsuCrearComponent implements OnInit {
 
   constructor(
     public toastrService: ToastrService,
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
+    private router:Router,
   ) {
     this.miSuscripcionUsu = this.temporal;
     this.objUsuario = this.inicializarUsuario();
@@ -61,12 +63,12 @@ export class UsuCrearComponent implements OnInit {
   // ****************/
 
   public inicializarUsuario(): Usuarios {
-    return new Usuarios(0, 0,'','','','','','',0,'','',0,0);
+    return new Usuarios(0, 0, '', '', '', '', '', '', 0, '', '', 0, 0);
   }
 
   public inicializarAcceso():Acceso{
     return new Acceso(0,'','','',0, 0);
-  }  
+  }
 
   //Lógica del negocio
 
@@ -87,6 +89,7 @@ export class UsuCrearComponent implements OnInit {
             'Exito',
             this.toastrService
           );
+           this.router.navigate(['/private/usuario/listar-usuario/']);
         }),
         catchError((miError) => {
 

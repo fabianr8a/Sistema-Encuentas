@@ -33,8 +33,8 @@ export class EncuestaService {
 
   constructor(private http: HttpClient) {}
 
-  public listarEncuestas(): Observable<Encuesta[]> {
-    return this.http.get<Encuesta[]>(this.apiEncuesta);
+  public listarEncuestas(codUsuario:number): Observable<Encuesta[]> {
+    return this.http.get<Encuesta[]>( `${this.apiEncuesta}/${codUsuario}`);
   }
 
   public listarEventos(): Observable<TipoEventos[]> {
@@ -57,7 +57,7 @@ export class EncuestaService {
     );
   }
 
-  public crearEncuesta(objeto: Encuesta,preguntas:Preguntas[]): Observable<Encuesta> {
+  public crearEncuesta(objeto: Encuesta, preguntas: Preguntas[]): Observable<Encuesta> {
     return this.http.post<Encuesta>(this.apiCrearEncuesta, [objeto,preguntas]);
   }
 

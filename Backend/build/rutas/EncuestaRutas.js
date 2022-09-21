@@ -12,7 +12,7 @@ class EncuestaRutas {
     }
     listadoRutas() {
         //listar encuestas
-        this.miRutaEncuesta.get('/getAll', EncuestaControlador_1.default.listarEncuestas);
+        this.miRutaEncuesta.get('/getAll/:codUsuario', EncuestaControlador_1.default.listarEncuestas);
         //obtener tipo de eventos
         this.miRutaEncuesta.get('/eventos', EncuestaControlador_1.default.listarEventos);
         //obtener tipo de preguntas

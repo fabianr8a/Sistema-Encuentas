@@ -5,6 +5,8 @@ import { Subscription, map, finalize } from 'rxjs';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Encuesta } from 'src/app/modelos/encuesta';
 import { Component, OnInit } from '@angular/core';
+import { TipoEventos } from 'src/app/modelos/tipo_eventos';
+import { UsuarioEncuestaService } from 'src/app/servicios/usuario_encuestas.service';
 
 @Component({
   selector: 'app-listar-encuestas',
@@ -13,8 +15,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListarEncuestasComponent implements OnInit {
   public arregloEncuesta: Encuesta[];
-  public encuestaSeleccionada: Encuesta;
+  public objEncuesta: Encuesta;
+  public arregloEvento: TipoEventos[];
   public output: string;
+  public busqueda: string = '';
 
   //Atributos paginación
   public paginaActual: number;
@@ -33,15 +37,20 @@ export class ListarEncuestasComponent implements OnInit {
   public miSuscripcion: Subscription;
   public miSuscripcionEliminar: Subscription;
   public cargaFinalizada: boolean;
+  public fechaActual: string = '';
+  public fechaCierre: string = '';
+  public comprobarFecha: boolean = true;
 
   constructor(
-    public encuestaService: EncuestaService,
+    public tipoEventosService: EncuestaService,
+    public encuestaService: UsuarioEncuestaService,
     public modalService: BsModalService,
     private toastr: ToastrService
   ) {
     //Inicializar atributos requeridos
+    this.arregloEvento = [];
     this.arregloEncuesta = [];
-    this.encuestaSeleccionada = this.inicializarEncuesta();
+    this.objEncuesta = this.inicializarEncuesta();
     this.output = '';
 
     //Inicializar modales
@@ -64,12 +73,12 @@ export class ListarEncuestasComponent implements OnInit {
 
   //Metodos obligatorios
   public inicializarEncuesta(): Encuesta {
-    return new Encuesta(0, 0, 0, '', '', '', '', 0, '');
+    return new Encuesta(0, 0, 0, '', '', '', '',0, 0, '');
   }
 
   ngOnInit(): void {
-    this.listarEncuestas();
-    this.probandoFecha();
+    this.listarEncuestasUsuarios();
+    this.listarEventos();
   }
 
   ngOnDestroy(): void {
@@ -83,37 +92,23 @@ export class ListarEncuestasComponent implements OnInit {
 
   //Lógica del negocio - Servicios
 
-  public probandoFecha() {
-    let fecha = new Date();
-
-   // console.log(fecha);
-
-    let desdeStr = `${fecha.getFullYear()}-${
-      fecha.getMonth() + 1
-    }-${fecha.getDate()}`;
-
-    //console.log(desdeStr);
+  public listarEventos(): void {
+    this.miSuscripcion = this.tipoEventosService
+      .listarEventos()
+      .pipe(
+        map((resultado: TipoEventos[]) => {
+          this.arregloEvento = resultado;
+        }),
+        finalize(() => {
+          this.cargaFinalizada = true;
+        })
+      )
+      .subscribe(observadorAny);
   }
 
-  public compararFechas(fechita: any) {
-
-    let date = new Date();
-let output2=String(date.getFullYear()+'-'+ String(date.getMonth() + 1).padStart(2, '0')+'-'+date.getDate()).padStart(2, '0')
-
-console.log(output2);
-console.log("fechita"+fechita)
-
-
-    if (fechita === output2) {
-      console.log('es igual');
-    } else {
-      console.log('es diferente');
-    }
-  }
-
-  public listarEncuestas(): void {
+  public listarEncuestasUsuarios(): void {
     this.miSuscripcion = this.encuestaService
-      .listarEncuestas()
+      .listarEncuestasUsuarios()
       .pipe(
         map((resultado: Encuesta[]) => {
           this.arregloEncuesta = resultado;
@@ -125,6 +120,8 @@ console.log("fechita"+fechita)
       )
       .subscribe(observadorAny);
   }
+
+
 
   // Paginador
   public verificarPaginador(): void {

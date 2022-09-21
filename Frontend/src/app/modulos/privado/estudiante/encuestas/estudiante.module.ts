@@ -6,6 +6,7 @@ import { EstudianteRoutingModule } from './estudiante-routing.module';
 import { ResponderEncuestaComponent } from './responder-encuesta/responder-encuesta.component';
 import { ListarEncuestasComponent } from './listar-encuestas/listar-encuestas.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { NgPipesModule } from 'ngx-pipes';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     EstudianteRoutingModule,
     NgxPaginationModule,
     FormsModule,
+    NgPipesModule,
     RouterModule
   ]
 })

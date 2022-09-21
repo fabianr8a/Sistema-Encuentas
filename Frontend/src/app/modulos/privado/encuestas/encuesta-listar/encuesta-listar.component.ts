@@ -1,3 +1,4 @@
+import { AccesoService } from './../../../../servicios/acceso.service';
 import { EncuestaService } from 'src/app/servicios/encuesta.service';
 import { Encuesta } from 'src/app/modelos/encuesta';
 import { Component, OnInit } from '@angular/core';
@@ -16,6 +17,7 @@ export class EncuestaListarComponent implements OnInit {
   public arregloEncuesta: Encuesta[];
   public encuestaSeleccionada: Encuesta;
   public busqueda: string = '';
+
 
   //Atributos paginación
   public paginaActual: number;
@@ -38,7 +40,8 @@ export class EncuestaListarComponent implements OnInit {
   constructor(
     public encuestaService: EncuestaService,
     public modalService: BsModalService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private acceso:AccesoService,
   ) {
     //Inicializar atributos requeridos
     this.arregloEncuesta = [];
@@ -64,11 +67,12 @@ export class EncuestaListarComponent implements OnInit {
 
   //Metodos obligatorios
   public inicializarEncuesta(): Encuesta {
-    return new Encuesta(0, 0, 0, '', '', '', '', 0, '');
+    return new Encuesta(0, 0, 0, '', '', '', '', this.acceso.objAcceso.codUsuario, 0, '');
   }
 
   ngOnInit(): void {
-    this.listarEncuestas();
+    this.listarEncuestas(this.encuestaSeleccionada.codUsuario);
+
   }
 
   ngOnDestroy(): void {
@@ -81,10 +85,10 @@ export class EncuestaListarComponent implements OnInit {
 
 
 
-
-  public listarEncuestas(): void {
+  public listarEncuestas(codUsuario:number): void {
+    console.log(this.encuestaSeleccionada.descripcionEncuesta)
     this.miSuscripcion = this.encuestaService
-      .listarEncuestas()
+      .listarEncuestas(codUsuario)
       .pipe(
         map((resultado: Encuesta[]) => {
           this.arregloEncuesta = resultado;

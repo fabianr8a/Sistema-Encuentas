@@ -17,6 +17,7 @@ class ImagenControlador extends ImagenDAO_1.default {
         const codUsu = req.params.codUsuario;
         const sing = '_IMA';
         const stringAle = (0, nanoid_1.nanoid)(5);
+        console.log(codUsu);
         const nombrePrivado = codUsu + sing + stringAle + '.' + req.body.tipoImagen.split('/')[1];
         ImagenControladorVerificar_1.default.crearImagen(nombrePrivado, req.body.base64);
         const misParametros = [

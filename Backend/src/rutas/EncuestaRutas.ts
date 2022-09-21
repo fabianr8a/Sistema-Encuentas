@@ -11,7 +11,7 @@ class EncuestaRutas {
 
   public listadoRutas(): void {
     //listar encuestas
-    this.miRutaEncuesta.get('/getAll',encuestaControlador.listarEncuestas);
+    this.miRutaEncuesta.get('/getAll/:codUsuario',encuestaControlador.listarEncuestas);
     //obtener tipo de eventos
     this.miRutaEncuesta.get('/eventos',encuestaControlador.listarEventos);
     //obtener tipo de preguntas

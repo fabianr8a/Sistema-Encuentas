@@ -104,6 +104,7 @@ export class UsuDatosComponent implements OnInit {
         })
         )
       .subscribe(observadorAny);
+
   }
 
   public iniAcceso(): void {
@@ -190,7 +191,7 @@ export class UsuDatosComponent implements OnInit {
     this.miSuscripcionUsu = this.usuarioService
       .modificarUsuario(this.objUsuario)
       .pipe(
-        map((respuesta) => {
+        map(() => {
           mostrarMensaje(
             'success',
             'Usuario actualizado correctamente',

@@ -8,9 +8,6 @@ import { Rol } from 'src/app/modelos/rol';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-
-
-
 @Component({
   selector: 'app-rol-editar',
   templateUrl: './rol-editar.component.html',

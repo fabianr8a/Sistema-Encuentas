@@ -9,6 +9,9 @@ class EstudianteControlador extends EstudianteDAO_1.default {
     listarEncuestas(req, res) {
         EstudianteControlador.listarLasEncuestas(Estudiantes_sql_1.SQL_ENCUESTA_ESTUDIANTES.LISTAR_ENCUESTAS, req, res);
     }
+    listarTiposDependencia(req, res) {
+        EstudianteControlador.listarLosTiposDependencia(Estudiantes_sql_1.SQL_ENCUESTA_ESTUDIANTES.LISTAR_TIPO_DEPENDENCIAS, req, res);
+    }
 }
 const estudianteControlador = new EstudianteControlador();
 exports.default = estudianteControlador;

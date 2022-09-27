@@ -80,8 +80,8 @@ class EncuestaDAO {
                 const codigoEncuesta = yield consulta.one(sqlCrear, parametros);
                 parametrosPregunta.map((pregunta) => __awaiter(this, void 0, void 0, function* () {
                     const arregloPregunta = [pregunta.codTipoPregunta, codigoEncuesta.codEncuesta, pregunta.descripcionPregunta];
-                    const codigoPregunta = yield consulta.one(sqlPregunta, arregloPregunta);
-                    if (pregunta.codTipoPregunta === 3) {
+                    let codigoPregunta = yield consulta.one(sqlPregunta, arregloPregunta);
+                    if (pregunta.codTipoPregunta == 3) {
                         pregunta.arregloOpciones.map((opcion) => __awaiter(this, void 0, void 0, function* () {
                             const arregloOpciones = [codigoPregunta.codPregunta, opcion.textoOpcion];
                             yield consulta.none(sqlOpcion, arregloOpciones);
@@ -104,36 +104,6 @@ class EncuestaDAO {
             });
         });
     }
-    static crearLasPreguntas(sql, parametros, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            yield conexionBd_1.default.result(sql, parametros)
-                .then((resultado) => {
-                res.status(200).json({
-                    respuesta: "Pregunta creada",
-                    resultado: resultado.rowCount
-                });
-            })
-                .catch((miError) => {
-                console.log(miError);
-                res.status(400).json({ respuesta: 'Error creando las preguntas' });
-            });
-        });
-    }
-    static crearLasOpciones(sql, parametros, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            yield conexionBd_1.default.result(sql, parametros)
-                .then((resultado) => {
-                res.status(200).json({
-                    respuesta: "Opciones creadas",
-                    resultado: resultado.rowCount
-                });
-            })
-                .catch((miError) => {
-                console.log(miError);
-                res.status(400).json({ respuesta: 'Error creando las opciones' });
-            });
-        });
-    }
     //encuesta que se va a modificar
     static seleccionEncuestaModificar(sqlBuscar, parametros, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -143,6 +113,7 @@ class EncuestaDAO {
                     res.status(400).json({ respuesta: 'Error seleccionando la encuesta a modificar' });
                 }
                 res.status(200).json(resultado);
+                console.log(resultado);
             })
                 .catch((miError) => {
                 console.log(miError);

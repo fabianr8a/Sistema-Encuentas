@@ -63,8 +63,8 @@ class EncuestaDAO {
       const codigoEncuesta = await consulta.one(sqlCrear, parametros);
       parametrosPregunta.map(async (pregunta: any) => {
         const arregloPregunta = [pregunta.codTipoPregunta, codigoEncuesta.codEncuesta, pregunta.descripcionPregunta];
-        const codigoPregunta = await consulta.one(sqlPregunta, arregloPregunta);
-        if (pregunta.codTipoPregunta === 3) {
+        let codigoPregunta = await consulta.one(sqlPregunta, arregloPregunta);
+        if (pregunta.codTipoPregunta == 3) {
           pregunta.arregloOpciones.map(async (opcion: any) => {
             const arregloOpciones = [codigoPregunta.codPregunta, opcion.textoOpcion];
             await consulta.none(sqlOpcion, arregloOpciones);
@@ -86,40 +86,13 @@ class EncuestaDAO {
       });
   }
 
-  protected static async crearLasPreguntas(sql: string, parametros: any, res: Response): Promise<any> {
-    await pool.result(sql, parametros)
-      .then((resultado: any) => {
-        res.status(200).json({
-          respuesta: "Pregunta creada",
-          resultado: resultado.rowCount
-        });
-      })
-      .catch((miError: any) => {
-        console.log(miError);
-        res.status(400).json({ respuesta: 'Error creando las preguntas' });
-      });
-  }
-
-  protected static async crearLasOpciones(sql: string, parametros: any, res: Response): Promise<any> {
-    await pool.result(sql, parametros)
-      .then((resultado: any) => {
-        res.status(200).json({
-          respuesta: "Opciones creadas",
-          resultado: resultado.rowCount
-        });
-      })
-      .catch((miError: any) => {
-        console.log(miError);
-        res.status(400).json({ respuesta: 'Error creando las opciones' });
-      });
-  }
-
   //encuesta que se va a modificar
   protected static async seleccionEncuestaModificar(sqlBuscar: string, parametros: any, res: Response): Promise<any> {
     await pool.oneOrNone(sqlBuscar, parametros)
       .then((resultado: any) => {
         if (!resultado) { res.status(400).json({ respuesta: 'Error seleccionando la encuesta a modificar' }); }
         res.status(200).json(resultado);
+        console.log(resultado)
       })
       .catch((miError: any) => {
         console.log(miError);

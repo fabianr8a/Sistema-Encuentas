@@ -13,30 +13,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const conexionBd_1 = __importDefault(require("../configuracion/conexion/conexionBd"));
-class EstudianteDAO {
-    static listarLasEncuestas(sql, parametros, res) {
+class OpcionDAO {
+    static crearLasOpciones(sql, parametros, res) {
         return __awaiter(this, void 0, void 0, function* () {
             yield conexionBd_1.default.result(sql, parametros)
                 .then((resultado) => {
-                res.status(200).json(resultado.rows);
+                res.status(200).json({
+                    respuesta: "Opciones creadas",
+                    resultado: resultado.rowCount
+                });
             })
                 .catch((miError) => {
                 console.log(miError);
-                res.status(400).json({ respuesta: 'Error en la consulta de encuestas estudiantes' });
-            });
-        });
-    }
-    static listarLosTiposDependencia(sql, parametros, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            yield conexionBd_1.default.result(sql, parametros)
-                .then((resultado) => {
-                res.status(200).json(resultado.rows);
-            })
-                .catch((miError) => {
-                console.log(miError);
-                res.status(400).json({ respuesta: 'Error listando el tipo dependencia' });
+                res.status(400).json({ respuesta: 'Error creando las opciones' });
             });
         });
     }
 }
-exports.default = EstudianteDAO;
+exports.default = OpcionDAO;

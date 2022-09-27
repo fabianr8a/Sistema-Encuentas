@@ -79,12 +79,13 @@ export class EncuestaCrearComponent implements OnInit {
     this.listarEventos();
     this.listarTipoPreguntas();
     this.listarDependencias();
+    this.obtenerTiposDependencia();
 
   }
 
   //Metodos obligatorios
   public inicializarEncuesta(): Encuesta {
-    return new Encuesta(0, 0, 0, '', '', '', '',this.acceso.objAcceso.codUsuario, 0, '','');
+    return new Encuesta(0, 0, 0,0, '', '', '', '',this.acceso.objAcceso.codUsuario, '','');
   }
 
 
@@ -140,9 +141,9 @@ export class EncuestaCrearComponent implements OnInit {
       .subscribe(observadorAny);
   }
 
-  public obtenerTiposDependencia(codDependencia: number): void {
+  public obtenerTiposDependencia(): void {
     this.miSuscripcion = this.tipoDependenciasService
-      .listarTipoDependencias(codDependencia)
+      .listarTipoDependencias()
       .pipe(
         map((respuesta) => {
           this.arregloTiposDependencia = respuesta;

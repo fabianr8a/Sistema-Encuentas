@@ -1,12 +1,13 @@
 import { observadorAny } from 'src/app/utilidades/observadores/tipo-any';
 import { ToastrService } from 'ngx-toastr';
 import { EncuestaService } from 'src/app/servicios/encuesta.service';
-import { Subscription, map, finalize } from 'rxjs';
+import { Subscription, map, finalize, catchError } from 'rxjs';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Encuesta } from 'src/app/modelos/encuesta';
 import { Component, OnInit } from '@angular/core';
 import { TipoEventos } from 'src/app/modelos/tipo_eventos';
 import { UsuarioEncuestaService } from 'src/app/servicios/usuario_encuestas.service';
+import { TiposDependencia } from 'src/app/modelos/tipo_dependencias';
 
 @Component({
   selector: 'app-listar-encuestas',
@@ -15,9 +16,9 @@ import { UsuarioEncuestaService } from 'src/app/servicios/usuario_encuestas.serv
 })
 export class ListarEncuestasComponent implements OnInit {
   public arregloEncuesta: Encuesta[];
+  public arregloTiposDependencia: TiposDependencia[];
+  public objTipoDependencia:TiposDependencia;
   public objEncuesta: Encuesta;
-  public arregloEvento: TipoEventos[];
-  public output: string;
   public busqueda: string = '';
 
   //Atributos paginación
@@ -42,16 +43,15 @@ export class ListarEncuestasComponent implements OnInit {
   public comprobarFecha: boolean = true;
 
   constructor(
-    public tipoEventosService: EncuestaService,
     public encuestaService: UsuarioEncuestaService,
     public modalService: BsModalService,
-    private toastr: ToastrService
+    public tipoDependenciasService: UsuarioEncuestaService,
   ) {
     //Inicializar atributos requeridos
-    this.arregloEvento = [];
     this.arregloEncuesta = [];
     this.objEncuesta = this.inicializarEncuesta();
-    this.output = '';
+    this.arregloTiposDependencia = [];
+    this.objTipoDependencia=this.inicializarTipoDependencia();
 
     //Inicializar modales
     this.modalTitulo = '';
@@ -73,12 +73,16 @@ export class ListarEncuestasComponent implements OnInit {
 
   //Metodos obligatorios
   public inicializarEncuesta(): Encuesta {
-    return new Encuesta(0, 0, 0, '', '', '', '',0, 0, '','');
+    return new Encuesta(0, 0, 0, 0,'', '', '', '',0,  '','');
+  }
+
+  public inicializarTipoDependencia(): TiposDependencia {
+    return new TiposDependencia(0,0,'');
   }
 
   ngOnInit(): void {
     this.listarEncuestasUsuarios();
-    this.listarEventos();
+    this.listarTiposDependencia();
   }
 
   ngOnDestroy(): void {
@@ -92,12 +96,15 @@ export class ListarEncuestasComponent implements OnInit {
 
   //Lógica del negocio - Servicios
 
-  public listarEventos(): void {
-    this.miSuscripcion = this.tipoEventosService
-      .listarEventos()
+  public listarTiposDependencia(): void {
+    this.miSuscripcion = this.tipoDependenciasService
+      .listarTipoDependencias()
       .pipe(
-        map((resultado: TipoEventos[]) => {
-          this.arregloEvento = resultado;
+        map((respuesta) => {
+          this.arregloTiposDependencia = respuesta;
+        }),
+        catchError((err) => {
+          throw err;
         }),
         finalize(() => {
           this.cargaFinalizada = true;

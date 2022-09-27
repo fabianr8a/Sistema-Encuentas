@@ -61,8 +61,8 @@ export class UsuarioService {
     return this.http.put<Acceso>(API_USUARIO_MODIFICAR_ACCESO + '/' +  objUsu.codUsuario, objAcce);
   }
 
-  public modificarImagen(objUsu: Usuarios ,objIma: Imagen): Observable<Acceso>{
-    return this.http.put<Acceso>(API_USUARIO_MODIFICAR_IMAGEN + '/' +  objUsu.codUsuario, objIma);
+  public modificarImagen(objUsu: Usuarios ,objIma: Imagen): Observable<Imagen>{
+    return this.http.put<Imagen>(API_USUARIO_MODIFICAR_IMAGEN + '/' +  objUsu.codUsuario, objIma);
   }
 
 }

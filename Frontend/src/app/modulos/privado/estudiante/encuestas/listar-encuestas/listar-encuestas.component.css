@@ -3,7 +3,7 @@ a{
 }
 
 .buscar{
-  justify-content: center;
+  justify-content: space-between;
   width: 100%;
 }
 
@@ -18,5 +18,7 @@ a{
 
 .input-group-prepend{
   width: 36%;
-
 }
+
+
+

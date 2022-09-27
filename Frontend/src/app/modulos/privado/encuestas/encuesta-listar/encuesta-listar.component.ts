@@ -3,7 +3,6 @@ import { EncuestaService } from 'src/app/servicios/encuesta.service';
 import { Encuesta } from 'src/app/modelos/encuesta';
 import { Component, OnInit } from '@angular/core';
 import { observadorAny } from 'src/app/utilidades/observadores/tipo-any';
-import { ToastrService } from 'ngx-toastr';
 import { Subscription, map, finalize } from 'rxjs';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
@@ -40,7 +39,6 @@ export class EncuestaListarComponent implements OnInit {
   constructor(
     public encuestaService: EncuestaService,
     public modalService: BsModalService,
-    private toastr: ToastrService,
     private acceso:AccesoService,
   ) {
     //Inicializar atributos requeridos
@@ -67,7 +65,7 @@ export class EncuestaListarComponent implements OnInit {
 
   //Metodos obligatorios
   public inicializarEncuesta(): Encuesta {
-    return new Encuesta(0, 0, 0, '', '', '', '', this.acceso.objAcceso.codUsuario, 0, '','');
+    return new Encuesta(0, 0, 0,0, '', '', '', '', this.acceso.objAcceso.codUsuario,  '','');
   }
 
   ngOnInit(): void {
@@ -86,7 +84,6 @@ export class EncuestaListarComponent implements OnInit {
 
 
   public listarEncuestas(codUsuario:number): void {
-    console.log(this.encuestaSeleccionada.descripcionEncuesta)
     this.miSuscripcion = this.encuestaService
       .listarEncuestas(codUsuario)
       .pipe(

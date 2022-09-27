@@ -187,58 +187,25 @@
                     <div class="form-floating mb-3 mb-md-0">
                       <div class="input-group mb-2 mr-sm-2">
                         <select
-                          (click)="
-                            obtenerTiposDependencia(objEncuesta.codDependencia)
-                          "
-                          id="dependencia"
-                          name="dependencia"
+                          name="tipo_dependencia"
+                          id="tipo_dependencia"
                           class="fecha-encuesta"
                           aria-label="Default select example"
-                          [(ngModel)]="objEncuesta.codDependencia"
-                          #dependencia="ngModel"
-                          [ngClass]="{
-                            'is-invalid':
-                              frmCrearEncuesta.submitted && dependencia.invalid
-                          }"
+                          [(ngModel)]="objEncuesta.codTipoDependencia"
+                          #tipo_dependencia="ngModel"
                           required
                         >
                           <option value="0">Elija una opción</option>
                           <option
-                            *ngFor="let objDependencia of arregloDependencias"
-                            value="{{ objDependencia.codDependencia }}"
+                            *ngFor="
+                              let objTipoDependencia of arregloTiposDependencia
+                            "
+                            value="{{ objTipoDependencia.codTipoDependencia }}"
                           >
-                            {{ objDependencia.nombreDependencia }}
+                            {{ objTipoDependencia.nombreTipoDependencia }}
                           </option>
                         </select>
-                        <div
-                          class="text-danger"
-                          *ngIf="
-                            frmCrearEncuesta.submitted && dependencia.invalid
-                          "
-                        >
-                          <span *ngIf="dependencia.errors?.['required']"
-                            >Campo obligatorio</span
-                          >
-                        </div>
                       </div>
-
-                      <select
-                        name="tipo_dependencia"
-                        id="tipo_dependencia"
-                        class="fecha-encuesta"
-                        aria-label="Default select example"
-                        required
-                      >
-                        <option value="0">Elija una opción</option>
-                        <option
-                          *ngFor="
-                            let objTipoDependencia of arregloTiposDependencia
-                          "
-                          value="{{ objTipoDependencia.codTipoDependencia }}"
-                        >
-                          {{ objTipoDependencia.nombreTipoDependencia }}
-                        </option>
-                      </select>
                     </div>
                   </div>
                 </div>
@@ -432,7 +399,13 @@
                     >
                   </div>
                 </div>
-                <div class="row" *ngFor="let opcion of pregunta.arregloOpciones; let indiceOp=index">
+                <div
+                  class="row"
+                  *ngFor="
+                    let opcion of pregunta.arregloOpciones;
+                    let indiceOp = index
+                  "
+                >
                   <div class="col-md-9 custom-control custom-radio">
                     <input
                       type="radio"

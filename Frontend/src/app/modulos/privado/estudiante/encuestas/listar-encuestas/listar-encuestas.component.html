@@ -27,11 +27,38 @@
               background-color: rgba(17, 17, 17, 0.116);
             "
           ></div>
-
           <div class="card-body">
             <div class="table-responsive">
               <div class="row buscar">
                 <div class="col-md-6">
+                  <div class="form-floating mb-3 mb-md-0">
+                    <div class="input-group mb-2 mr-sm-2">
+                      <div class="input-group-prepend">
+                        <label for="codRol" class="input-group-text"
+                          >Filtrar por</label
+                        >
+                      </div>
+                      <select
+                        class="form-select"
+                        id="tipoDependencia"
+                        name="tipoDependencia"
+                        [(ngModel)]="objTipoDependencia.nombreTipoDependencia"
+                        #tipoDependencia="ngModel"
+                      >
+                      <option value>Elija una facultad</option>
+                        <option
+                          *ngFor="
+                            let tipoDependencia of arregloTiposDependencia
+                          "
+                          [value]="tipoDependencia.nombreTipoDependencia"
+                        >
+                          {{ tipoDependencia.nombreTipoDependencia }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-5">
                   <div class="input-group">
                     <button class="btn btn-primary btn-buscar">
                       <i class="fas fa-search"></i>
@@ -39,7 +66,7 @@
                     <input
                       style="margin-left: auto; margin-right: auto"
                       class="busqueda-encuesta form-control"
-                      placeholder="Buscar"
+                      placeholder="Buscar por nombre del evento"
                       id="buscar"
                       name="buscar"
                       aria-label="Search"
@@ -67,8 +94,11 @@
                     *ngFor="
                       let objEncuesta of arregloEncuesta
                         | filterBy
-                          : ['nombreEncuesta', 'nombreTipoEvento']
+                          : ['nombreEncuesta']
                           : busqueda
+                          | filterBy
+                          : ['nombreTipoDependencia']
+                          : objTipoDependencia.nombreTipoDependencia
                         | paginate
                           : {
                               id: 'codiguitoPaginacion',
@@ -79,7 +109,7 @@
                     "
                   >
                     <td>
-                      {{ objEncuesta.fechaCierreEncuesta}}
+                      {{ objEncuesta.fechaCierreEncuesta }}
                     </td>
                     <td>{{ objEncuesta.nombreTipoEvento }}</td>
                     <td>{{ objEncuesta.nombreEncuesta }}</td>

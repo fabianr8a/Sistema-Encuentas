@@ -13,30 +13,53 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const conexionBd_1 = __importDefault(require("../configuracion/conexion/conexionBd"));
-class EstudianteDAO {
-    static listarLasEncuestas(sql, parametros, res) {
+class PreguntaDAO {
+    static crearLasPreguntas(sql, parametros, res) {
         return __awaiter(this, void 0, void 0, function* () {
             yield conexionBd_1.default.result(sql, parametros)
                 .then((resultado) => {
-                res.status(200).json(resultado.rows);
+                res.status(200).json({
+                    respuesta: "Pregunta creada",
+                    resultado: resultado.rowCount
+                });
             })
                 .catch((miError) => {
                 console.log(miError);
-                res.status(400).json({ respuesta: 'Error en la consulta de encuestas estudiantes' });
+                res.status(400).json({ respuesta: 'Error creando las preguntas' });
             });
         });
     }
-    static listarLosTiposDependencia(sql, parametros, res) {
+    static seleccionarPregunta(sqlPregunta, parametros, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield conexionBd_1.default.result(sql, parametros)
+            yield conexionBd_1.default.result(sqlPregunta, parametros)
                 .then((resultado) => {
+                if (!resultado) {
+                    res.status(400).json({ respuesta: 'Error seleccionando la pregunta a modificar' });
+                }
                 res.status(200).json(resultado.rows);
+                console.log(resultado);
             })
                 .catch((miError) => {
                 console.log(miError);
-                res.status(400).json({ respuesta: 'Error listando el tipo dependencia' });
+                res.status(400).json({ respuesta: 'Error seleccionando la pregunta a modificar' });
+            });
+        });
+    }
+    static modificarPregunta(sqlModificar, parametros, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield conexionBd_1.default.task((consulta) => __awaiter(this, void 0, void 0, function* () {
+                return yield consulta.result(sqlModificar, parametros);
+            }))
+                .then(() => {
+                res.status(200).json({
+                    respuesta: "Pregunta modificada",
+                });
+            })
+                .catch((miError) => {
+                console.log(miError);
+                res.status(400).json({ respuesta: 'Error modificando la pregunta' });
             });
         });
     }
 }
-exports.default = EstudianteDAO;
+exports.default = PreguntaDAO;

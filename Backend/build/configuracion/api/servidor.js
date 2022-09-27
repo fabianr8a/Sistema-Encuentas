@@ -11,6 +11,7 @@ const RolRutas_1 = __importDefault(require("../../rutas/RolRutas"));
 const UsuarioRutas_1 = __importDefault(require("../../rutas/UsuarioRutas"));
 const EncuestaRutas_1 = __importDefault(require("../../rutas/EncuestaRutas"));
 const EstudiantesRutas_1 = __importDefault(require("../../rutas/EstudiantesRutas"));
+const PreguntaRutas_1 = __importDefault(require("../../rutas/PreguntaRutas"));
 class Servidor {
     constructor() {
         this.app = (0, express_1.default)();
@@ -32,6 +33,7 @@ class Servidor {
         this.app.use('/api/private/usuario', UsuarioRutas_1.default);
         this.app.use('/api/private/encuesta', EncuestaRutas_1.default);
         this.app.use('/api/private/estudiante', EstudiantesRutas_1.default);
+        this.app.use('/api/private/pregunta', PreguntaRutas_1.default);
     }
     //Arrancar el servidor
     arrancar() {

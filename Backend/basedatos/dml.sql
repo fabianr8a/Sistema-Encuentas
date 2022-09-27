@@ -44,5 +44,5 @@ INSERT INTO tipo_preguntas (nombre_tipo_pregunta) values ('Pregunta abierta');
 INSERT INTO tipo_preguntas (nombre_tipo_pregunta) values ('Opción múltiple');
 INSERT INTO tipo_preguntas (nombre_tipo_pregunta) values ('Pregunta de escala (1 al 5)');
 
-INSERT INTO encuestas(cod_dependencia,cod_tipo_evento,nombre_encuesta,fecha_creacion_encuesta,fecha_cierre_encuesta,descripcion_encuesta)
+INSERT INTO encuestas(cod_tipo_dependencia,cod_tipo_evento,nombre_encuesta,fecha_creacion_encuesta,fecha_cierre_encuesta,descripcion_encuesta)
 values (3,2,'Inteligencia artificial en la actualidad','12-07-2022','14-07-2022','Seminario sobre la conferencia impartida por el ingeniero Pepito Perez')

@@ -19,7 +19,7 @@ class EncuestaRutas {
     //obtener dependencias
     this.miRutaEncuesta.get('/dependencias',encuestaControlador.listarDependencias);
     //obtener tipo dependencias
-    this.miRutaEncuesta.get('/tipoDependencias/:codDependencia',encuestaControlador.listarTiposDependencia);
+    this.miRutaEncuesta.get('/tipoDependencias',encuestaControlador.listarTiposDependencia);
     //crear encuestas
     this.miRutaEncuesta.post('/crear', encuestaControlador.crearEncuesta);
     //seleccionar encuesta para modificar

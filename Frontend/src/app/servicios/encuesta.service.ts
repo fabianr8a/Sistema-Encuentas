@@ -49,11 +49,9 @@ export class EncuestaService {
     return this.http.get<Dependencias[]>(this.apiDependencias);
   }
 
-  public listarTipoDependencias(
-    codDependencia: number
-  ): Observable<TiposDependencia[]> {
+  public listarTipoDependencias(): Observable<TiposDependencia[]> {
     return this.http.get<TiposDependencia[]>(
-      `${this.apiTipoDependencias}/${codDependencia}`
+      this.apiTipoDependencias
     );
   }
 

@@ -56,9 +56,11 @@ export const API_MODIFICAR_ENCUESTA=API_URL + 'api/private/encuesta/modificar';
 
 /********************************Estudiante************************************/
 export const API_LISTAR_ENCUESTAS = API_URL + 'api/private/estudiante/getAll';
+export const API_LISTAR_TIPO_DEPENDENCIAS = API_URL + 'api/private/estudiante/tipoDependencias';
 
-
-
+/********************************Preguntas************************************/
+export const API_SELECCIONAR_PREGUNTA=API_URL + 'api/private/pregunta/preguntas'
+export const API_MODIFICAR_PREGUNTA=API_URL + 'api/private/pregunta/modificar'
 
 
 

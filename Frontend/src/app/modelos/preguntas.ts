@@ -1,4 +1,5 @@
-import { Opciones } from './opciones';
+import { Opciones } from "./opciones";
+
 export class Preguntas{
   public codPregunta:number;
   public codTipoPregunta:number;

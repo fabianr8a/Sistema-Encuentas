@@ -60,8 +60,13 @@ export const API_LISTAR_TIPO_DEPENDENCIAS = API_URL + 'api/private/estudiante/ti
 
 /********************************Preguntas************************************/
 export const API_SELECCIONAR_PREGUNTA=API_URL + 'api/private/pregunta/preguntas'
+export const API_CREAR_PREGUNTA= API_URL + 'api/private/pregunta/crear'
 export const API_MODIFICAR_PREGUNTA=API_URL + 'api/private/pregunta/modificar'
+export const API_ELIMINAR_PREGUNTA=API_URL + 'api/private/pregunta/eliminar'
 
+/********************************Opciones************************************/
+export const API_SELECCIONAR_OPCIONES=API_URL + 'api/private/opciones/listar'
+export const API_ELIMINAR_OPCIONES=API_URL + 'api/private/opciones/eliminar'
 
 
 

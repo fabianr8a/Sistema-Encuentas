@@ -9,7 +9,6 @@ class RolControlador extends RolDAO {
   }
 
   public eliminarRol(req: Request, res: Response) {
-    console.log(req);
     const codiguito = req.params.codigo;
     const losParametros = [codiguito];
     RolControlador.eliminarRol(SQL_ROL.ELIMINAR, losParametros, res);

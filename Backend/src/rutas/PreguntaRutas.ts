@@ -14,6 +14,10 @@ class PreguntaRutas {
     this.miRutaPregunta.get('/preguntas/:codEncuesta', preguntaControlador.seleccionarPregunta);
     //modificar
     this.miRutaPregunta.put('/modificar/:codPregunta', preguntaControlador.modificarPregunta);
+    //eliminar pregunta
+    this.miRutaPregunta.delete('/eliminar/:codPregunta', preguntaControlador.eliminarPregunta);
+    //agregar pregunta
+    this.miRutaPregunta.post('/crear', preguntaControlador.crearPreguntas);
   }
 }
   const preguntaRutas = new PreguntaRutas();

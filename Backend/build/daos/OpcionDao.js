@@ -29,5 +29,34 @@ class OpcionDAO {
             });
         });
     }
+    static listarOpcion(sqlOpciones, parametros, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield conexionBd_1.default.result(sqlOpciones, parametros)
+                .then((resultado) => {
+                if (!resultado) {
+                    res.status(400).json({ respuesta: 'Error seleccionando la opcion' });
+                }
+                res.status(200).json(resultado.rows);
+                console.log(resultado);
+            })
+                .catch((miError) => {
+                console.log(miError);
+                res.status(400).json({ respuesta: 'Error seleccionando la opcion' });
+            });
+        });
+    }
+    static eliminarOpcion(sqlEliminar, parametros, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield conexionBd_1.default.result(sqlEliminar, parametros)
+                .then((resultado) => {
+                res.status(200).json({ respuesta: "Opcion eliminada",
+                    resultado: resultado.rowCount });
+            })
+                .catch((miError) => {
+                console.log(miError);
+                res.status(400).json({ respuesta: 'Error eliminando opcion' });
+            });
+        });
+    }
 }
 exports.default = OpcionDAO;

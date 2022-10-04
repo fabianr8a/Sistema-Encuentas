@@ -430,7 +430,7 @@
                         class="fas fa-xmark"
                         title="Eliminar opción"
                         tooltip-dir="left"
-                        (click)="eliminarOpciones(opcion.textoOpcion)"
+                        (click)="eliminarOpciones(opcion.codPregunta)"
                       ></i>
                     </div>
                   </div>
@@ -474,8 +474,8 @@
                 </div>
                 <br />
                 <div class="row">
-                  <div class="col-md-9">
-                    <div class="form-check form-check-inline">
+                  <div class="col-md-9" >
+                    <div class="form-check form-check-inline" *ngFor="let objEscala of arregloEscala">
                       <input
                         class="form-check-input"
                         type="radio"
@@ -484,55 +484,7 @@
                         value="option1"
                       />
                       <label class="form-check-label" for="inlineRadio1"
-                        >1</label
-                      >
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="inlineRadioOptions"
-                        id="inlineRadio2"
-                        value="option2"
-                      />
-                      <label class="form-check-label" for="inlineRadio2"
-                        >2</label
-                      >
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="inlineRadioOptions"
-                        id="inlineRadio3"
-                        value="option3"
-                      />
-                      <label class="form-check-label" for="inlineRadio3"
-                        >3</label
-                      >
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="inlineRadioOptions"
-                        id="inlineRadio4"
-                        value="option4"
-                      />
-                      <label class="form-check-label" for="inlineRadio4"
-                        >4</label
-                      >
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="inlineRadioOptions"
-                        id="inlineRadio5"
-                        value="option5"
-                      />
-                      <label class="form-check-label" for="inlineRadio4"
-                        >5</label
+                        >{{objEscala.nombre}}</label
                       >
                     </div>
                   </div>

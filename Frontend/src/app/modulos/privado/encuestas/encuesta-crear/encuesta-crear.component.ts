@@ -23,9 +23,14 @@ import { Opciones } from 'src/app/modelos/opciones';
   styleUrls: ['./encuesta-crear.component.css'],
 })
 export class EncuestaCrearComponent implements OnInit {
+  arregloEscala=[{nombre:'1'},
+          {nombre:'2'},
+          {nombre:'3'},
+          {nombre:'4'},
+          {nombre:'5'}];
+
   arregloPreguntas: Preguntas[] = [];
   arregloOpciones:Opciones[]=[];
-
 
   public arregloEvento: TipoEventos[];
   public arregloTipoPreguntas: TipoPreguntas[];
@@ -163,7 +168,6 @@ export class EncuestaCrearComponent implements OnInit {
     let codigoPregunta=this.arregloPreguntas.length+1;
     let objPreguntica = new Preguntas(codigoPregunta, tipoPregunta, '', 0,[]);
     this.arregloPreguntas.push(objPreguntica);
-    console.log(this.arregloPreguntas)
   }
 
 
@@ -184,14 +188,16 @@ export class EncuestaCrearComponent implements OnInit {
         pregunta.arregloOpciones.push(objOpcion);
       }
      });
-     console.log(this.arregloPreguntas[codPregunta]);
     }
 
-  public eliminarOpciones(textOp: string) {
-    for (var i = 0; i < this.arregloOpciones.length; i++) {
-      if (this.arregloOpciones[i].textoOpcion === textOp) {
-        this.arregloOpciones.splice(i, 1);
-        break;
+  public eliminarOpciones(indicePregunta: number) {
+    for (var i = 0; i < this.arregloPreguntas.length; i++) {
+      if (this.arregloPreguntas[i].codPregunta === indicePregunta) {
+        this.arregloPreguntas[i].arregloOpciones.map((codigoOpcion)=>{
+          codigoOpcion.textoOpcion.slice(i, 1);
+        })//es splice
+
+
       }
     }
   }

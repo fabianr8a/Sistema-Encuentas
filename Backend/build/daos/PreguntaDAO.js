@@ -14,18 +14,32 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const conexionBd_1 = __importDefault(require("../configuracion/conexion/conexionBd"));
 class PreguntaDAO {
-    static crearLasPreguntas(sql, parametros, res) {
+    static crearPregunta(parametros, sqlPregunta, sqlOpcion, parametrosPregunta, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield conexionBd_1.default.result(sql, parametros)
+            yield conexionBd_1.default.task((consulta) => __awaiter(this, void 0, void 0, function* () {
+                const codigoEncuesta = parametros[1];
+                parametrosPregunta.map((pregunta) => __awaiter(this, void 0, void 0, function* () {
+                    const arregloPregunta = [pregunta.codTipoPregunta, codigoEncuesta.codEncuesta, pregunta.descripcionPregunta];
+                    console.log(arregloPregunta);
+                    let codigoPregunta = yield consulta.one(sqlPregunta, arregloPregunta);
+                    if (pregunta.codTipoPregunta == 3) {
+                        pregunta.arregloOpciones.map((opcion) => __awaiter(this, void 0, void 0, function* () {
+                            const arregloOpciones = [codigoPregunta.codPregunta, opcion.textoOpcion];
+                            yield consulta.none(sqlOpcion, arregloOpciones);
+                        }));
+                    }
+                    ;
+                }));
+            }))
                 .then((resultado) => {
                 res.status(200).json({
-                    respuesta: "Pregunta creada",
+                    respuesta: "Encuesta creada",
                     resultado: resultado.rowCount
                 });
             })
                 .catch((miError) => {
                 console.log(miError);
-                res.status(400).json({ respuesta: 'Error creando las preguntas' });
+                res.status(400).json({ respuesta: 'Error creando la encuesta' });
             });
         });
     }
@@ -58,6 +72,19 @@ class PreguntaDAO {
                 .catch((miError) => {
                 console.log(miError);
                 res.status(400).json({ respuesta: 'Error modificando la pregunta' });
+            });
+        });
+    }
+    static eliminarPregunta(sqlEliminar, parametros, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield conexionBd_1.default.result(sqlEliminar, parametros)
+                .then((resultado) => {
+                res.status(200).json({ respuesta: "Pregunta eliminada",
+                    resultado: resultado.rowCount });
+            })
+                .catch((miError) => {
+                console.log(miError);
+                res.status(400).json({ respuesta: 'Error eliminando pregunta' });
             });
         });
     }

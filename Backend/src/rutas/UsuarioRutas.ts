@@ -18,7 +18,7 @@ class UsuarioRutas {
     this.miRutaUsuario.put('/actualizar/:codUsuario', usuarioControlador.actualizarUsuario);
     this.miRutaUsuario.put('/actualizar-acceso/:codUsuario', accesoControlador.actualizarAcceso);
     this.miRutaUsuario.get('/buscar-usuario/:codUsuario', usuarioControlador.buscarUnUsuario);
-     this.miRutaUsuario.get('/buscar-roles', rolControlador.buscarNombreRoles);
+    this.miRutaUsuario.get('/buscar-roles', rolControlador.buscarNombreRoles);
     this.miRutaUsuario.get('/buscar-acceso/:codUsuario', accesoControlador.buscarUnAcceso);
     this.miRutaUsuario.get('/buscar-imagen/:codUsuario', imagenControlador.buscarUnaImagen);
     this.miRutaUsuario.put('/actualizar-imagen/:codUsuario', imagenControlador.actualizarImagen);

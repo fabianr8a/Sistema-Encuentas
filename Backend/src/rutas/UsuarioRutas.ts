@@ -15,7 +15,6 @@ class UsuarioRutas {
   public listadoRutas(): void {
     this.miRutaUsuario.get('/getAll', usuarioControlador.obtenerTodosUsuario);
     this.miRutaUsuario.post('/create', usuarioControlador.crearUsuario);
-    this.miRutaUsuario.post('/buscar', usuarioControlador.buscarUsuario);
     this.miRutaUsuario.put('/actualizar/:codUsuario', usuarioControlador.actualizarUsuario);
     this.miRutaUsuario.put('/actualizar-acceso/:codUsuario', accesoControlador.actualizarAcceso);
     this.miRutaUsuario.get('/buscar-usuario/:codUsuario', usuarioControlador.buscarUnUsuario);

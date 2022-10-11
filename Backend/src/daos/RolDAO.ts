@@ -14,17 +14,6 @@ class RolDAO {
       });
   }
 
-  protected static async buscarRol(sql: string, parametros: any, res: Response): Promise<any> {
-    await pool.result(sql, parametros)
-      .then((resultado: any) => {
-        res.status(200).json(resultado.rows);
-      })
-      .catch((miError: any) => {
-        console.log(miError);
-        res.status(400).json({ respuesta: 'Error buscando rol' });
-      });
-  }
-
   protected static async buscarUnRolModificar(sqlBuscar: string, parametros: any, res: Response): Promise<any> {
     await pool.oneOrNone(sqlBuscar, parametros)
       .then((resultado: any) => {
@@ -85,5 +74,6 @@ class RolDAO {
         res.status(400).json({ respuesta: 'Error en la consulta rol' });
       });
   }
+
 }
 export default RolDAO;

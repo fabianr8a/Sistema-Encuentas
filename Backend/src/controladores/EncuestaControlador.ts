@@ -1,11 +1,16 @@
 import { Request, Response } from 'express';
-import RolDAO from '../daos/EncuestaDAO';
+import EncuestaDAO from '../daos/EncuestaDAO';
 import { SQL_ENCUESTA } from '../repositorios/Encuestas_sql';
+import {SQL_PREGUNTAS} from '../repositorios/Preguntas_sql'
+import {SQL_USUARIO_ENCUESTAS} from '../repositorios/Usuario_Encuestas_sql'
+import {SQL_OPCIONES} from '../repositorios/Opciones_sql'
 
-class EncuestaControlador extends RolDAO {
+class EncuestaControlador extends EncuestaDAO {
 
   public listarEncuestas(req: Request, res: Response) {
-    EncuestaControlador.listarLasEncuestas(SQL_ENCUESTA.LISTAR, req, res);
+    const codigoUsuario = req.params.codUsuario;
+    const miParametro = [codigoUsuario];
+    EncuestaControlador.listarLasEncuestas(SQL_ENCUESTA.LISTAR, miParametro, res);
   }
 
   public listarEventos(req: Request, res: Response) {
@@ -21,33 +26,23 @@ class EncuestaControlador extends RolDAO {
   }
 
   public listarTiposDependencia(req: Request, res: Response) {
-    const buscarDependencia = req.params.codDependencia;
-    const miParametro = [buscarDependencia];
-    if (!buscarDependencia) { return res.status(400).json({ 'Error': 'No se encontro un parametro' }) }
-    EncuestaControlador.listarLosTiposDependencia(SQL_ENCUESTA.LISTAR_TIPO_DEPENDENCIAS, miParametro, res);
+    EncuestaControlador.listarLosTiposDependencia(SQL_ENCUESTA.LISTAR_TIPO_DEPENDENCIAS,req, res);
   }
 
   public crearEncuesta(req: Request, res: Response) {
     const misParametros = [
-      req.body[0].codDependencia,
-      req.body[0].codTipoEvento,
-      req.body[0].nombreEncuesta,
-      req.body[0].descripcionEncuesta,
-      req.body[0].fechaCreacionEncuesta,
-      req.body[0].fechaCierreEncuesta,
-      req.body[1].descripcionPregunta,
-      req.body[1].codTipoPregunta,
+    req.body[0].codTipoDependencia,
+    req.body[0].codTipoEvento,
+    req.body[0].nombreEncuesta,
+    req.body[0].fechaCreacionEncuesta,
+    req.body[0].fechaCierreEncuesta,
+    req.body[0].descripcionEncuesta,
+    req.body[0].codUsuario,
     ];
-    EncuestaControlador.crearEncuesta(SQL_ENCUESTA.CREAR_ENCUESTA, SQL_ENCUESTA.CREAR_PREGUNTAS, misParametros, res);
+    const arregloPreguntas=req.body[1];
+    EncuestaControlador.crearEncuesta(SQL_ENCUESTA.CREAR_ENCUESTA, SQL_PREGUNTAS.CREAR_PREGUNTAS, SQL_OPCIONES.CREAR_OPCIONES, SQL_USUARIO_ENCUESTAS.CREAR_USUARIO_ENCUESTAS, misParametros, arregloPreguntas,res);
   }
 
-  public crearPreguntas(req: Request, res: Response) {
-    const losParametros = [
-      req.body.codTipoPregunta,
-      req.body.descripcionPregunta,
-    ];
-    EncuestaControlador.crearLasPreguntas(SQL_ENCUESTA.CREAR_PREGUNTAS, losParametros, res);
-  }
 
   public seleccionarEncuestaModificar(req: Request, res: Response) {
     const seleccionarEncuesta = req.params.codEncuesta;
@@ -58,13 +53,13 @@ class EncuestaControlador extends RolDAO {
 
   public modificarEncuesta(req: Request, res: Response) {
     const codigoEncuesta = req.params.codEncuesta;
-    const codigoDependencia = req.body.codDependencia;
+    const codigoTipoDependencia = req.body.codTipoDependencia;
     const codigoEvento = req.body.codTipoEvento;
     const nombreEncuesta = req.body.nombreEncuesta;
     const descripcionEncuesta = req.body.descripcionEncuesta;
     const fechaCreacion = req.body.fechaCreacionEncuesta;
     const fechaCierre = req.body.fechaCierreEncuesta;
-    const misParametros = [codigoEncuesta, codigoDependencia, codigoEvento, nombreEncuesta, descripcionEncuesta, fechaCreacion, fechaCierre];
+    const misParametros = [codigoEncuesta, codigoTipoDependencia, codigoEvento, nombreEncuesta, descripcionEncuesta, fechaCreacion, fechaCierre];
     EncuestaControlador.modificarLaEncuesta(SQL_ENCUESTA.MODIFICAR_ENCUESTA, misParametros, res);
   }
 

@@ -42,7 +42,7 @@ export class RegistroComponent implements OnInit {
   //Métodos obligatorios
   // ********************************************/
   public inicializarRegistro(): Registro {
-    return new Registro('', '', '', '', '', '');
+    return new Registro('', '', '', '','', '');
   }
 
   //Lógica del negocio

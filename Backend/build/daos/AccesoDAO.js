@@ -27,12 +27,7 @@ class AccesoDAO {
                 }
                 else {
                     const miTokencito = jsonwebtoken_1.default.sign({ datos: arreglo, alg: 'HS256', typ: 'JWT' }, 'LaClaveSuperSecreta');
-                    res.status(200).json({
-                        tokenFullStack: miTokencito,
-                        nombreRol: arreglo[0].nombreRol,
-                        estadoRol: arreglo[0].estadoRol,
-                        estadoUsuario: arreglo[0].estadoUsuario
-                    });
+                    res.status(200).json({ tokenFullStack: miTokencito, nombreRol: arreglo[0].nombreRol, estadoRol: arreglo[0].estadoRol, estadoUsuario: arreglo[0].estadoUsuario });
                 }
             })
                 .catch((miError) => {
@@ -50,8 +45,9 @@ class AccesoDAO {
                     const nombres = parametros[1];
                     const apellidos = parametros[2];
                     const documento = parametros[3];
-                    const nuevoUsuario = yield consulta.one(sqlAgreUsu, [documento, nombres, apellidos]);
-                    const clavecita = parametros[4];
+                    const telefono = parametros[4];
+                    const nuevoUsuario = yield consulta.one(sqlAgreUsu, [documento, nombres, apellidos, telefono]);
+                    const clavecita = parametros[5];
                     yield consulta.none(sqlAgreAcceso, [nuevoUsuario.codUsuario, correito, clavecita]);
                     yield consulta.none(sqlAgreIngreso, [nuevoUsuario.codUsuario]);
                     return yield consulta.result(sqlTodoListo, [nuevoUsuario.codUsuario]);

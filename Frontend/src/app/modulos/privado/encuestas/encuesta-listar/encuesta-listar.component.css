@@ -21,11 +21,16 @@ a{
 
 .buscar{
   display: flex;
-  justify-content: center
+  justify-content: center;
+  width: 100%;
 }
 
 .btn-buscar{
   cursor: auto;
 }
+
+
+
+
 
 

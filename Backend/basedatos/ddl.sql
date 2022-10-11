@@ -78,7 +78,7 @@ alter table roles owner to user_encuestas;
 
 CREATE TABLE encuestas(
 cod_encuesta SERIAL NOT NULL,
-cod_dependencia int not null,
+cod_tipo_dependencia int not null,
 cod_tipo_evento int not null,
 nombre_encuesta varchar(200) not null,
 fecha_creacion_encuesta DATE not null,
@@ -141,20 +141,24 @@ constraint pk_tipo_opciones primary key (cod_opcion)
 
 alter table opciones owner to user_encuestas;
 
-CREATE TABLE usuarios_respuestas_opciones(
+CREATE TABLE usuarios_preguntas(
 cod_usuario int not null,
-cod_opcion int not null,
-respuesta_usuario text not null
+cod_pregunta int not null,
+respuesta_abierta text,
+respuesta_fecha date,
+cod_opcion int
+constraint pk_usuarios_preguntas primary key (cod_usuario,cod_pregunta)
 );
 
-alter table usuarios_respuestas_opciones owner to user_encuestas;
+alter table usuarios_preguntas owner to user_encuestas;
 
-CREATE TABLE asignados(
+CREATE TABLE usuario_encuestas(
 	cod_usuario int not null,
-	cod_encuesta int not null
+	cod_encuesta int not null,
+	constraint pk_usuarios_encuestas primary key (cod_usuario,cod_encuesta)
 );
 
-alter table asignados owner to user_encuestas;
+alter table usuario_encuestas owner to user_encuestas;
 
 alter table accesos
 add constraint fk_accesos_ref_usuarios foreign key (cod_usuario)
@@ -173,7 +177,7 @@ add constraint fk_usuarios_ref_imagenes foreign key (cod_imagen)
 references imagenes (cod_imagen)
 on delete restrict on update cascade;
 
-alter table asignados
+alter table usuario_encuestas
 add constraint fk_asignados_ref_usuarios foreign key (cod_usuario)
 references usuarios (cod_usuario),
 add constraint fk_asignados_ref_encuestas foreign key (cod_encuesta)
@@ -181,8 +185,8 @@ references encuestas (cod_encuesta)
 on delete restrict on update cascade;
 
 alter table encuestas
-add constraint fk_encuestas_ref_dependencias foreign key (cod_dependencia)
-references dependencias (cod_dependencia),
+add constraint fk_encuestas_ref_dependencias foreign key (cod_tipo_dependencia)
+references tipo_dependencias (cod_tipo_dependencia),
 add constraint fk_encuestas_ref_tipo_eventos foreign key (cod_tipo_evento)
 references tipo_eventos (cod_tipo_evento)
 on delete restrict on update cascade;
@@ -204,9 +208,11 @@ add constraint fk_opciones_ref_preguntas foreign key (cod_pregunta)
 references preguntas (cod_pregunta)
 on delete restrict on update cascade;
 
-alter table usuarios_respuestas_opciones
+alter table usuarios_preguntas
 add constraint fk_respuestas_ref_usuarios foreign key (cod_usuario)
 references usuarios (cod_usuario),
+add constraint fk_respuestas_ref_preguntas foreign key (cod_pregunta)
+references preguntas (cod_pregunta)
 add constraint fk_respuestas_ref_opciones foreign key (cod_opcion)
 references opciones (cod_opcion)
 on delete restrict on update cascade;

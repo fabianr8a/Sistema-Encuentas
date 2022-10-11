@@ -5,9 +5,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const EncuestaDAO_1 = __importDefault(require("../daos/EncuestaDAO"));
 const Encuestas_sql_1 = require("../repositorios/Encuestas_sql");
+const Preguntas_sql_1 = require("../repositorios/Preguntas_sql");
+const Usuario_Encuestas_sql_1 = require("../repositorios/Usuario_Encuestas_sql");
+const Opciones_sql_1 = require("../repositorios/Opciones_sql");
 class EncuestaControlador extends EncuestaDAO_1.default {
     listarEncuestas(req, res) {
-        EncuestaControlador.listarLasEncuestas(Encuestas_sql_1.SQL_ENCUESTA.LISTAR, req, res);
+        const codigoUsuario = req.params.codUsuario;
+        const miParametro = [codigoUsuario];
+        EncuestaControlador.listarLasEncuestas(Encuestas_sql_1.SQL_ENCUESTA.LISTAR, miParametro, res);
     }
     listarEventos(req, res) {
         EncuestaControlador.listarLosEventos(Encuestas_sql_1.SQL_ENCUESTA.LISTAR_EVENTOS, req, res);
@@ -19,32 +24,20 @@ class EncuestaControlador extends EncuestaDAO_1.default {
         EncuestaControlador.listarLasDependencias(Encuestas_sql_1.SQL_ENCUESTA.LISTAR_DEPENDENCIAS, req, res);
     }
     listarTiposDependencia(req, res) {
-        const buscarDependencia = req.params.codDependencia;
-        const miParametro = [buscarDependencia];
-        if (!buscarDependencia) {
-            return res.status(400).json({ 'Error': 'No se encontro un parametro' });
-        }
-        EncuestaControlador.listarLosTiposDependencia(Encuestas_sql_1.SQL_ENCUESTA.LISTAR_TIPO_DEPENDENCIAS, miParametro, res);
+        EncuestaControlador.listarLosTiposDependencia(Encuestas_sql_1.SQL_ENCUESTA.LISTAR_TIPO_DEPENDENCIAS, req, res);
     }
     crearEncuesta(req, res) {
         const misParametros = [
-            req.body[0].codDependencia,
+            req.body[0].codTipoDependencia,
             req.body[0].codTipoEvento,
             req.body[0].nombreEncuesta,
-            req.body[0].descripcionEncuesta,
             req.body[0].fechaCreacionEncuesta,
             req.body[0].fechaCierreEncuesta,
-            req.body[1].descripcionPregunta,
-            req.body[1].codTipoPregunta,
+            req.body[0].descripcionEncuesta,
+            req.body[0].codUsuario,
         ];
-        EncuestaControlador.crearEncuesta(Encuestas_sql_1.SQL_ENCUESTA.CREAR_ENCUESTA, Encuestas_sql_1.SQL_ENCUESTA.CREAR_PREGUNTAS, misParametros, res);
-    }
-    crearPreguntas(req, res) {
-        const losParametros = [
-            req.body.codTipoPregunta,
-            req.body.descripcionPregunta,
-        ];
-        EncuestaControlador.crearLasPreguntas(Encuestas_sql_1.SQL_ENCUESTA.CREAR_PREGUNTAS, losParametros, res);
+        const arregloPreguntas = req.body[1];
+        EncuestaControlador.crearEncuesta(Encuestas_sql_1.SQL_ENCUESTA.CREAR_ENCUESTA, Preguntas_sql_1.SQL_PREGUNTAS.CREAR_PREGUNTAS, Opciones_sql_1.SQL_OPCIONES.CREAR_OPCIONES, Usuario_Encuestas_sql_1.SQL_USUARIO_ENCUESTAS.CREAR_USUARIO_ENCUESTAS, misParametros, arregloPreguntas, res);
     }
     seleccionarEncuestaModificar(req, res) {
         const seleccionarEncuesta = req.params.codEncuesta;
@@ -56,13 +49,13 @@ class EncuestaControlador extends EncuestaDAO_1.default {
     }
     modificarEncuesta(req, res) {
         const codigoEncuesta = req.params.codEncuesta;
-        const codigoDependencia = req.body.codDependencia;
+        const codigoTipoDependencia = req.body.codTipoDependencia;
         const codigoEvento = req.body.codTipoEvento;
         const nombreEncuesta = req.body.nombreEncuesta;
         const descripcionEncuesta = req.body.descripcionEncuesta;
         const fechaCreacion = req.body.fechaCreacionEncuesta;
         const fechaCierre = req.body.fechaCierreEncuesta;
-        const misParametros = [codigoEncuesta, codigoDependencia, codigoEvento, nombreEncuesta, descripcionEncuesta, fechaCreacion, fechaCierre];
+        const misParametros = [codigoEncuesta, codigoTipoDependencia, codigoEvento, nombreEncuesta, descripcionEncuesta, fechaCreacion, fechaCierre];
         EncuestaControlador.modificarLaEncuesta(Encuestas_sql_1.SQL_ENCUESTA.MODIFICAR_ENCUESTA, misParametros, res);
     }
 }

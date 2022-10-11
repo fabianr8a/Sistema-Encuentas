@@ -10,16 +10,6 @@ class UsuarioControlador extends UsuarioDAO_1.default {
     obtenerTodosUsuario(req, res) {
         UsuarioControlador.obtenerTodosUsu(Usuario_sql_1.SQL_USUARIO.TODOS, req, res);
     }
-    buscarUsuario(req, res) {
-        const buscar = req.body.nombresUsuario;
-        const miParametro = [buscar];
-        if (buscar === '') {
-            UsuarioControlador.obtenerTodosUsu(Usuario_sql_1.SQL_USUARIO.TODOS, req, res);
-        }
-        else {
-            UsuarioControlador.buscarUsuario(Usuario_sql_1.SQL_USUARIO.BUSCAR, miParametro, res);
-        }
-    }
     crearUsuario(req, res) {
         const misParametros = [
             req.body.codRol,

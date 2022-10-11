@@ -13,6 +13,9 @@ import { OnInit } from '@angular/core';
 import { TipoEventos } from 'src/app/modelos/tipo_eventos';
 import { EncuestaService } from 'src/app/servicios/encuesta.service';
 import { Component } from '@angular/core';
+import { AccesoService } from 'src/app/servicios/acceso.service';
+import { Opciones } from 'src/app/modelos/opciones';
+
 
 @Component({
   selector: 'app-encuesta-crear',
@@ -20,9 +23,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./encuesta-crear.component.css'],
 })
 export class EncuestaCrearComponent implements OnInit {
+  arregloEscala=[{nombre:'1'},
+          {nombre:'2'},
+          {nombre:'3'},
+          {nombre:'4'},
+          {nombre:'5'}];
+
   arregloPreguntas: Preguntas[] = [];
-  opciones = [{ id: 0, opcion: '', placeholder: 'Opción' }];
-  text = ((document.getElementById("pregunFecha") as HTMLTextAreaElement));
+  arregloOpciones:Opciones[]=[];
 
   public arregloEvento: TipoEventos[];
   public arregloTipoPreguntas: TipoPreguntas[];
@@ -33,6 +41,7 @@ export class EncuestaCrearComponent implements OnInit {
   public temporal: any;
   public objEncuesta: Encuesta;
   public objPregunta: Preguntas;
+  public objOpciones:Opciones;
   public miSuscripcion: Subscription;
   public cargaFinalizada: boolean;
   public miSuscripcionEliminar: Subscription;
@@ -44,7 +53,8 @@ export class EncuestaCrearComponent implements OnInit {
     public tipoDependenciasService: EncuestaService,
     public encuestaService: EncuestaService,
     private toastrService: ToastrService,
-    private router: Router
+    private router: Router,
+    private acceso:AccesoService,
   ) {
     //Inicializar atributos requeridos
     this.arregloEvento = [];
@@ -53,6 +63,7 @@ export class EncuestaCrearComponent implements OnInit {
     this.arregloTiposDependencia = [];
     this.objEncuesta = this.inicializarEncuesta();
     this.objPregunta = this.inicializarPregunta();
+    this.objOpciones=this.inicializarOpciones();
 
     //Inicializar consumo de servicios
     this.miSuscripcion = this.temporal;
@@ -73,15 +84,22 @@ export class EncuestaCrearComponent implements OnInit {
     this.listarEventos();
     this.listarTipoPreguntas();
     this.listarDependencias();
+    this.obtenerTiposDependencia();
+
   }
 
   //Metodos obligatorios
   public inicializarEncuesta(): Encuesta {
-    return new Encuesta(0, 0, 0, '', '', '', '', 0, '');
+    return new Encuesta(0, 0, 0,0, '', '', '', '',this.acceso.objAcceso.codUsuario, '','');
   }
 
+
   public inicializarPregunta() {
-    return new Preguntas(0, 0, '', 0);
+    return new Preguntas(0, 0, '', 0,[]);
+  }
+
+  public inicializarOpciones(){
+    return new Opciones(0,0,'')
   }
 
   //Lógica del negocio - Servicios
@@ -128,9 +146,9 @@ export class EncuestaCrearComponent implements OnInit {
       .subscribe(observadorAny);
   }
 
-  public obtenerTiposDependencia(codDependencia: number): void {
+  public obtenerTiposDependencia(): void {
     this.miSuscripcion = this.tipoDependenciasService
-      .listarTipoDependencias(codDependencia)
+      .listarTipoDependencias()
       .pipe(
         map((respuesta) => {
           this.arregloTiposDependencia = respuesta;
@@ -146,47 +164,40 @@ export class EncuestaCrearComponent implements OnInit {
   }
 
   //agregar preguntas en un array
-  public agregarPreguntas(tipoPregunta: any): void {
-    let indice=this.arregloPreguntas.length;
-    let objPreguntica = new Preguntas(indice, tipoPregunta, '', 0);
+  public crearPreguntas(tipoPregunta: any): void {
+    let codigoPregunta=this.arregloPreguntas.length+1;
+    let objPreguntica = new Preguntas(codigoPregunta, tipoPregunta, '', 0,[]);
     this.arregloPreguntas.push(objPreguntica);
-    console.log(this.arregloPreguntas);
   }
 
 
-
-  public getInputValue(inputValue:string){
-    console.log(inputValue);
-  }
-
-
-
-
-  //agregar opciones al tipo de pregunta de seleccion en un json
-  public agregarOpciones(opcion: string): void {
-    let indice=this.opciones.length;
-    this.opciones.push({
-      id: indice,
-      opcion: opcion,
-      placeholder: 'Opción',
-    });
-    console.log(this.opciones);
-  }
-
-  public eliminarOpciones(id: number) {
-    for (var i = 0; i < this.opciones.length; i++) {
-      if (this.opciones[i].id == id) {
-        this.opciones.splice(i, 1);
-        break;
+    public eliminarPregunta(descripcion:string) {
+      for (var i = 0; i < this.arregloPreguntas.length; i++) {
+        if (this.arregloPreguntas[i].descripcionPregunta == descripcion) {
+          this.arregloPreguntas.splice(i, 1);
+          break;
+        }
       }
     }
-  }
 
-  public eliminarPreguntas(id: number) {
+    //agregar opciones al tipo de pregunta de seleccion en un array
+    public agregarOpciones(codPregunta:number): void {
+      let objOpcion = new Opciones(0,codPregunta,'');
+     this.arregloPreguntas.map((pregunta)=>{
+      if (pregunta.codPregunta===codPregunta) {
+        pregunta.arregloOpciones.push(objOpcion);
+      }
+     });
+    }
+
+  public eliminarOpciones(indicePregunta: number) {
     for (var i = 0; i < this.arregloPreguntas.length; i++) {
-      if (this.arregloPreguntas[i].codPregunta == id) {
-        this.arregloPreguntas.splice(i, 1);
-        break;
+      if (this.arregloPreguntas[i].codPregunta === indicePregunta) {
+        this.arregloPreguntas[i].arregloOpciones.map((codigoOpcion)=>{
+          codigoOpcion.textoOpcion.slice(i, 1);
+        })//es splice
+
+
       }
     }
   }
@@ -201,7 +212,7 @@ export class EncuestaCrearComponent implements OnInit {
             'success',
             'Se creó la encuesta',
             'Exito',
-            this.toastrService
+            this.toastrService,
           );
           this.router.navigate(['/private/encuestas/listar-encuesta']);
         }),

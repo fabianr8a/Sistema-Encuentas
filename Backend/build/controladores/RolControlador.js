@@ -9,18 +9,7 @@ class RolControlador extends RolDAO_1.default {
     obtenerTodosRoles(req, res) {
         RolControlador.obtenerTodos(Roles_sql_1.SQL_ROL.TODOS, req, res);
     }
-    buscarRoles(req, res) {
-        const buscar = req.body.nombreRol;
-        const miParametro = [buscar];
-        if (buscar === '') {
-            RolControlador.obtenerTodos(Roles_sql_1.SQL_ROL.TODOS, req, res);
-        }
-        else {
-            RolControlador.buscarRol(Roles_sql_1.SQL_ROL.BUSCAR, miParametro, res);
-        }
-    }
     eliminarRol(req, res) {
-        console.log(req);
         const codiguito = req.params.codigo;
         const losParametros = [codiguito];
         RolControlador.eliminarRol(Roles_sql_1.SQL_ROL.ELIMINAR, losParametros, res);

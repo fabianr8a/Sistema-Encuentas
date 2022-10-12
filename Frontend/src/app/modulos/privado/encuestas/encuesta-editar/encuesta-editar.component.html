@@ -66,13 +66,13 @@
               aria-controls="contact"
               aria-selected="false"
             >
-            <i class="fa-solid fa-file-circle-plus"></i>
+              <i class="fa-solid fa-file-circle-plus"></i>
               Crear preguntas
             </button>
           </li>
         </ul>
         <br />
-        <form #frmModificarEncuesta="ngForm" novalidate>
+
           <div class="tab-content" id="myTabContent">
             <!-- Información de la encuesta -->
             <div
@@ -81,6 +81,7 @@
               role="tabpanel"
               aria-labelledby="home-tab"
             >
+            <form #frmModificarEncuesta="ngForm" novalidate>
               <div class="card mb-4 encabezado">
                 <div
                   class="card-header"
@@ -313,6 +314,7 @@
                   </p>
                 </div>
               </div>
+              </form>
             </div>
 
             <!-- Preguntas de la encuesta -->
@@ -322,6 +324,7 @@
               role="tabpanel"
               aria-labelledby="profile-tab"
             >
+            <form #frmModificarEncuesta="ngForm">
               <div class="card-body">
                 <div
                   class="card-header"
@@ -340,11 +343,18 @@
                   <div [ngSwitch]="pregunta.codTipoPregunta">
                     <!--Pregunta y respuesta de fecha---->
                     <div *ngSwitchCase="1" class="card mb-4 seccion-preguntas">
-                      <i
+                      <div class="col-md-3 opciones-editar">
+                        <i
+                        class="fa-solid fa-file-pen"
+                        title="Modificar pregunta"
+                        (click)="modificarPregunta(pregunta)"
+                      ></i>&nbsp;
+                        <i
                         class="fas fa-trash-can"
                         title="Eliminar pregunta"
                         (click)="eliminarPregunta(pregunta.codPregunta)"
                       ></i>
+                      </div>
                       <div class="form-floating">
                         <textarea
                           class="pregunta"
@@ -359,7 +369,6 @@
                           }"
                           required
                         ></textarea>
-
                         <div
                           class="text-danger"
                           *ngIf="
@@ -387,11 +396,18 @@
 
                     <!--!--Pregunta y respuesta abierta---->
                     <div *ngSwitchCase="2" class="card mb-4 seccion-preguntas">
-                      <i
+                      <div class="col-md-3 opciones-editar">
+                        <i
+                        class="fa-solid fa-file-pen"
+                        title="Modificar pregunta"
+                        (click)="modificarPregunta(pregunta)"
+                      ></i>&nbsp;
+                        <i
                         class="fas fa-trash-can"
                         title="Eliminar pregunta"
                         (click)="eliminarPregunta(pregunta.codPregunta)"
                       ></i>
+                      </div>
                       <div class="form-floating">
                         <textarea
                           class="pregunta"
@@ -428,11 +444,18 @@
 
                     <!--!--Pregunta y respuesta de selección multiple-->
                     <div *ngSwitchCase="3" class="card mb-4 seccion-preguntas">
-                      <i
+                      <div class="col-md-3 opciones-editar">
+                        <i
+                        class="fa-solid fa-file-pen"
+                        title="Modificar pregunta"
+                        (click)="modificarPregunta(pregunta)"
+                      ></i>&nbsp;
+                        <i
                         class="fas fa-trash-can"
                         title="Eliminar pregunta"
                         (click)="eliminarPregunta(pregunta.codPregunta)"
                       ></i>
+                      </div>
                       <div class="form-floating">
                         <textarea
                           class="pregunta"
@@ -466,13 +489,13 @@
                           let indiceOp = index
                         "
                       >
-                        <div class="col-md-9 custom-control custom-radio">
+                        <div class="col-md-8 custom-control custom-radio">
                           <input
                             type="radio"
                             name="customRadio"
                             class="custom-control-input"
                             id="radio"
-                          />
+                          />&nbsp;
                           <input
                             type="text"
                             class="custom-control-label"
@@ -490,6 +513,12 @@
                               title="Eliminar opción"
                               tooltip-dir="left"
                               (click)="eliminarOpciones(opcion)"
+                            ></i
+                            >&nbsp;&nbsp;
+                            <i
+                              class="fas fa-pen-to-square"
+                              title="Modificar opción"
+                              (click)="modificarOpcion(opcion)"
                             ></i>
                           </div>
                         </div>
@@ -498,11 +527,18 @@
 
                     <!--Pregunta y respuesta de escala---->
                     <div *ngSwitchCase="4" class="card mb-4 seccion-preguntas">
-                      <i
+                      <div class="col-md-3 opciones-editar">
+                        <i
+                        class="fa-solid fa-file-pen"
+                        title="Modificar pregunta"
+                        (click)="modificarPregunta(pregunta)"
+                      ></i>&nbsp;
+                        <i
                         class="fas fa-trash-can"
                         title="Eliminar pregunta"
                         (click)="eliminarPregunta(pregunta.codPregunta)"
                       ></i>
+                      </div>
                       <div class="form-floating">
                         <textarea
                           class="pregunta"
@@ -597,15 +633,7 @@
                   </div>
                 </div>
               </div>
-              <p style="text-align: center; margin-bottom: 10px">
-                <button
-                  type="button"
-                  class="btn btn-primary crear"
-                  (click)="modificarPregunta()"
-                >
-                  Modificar
-                </button>
-              </p>
+            </form>
             </div>
 
             <!--Crear nuevas preguntas---->
@@ -634,7 +662,7 @@
                           <select
                             class="form-control"
                             name="tipo_pregunta"
-                            [(ngModel)]="objPregunta.codTipoPregunta"
+                            [(ngModel)]="objPreguntaNueva.codTipoPregunta"
                             #tipo_pregunta="ngModel"
                             aria-label="Default select example"
                             [ngClass]="{
@@ -658,7 +686,7 @@
                             class="fa fa-circle-plus fa-2x"
                             title="Agregar pregunta"
                             (click)="
-                              crearPreguntas(objPregunta.codTipoPregunta)
+                              crearPreguntas(objPreguntaNueva.codTipoPregunta)
                             "
                           ></i>
                           <div
@@ -682,15 +710,20 @@
               <!--Seccion de preguntas---->
               <div class="card-body">
                 <div
-                  *ngFor="let nuevaPregunta of arregloPreguntasNuevas; let indice = index"
+                  *ngFor="
+                    let nuevaPregunta of arregloPreguntasNuevas;
+                    let indice = index
+                  "
                 >
                   <div [ngSwitch]="nuevaPregunta.codTipoPregunta">
                     <!--Pregunta y respuesta de fecha---->
                     <div *ngSwitchCase="1" class="card mb-4 seccion-preguntas">
                       <i
-                        class="fas fa-trash-can"
+                        class="fas fa-trash-can eliminar"
                         title="Eliminar pregunta"
-                        (click)="eliminarPreguntaNueva(nuevaPregunta.codPregunta)"
+                        (click)="
+                          eliminarPreguntaNueva(nuevaPregunta.codPregunta)
+                        "
                       ></i>
                       <div class="form-floating">
                         <textarea
@@ -735,9 +768,11 @@
                     <!--Pregunta y respuesta abierta---->
                     <div *ngSwitchCase="2" class="card mb-4 seccion-preguntas">
                       <i
-                        class="fas fa-trash-can"
+                        class="fas fa-trash-can eliminar"
                         title="Eliminar pregunta"
-                        (click)="eliminarPreguntaNueva(nuevaPregunta.codPregunta)"
+                        (click)="
+                          eliminarPreguntaNueva(nuevaPregunta.codPregunta)
+                        "
                       ></i>
                       <div class="form-floating">
                         <textarea
@@ -776,9 +811,11 @@
                     <!--!--Pregunta y respuesta de selección multiple-->
                     <div *ngSwitchCase="3" class="card mb-4 seccion-preguntas">
                       <i
-                        class="fas fa-trash-can"
+                        class="fas fa-trash-can eliminar"
                         title="Eliminar pregunta"
-                        (click)="eliminarPreguntaNueva(nuevaPregunta.codPregunta)"
+                        (click)="
+                          eliminarPreguntaNueva(nuevaPregunta.codPregunta)
+                        "
                       ></i>
                       <div class="form-floating">
                         <textarea
@@ -809,7 +846,7 @@
                       <div
                         class="row"
                         *ngFor="
-                          let opcion of objPregunta.arregloOpciones;
+                          let opcionNueva of nuevaPregunta.arregloOpcionesNuevas;
                           let indiceOp = index
                         "
                       >
@@ -828,7 +865,7 @@
                             id="opcion{{ indiceOp }}{{ indice }}"
                             name="opcion{{ indiceOp }}{{ indice }}"
                             #opcion="ngModel"
-                            [(ngModel)]="opcion.textoOpcion"
+                            [(ngModel)]="opcionNueva.textoOpcion"
                             required
                           />
 
@@ -837,13 +874,14 @@
                               class="fas fa-xmark"
                               title="Eliminar opción"
                               tooltip-dir="left"
+                              (click)="eliminarOpcionesNuevas(indice,indiceOp)"
                             ></i>
                           </div>
                         </div>
                       </div>
 
                       <span
-                        (click)="agregarOpciones(nuevaPregunta.codPregunta)"
+                        (click)="agregarOpcionesNuevas(nuevaPregunta.codPregunta)"
                         class="otra-opcion"
                         >Añadir opción</span
                       >
@@ -852,9 +890,11 @@
                     <!--Pregunta y respuesta de escala---->
                     <div *ngSwitchCase="4" class="card mb-4 seccion-preguntas">
                       <i
-                        class="fas fa-trash-can"
+                        class="fas fa-trash-can eliminar"
                         title="Eliminar pregunta"
-                        (click)="eliminarPreguntaNueva(nuevaPregunta.codPregunta)"
+                        (click)="
+                          eliminarPreguntaNueva(nuevaPregunta.codPregunta)
+                        "
                       ></i>
                       <div class="form-floating">
                         <textarea
@@ -961,7 +1001,6 @@
               </p>
             </div>
           </div>
-        </form>
       </div>
     </main>
   </div>

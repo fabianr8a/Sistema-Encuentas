@@ -10,8 +10,10 @@ class PreguntaRutas {
   }
 
   public listadoRutas(): void {
-    //seleccionar pregunta para modificar
-    this.miRutaPregunta.get('/preguntas/:codEncuesta', preguntaControlador.seleccionarPregunta);
+    //listar preguntas
+    this.miRutaPregunta.get('/preguntas/:codEncuesta', preguntaControlador.listarPregunta);
+    //seleccionar pregunta
+    this.miRutaPregunta.get('/seleccionar/:codPregunta', preguntaControlador.seleccionarPregunta)
     //modificar
     this.miRutaPregunta.put('/modificar/:codPregunta', preguntaControlador.modificarPregunta);
     //eliminar pregunta

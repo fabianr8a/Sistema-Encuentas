@@ -34,14 +34,14 @@ class OpcionDAO {
             yield conexionBd_1.default.result(sqlOpciones, parametros)
                 .then((resultado) => {
                 if (!resultado) {
-                    res.status(400).json({ respuesta: 'Error seleccionando la opcion' });
+                    res.status(400).json({ respuesta: 'Error listando las opciones' });
                 }
                 res.status(200).json(resultado.rows);
                 console.log(resultado);
             })
                 .catch((miError) => {
                 console.log(miError);
-                res.status(400).json({ respuesta: 'Error seleccionando la opcion' });
+                res.status(400).json({ respuesta: 'Error listando las opciones' });
             });
         });
     }
@@ -55,6 +55,36 @@ class OpcionDAO {
                 .catch((miError) => {
                 console.log(miError);
                 res.status(400).json({ respuesta: 'Error eliminando opcion' });
+            });
+        });
+    }
+    static seleccionarOpcion(sqlSeleccionar, parametros, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield conexionBd_1.default.oneOrNone(sqlSeleccionar, parametros)
+                .then((resultado) => {
+                if (!resultado) {
+                    res.status(400).json({ respuesta: 'Error seleccionando la opcion' });
+                }
+                res.status(200).json(resultado);
+            })
+                .catch((miError) => {
+                console.log(miError);
+                res.status(400).json({ respuesta: 'Error seleccionando la opcion' });
+            });
+        });
+    }
+    static modificarOpcion(sqlModificar, parametros, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield conexionBd_1.default.task((consulta) => __awaiter(this, void 0, void 0, function* () {
+                return yield consulta.result(sqlModificar, parametros);
+            }))
+                .then(() => {
+                res.status(200).json({ respuesta: "Opcion modificada",
+                });
+            })
+                .catch((miError) => {
+                console.log(miError);
+                res.status(400).json({ respuesta: 'Error modificando la opcion' });
             });
         });
     }

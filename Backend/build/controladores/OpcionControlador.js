@@ -19,12 +19,26 @@ class OpcionControlador extends OpcionDAO_1.default {
         if (!seleccionarOpcion) {
             return res.status(400).json({ 'Error': 'No se encontro un parametro' });
         }
-        OpcionControlador.listarOpcion(Opciones_sql_1.SQL_OPCIONES.SELECCIONAR_OPCIONES, miParametro, res);
+        OpcionControlador.listarOpcion(Opciones_sql_1.SQL_OPCIONES.LISTAR_OPCIONES, miParametro, res);
     }
     eliminarOpcion(req, res) {
         const codigo = req.params.codOpcion;
         const losParametros = [codigo];
         OpcionControlador.eliminarOpcion(Opciones_sql_1.SQL_OPCIONES.ELIMINAR_OPCIONES, losParametros, res);
+    }
+    seleccionarOpcion(req, res) {
+        const buscarOpcion = req.params.codOpcion;
+        const miParametro = [buscarOpcion];
+        if (!buscarOpcion) {
+            return res.status(400).json({ 'Error': 'No se encontro un parametro' });
+        }
+        OpcionControlador.seleccionarOpcion(Opciones_sql_1.SQL_OPCIONES.SELECCIONAR_OPCION, miParametro, res);
+    }
+    modificarOpcion(req, res) {
+        const codigoOpcion = req.params.codOpcion;
+        const textoOpcion = req.body.textoOpcion;
+        const misParametros = [codigoOpcion, textoOpcion];
+        OpcionControlador.modificarOpcion(Opciones_sql_1.SQL_OPCIONES.MODIFICAR_OPCIONES, misParametros, res);
     }
 }
 const opcionControlador = new OpcionControlador();

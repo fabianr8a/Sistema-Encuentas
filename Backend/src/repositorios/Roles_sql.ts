@@ -12,5 +12,4 @@ export const SQL_ROL = {
 
   BUSCAR_ROL_MODIFICAR:'select * from roles where cod_rol=$1 ',
 
-  BUSCAR_ROL:'select cod_rol, nombre_rol from roles'
 }

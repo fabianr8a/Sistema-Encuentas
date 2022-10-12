@@ -16,13 +16,21 @@ class PreguntaControlador extends PreguntaDAO_1.default {
         ];
         PreguntaControlador.crearPregunta(Encuestas_sql_1.SQL_ENCUESTA.CREAR_ENCUESTA, Preguntas_sql_1.SQL_PREGUNTAS.CREAR_PREGUNTAS, Opciones_sql_1.SQL_OPCIONES.CREAR_OPCIONES, losParametros, res);
     }
-    seleccionarPregunta(req, res) {
+    listarPregunta(req, res) {
         const seleccionarPregunta = req.params.codEncuesta;
         const miParametro = [seleccionarPregunta];
         if (!seleccionarPregunta) {
             return res.status(400).json({ 'Error': 'No se encontro un parametro' });
         }
-        PreguntaControlador.seleccionarPregunta(Preguntas_sql_1.SQL_PREGUNTAS.SELECCIONAR_PREGUNTAS, miParametro, res);
+        PreguntaControlador.listarPregunta(Preguntas_sql_1.SQL_PREGUNTAS.LISTAR_PREGUNTAS, miParametro, res);
+    }
+    seleccionarPregunta(req, res) {
+        const buscarPregunta = req.params.codPregunta;
+        const miParametro = [buscarPregunta];
+        if (!buscarPregunta) {
+            return res.status(400).json({ 'Error': 'No se encontro un parametro' });
+        }
+        PreguntaControlador.seleccionarPregunta(Preguntas_sql_1.SQL_PREGUNTAS.SELECCIONAR_PREGUNTA, miParametro, res);
     }
     modificarPregunta(req, res) {
         const codigoPregunta = req.params.codPregunta;

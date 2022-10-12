@@ -16,11 +16,18 @@ class PreguntaControlador extends PreguntaDAO {
     PreguntaControlador.crearPregunta(SQL_ENCUESTA.CREAR_ENCUESTA,SQL_PREGUNTAS.CREAR_PREGUNTAS, SQL_OPCIONES.CREAR_OPCIONES,  losParametros,  res);
   }
 
-  public seleccionarPregunta(req: Request, res: Response) {
+  public listarPregunta(req: Request, res: Response) {
     const seleccionarPregunta = req.params.codEncuesta;
     const miParametro = [seleccionarPregunta];
     if(!seleccionarPregunta){return res.status(400).json({'Error':'No se encontro un parametro'})}
-    PreguntaControlador.seleccionarPregunta(SQL_PREGUNTAS.SELECCIONAR_PREGUNTAS, miParametro, res);
+    PreguntaControlador.listarPregunta(SQL_PREGUNTAS.LISTAR_PREGUNTAS, miParametro, res);
+  }
+
+  public seleccionarPregunta(req: Request, res: Response) {
+    const buscarPregunta = req.params.codPregunta;
+    const miParametro = [buscarPregunta];
+    if(!buscarPregunta){return res.status(400).json({'Error':'No se encontro un parametro'})}
+    PreguntaControlador.seleccionarPregunta(SQL_PREGUNTAS.SELECCIONAR_PREGUNTA, miParametro, res);
   }
 
   public modificarPregunta(req: Request, res: Response) {

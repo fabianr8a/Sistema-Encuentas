@@ -12,6 +12,7 @@ import { TOKEN_SISTEMA } from 'src/app/utilidades/dominios/sesiones';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
 import { Acceso } from 'src/app/modelos/acceso';
 import { Rol } from 'src/app/modelos/rol';
+import { RolService } from 'src/app/servicios/rol.service';
 
 @Component({
   selector: 'app-usu-crear',
@@ -41,6 +42,7 @@ export class UsuCrearComponent implements OnInit {
     public toastrService: ToastrService,
     private usuarioService: UsuarioService,
     private router:Router,
+    private rolService:RolService,
   ) {
     this.miSuscripcionUsu = this.temporal;
     this.objUsuario = this.inicializarUsuario();
@@ -116,8 +118,8 @@ export class UsuCrearComponent implements OnInit {
   }
 
   public obtenerTodosRoles(): void {
-    this.miSuscripcionUsu = this.usuarioService
-      .obtenerRol()
+    this.miSuscripcionUsu = this.rolService
+      .cargarRoles()
       .pipe(
         map((resultado: Rol[]) => {
           this.arregloRoles = resultado;

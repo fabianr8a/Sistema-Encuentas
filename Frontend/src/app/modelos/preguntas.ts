@@ -6,6 +6,7 @@ export class Preguntas{
   public descripcionPregunta:any;
   public codEncuesta:number;
   public arregloOpciones:Opciones[];
+  public arregloOpcionesNuevas:Opciones[];
 
 
 
@@ -15,12 +16,13 @@ export class Preguntas{
     descripcionPregunta:any,
     codEncuesta:number,
     arregloOpciones:Opciones[],
+    arregloOpcionesNuevas:Opciones[]
   ){
     this.codPregunta=codPregunta;
     this.codTipoPregunta=codTipoPregunta;
     this.descripcionPregunta=descripcionPregunta;
     this.codEncuesta=codEncuesta;
     this.arregloOpciones=arregloOpciones;
-
+    this.arregloOpcionesNuevas=arregloOpcionesNuevas;
   }
 }

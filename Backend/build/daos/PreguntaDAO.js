@@ -43,19 +43,34 @@ class PreguntaDAO {
             });
         });
     }
-    static seleccionarPregunta(sqlPregunta, parametros, res) {
+    static listarPregunta(sqlPregunta, parametros, res) {
         return __awaiter(this, void 0, void 0, function* () {
             yield conexionBd_1.default.result(sqlPregunta, parametros)
                 .then((resultado) => {
                 if (!resultado) {
-                    res.status(400).json({ respuesta: 'Error seleccionando la pregunta a modificar' });
+                    res.status(400).json({ respuesta: 'Error listando las preguntas' });
                 }
                 res.status(200).json(resultado.rows);
                 console.log(resultado);
             })
                 .catch((miError) => {
                 console.log(miError);
-                res.status(400).json({ respuesta: 'Error seleccionando la pregunta a modificar' });
+                res.status(400).json({ respuesta: 'Error listando las preguntas' });
+            });
+        });
+    }
+    static seleccionarPregunta(sqlSeleccionar, parametros, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield conexionBd_1.default.oneOrNone(sqlSeleccionar, parametros)
+                .then((resultado) => {
+                if (!resultado) {
+                    res.status(400).json({ respuesta: 'Error seleccionando la pregunta' });
+                }
+                res.status(200).json(resultado);
+            })
+                .catch((miError) => {
+                console.log(miError);
+                res.status(400).json({ respuesta: 'Error seleccionando la pregunta' });
             });
         });
     }

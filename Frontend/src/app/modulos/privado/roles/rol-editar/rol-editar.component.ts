@@ -54,6 +54,7 @@ export class RolEditarComponent implements OnInit {
             'exito',
             this.toastrService
           );
+          console.log(this.objRol)
           this.router.navigate(['/private/roles/listar-rol']);
           this.clickCrear = false;
         }),

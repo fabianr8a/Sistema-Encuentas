@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const UsuarioControlador_1 = __importDefault(require("../controladores/UsuarioControlador"));
-const RolControlador_1 = __importDefault(require("../controladores/RolControlador"));
 const AccesoControlador_1 = __importDefault(require("../controladores/AccesoControlador"));
 const ImagenControlador_1 = __importDefault(require("../controladores/ImagenControlador"));
 class UsuarioRutas {
@@ -19,7 +18,6 @@ class UsuarioRutas {
         this.miRutaUsuario.put('/actualizar/:codUsuario', UsuarioControlador_1.default.actualizarUsuario);
         this.miRutaUsuario.put('/actualizar-acceso/:codUsuario', AccesoControlador_1.default.actualizarAcceso);
         this.miRutaUsuario.get('/buscar-usuario/:codUsuario', UsuarioControlador_1.default.buscarUnUsuario);
-        this.miRutaUsuario.get('/buscar-roles', RolControlador_1.default.buscarNombreRoles);
         this.miRutaUsuario.get('/buscar-acceso/:codUsuario', AccesoControlador_1.default.buscarUnAcceso);
         this.miRutaUsuario.get('/buscar-imagen/:codUsuario', ImagenControlador_1.default.buscarUnaImagen);
         this.miRutaUsuario.put('/actualizar-imagen/:codUsuario', ImagenControlador_1.default.actualizarImagen);

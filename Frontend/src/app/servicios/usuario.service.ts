@@ -7,7 +7,6 @@ import {
   API_USUARIO_BUSCAR,
   API_USUARIO_BUSCAR_USUARIO,
   API_USUARIO_MODIFICAR,
-  API_USUARIO_BUSCAR_ROL,
   API_USUARIO_BUSCAR_ACCESO,
   API_USUARIO_MODIFICAR_ACCESO,
   API_USUARIO_MODIFICAR_IMAGEN,
@@ -39,10 +38,6 @@ export class UsuarioService {
 
   public buscarUnUsuario(idUsu: number): Observable<Usuarios> {
     return this.http.get<Usuarios>(`${API_USUARIO_BUSCAR_USUARIO}/${idUsu}`);
-  }
-
-  public obtenerRol(): Observable<Rol[]> {
-    return this.http.get<Rol[]>(API_USUARIO_BUSCAR_ROL);
   }
 
   public buscarUnAcceso(idUsu: number): Observable<Acceso> {

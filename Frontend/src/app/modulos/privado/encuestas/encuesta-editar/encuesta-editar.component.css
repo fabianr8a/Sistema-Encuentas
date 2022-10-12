@@ -202,7 +202,7 @@ a {
 
 .pregunta {
   font-size: 17px;
-  width: 97%;
+  width: 95%;
   height: 50px;
   line-height: 23px;
   border-radius: 3px;
@@ -292,6 +292,11 @@ a {
 
 .fa-xmark {
   cursor: pointer;
+  color: rgb(187, 26, 26);
+}
+
+.fa-pen-to-square{
+  color: #2f68be;
 }
 
 .fa-xmark:after {
@@ -318,7 +323,6 @@ a {
 .fa-xmark[tooltip-dir="top"]:after {
   left: 50%;
   right: auto;
-
   transform: translateX(-50%);
 }
 
@@ -337,8 +341,8 @@ a {
   visibility: visible;
 }
 
-.fa-trash-can {
-  margin-left: 98%;
+.opciones-editar {
+  margin-left: 95%;
 }
 
 .form-check-input {
@@ -359,7 +363,16 @@ a {
   color: #2f68be;
 }
 
+.fa-file-pen{
+  cursor: pointer;
+  color: #2f68be;
+}
+
 .tipo-pregunta{
   align-items: center;
   display: flex;
+}
+
+.eliminar{
+  margin-left: 96%;
 }

@@ -82,17 +82,5 @@ class RolDAO {
             });
         });
     }
-    static obtenerNombresRol(sql, parametros, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            yield conexionBd_1.default.result(sql, parametros)
-                .then((resultado) => {
-                res.status(200).json(resultado.rows);
-            })
-                .catch((miError) => {
-                console.log(miError);
-                res.status(400).json({ respuesta: 'Error en la consulta rol' });
-            });
-        });
-    }
 }
 exports.default = RolDAO;

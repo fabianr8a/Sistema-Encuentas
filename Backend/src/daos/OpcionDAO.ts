@@ -19,13 +19,13 @@ class OpcionDAO {
   protected static async listarOpcion(sqlOpciones: string, parametros: any, res: Response): Promise<any> {
     await pool.result(sqlOpciones, parametros)
       .then((resultado: any) => {
-        if (!resultado) { res.status(400).json({ respuesta: 'Error seleccionando la opcion' }); }
+        if (!resultado) { res.status(400).json({ respuesta: 'Error listando las opciones' }); }
         res.status(200).json(resultado.rows);
         console.log(resultado)
       })
       .catch((miError: any) => {
         console.log(miError);
-        res.status(400).json({ respuesta: 'Error seleccionando la opcion' });
+        res.status(400).json({ respuesta: 'Error listando las opciones' });
       });
   }
 
@@ -38,6 +38,32 @@ class OpcionDAO {
       .catch((miError: any) => {
         console.log(miError);
         res.status(400).json({ respuesta: 'Error eliminando opcion' });
+      });
+  }
+
+  protected static async seleccionarOpcion(sqlSeleccionar: string, parametros: any, res: Response): Promise<any> {
+    await pool.oneOrNone(sqlSeleccionar, parametros)
+      .then((resultado: any) => {
+        if(!resultado){ res.status(400).json({ respuesta: 'Error seleccionando la opcion' });}
+        res.status(200).json(resultado);
+      })
+      .catch((miError: any) => {
+        console.log(miError);
+        res.status(400).json({ respuesta: 'Error seleccionando la opcion' });
+      });
+  }
+
+  protected static async modificarOpcion(sqlModificar: string, parametros: any, res: Response): Promise<any> {
+    await pool.task(async(consulta:any)=>{
+      return await consulta.result(sqlModificar,parametros);
+    })
+      .then(() => {
+        res.status(200).json({respuesta: "Opcion modificada",
+        });
+      })
+      .catch((miError: any) => {
+        console.log(miError);
+        res.status(400).json({ respuesta: 'Error modificando la opcion' });
       });
   }
 }

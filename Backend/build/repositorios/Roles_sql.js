@@ -10,5 +10,4 @@ exports.SQL_ROL = {
     CREAR: 'INSERT INTO roles(nombre_rol, estado_rol) VALUES ($1, 1) RETURNING cod_rol',
     MODIFICAR: 'UPDATE roles SET nombre_rol=$2, estado_rol=$3 WHERE cod_rol=$1;',
     BUSCAR_ROL_MODIFICAR: 'select * from roles where cod_rol=$1 ',
-    BUSCAR_ROL: 'select cod_rol, nombre_rol from roles'
 };

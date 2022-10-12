@@ -95,7 +95,7 @@ export class EncuestaCrearComponent implements OnInit {
 
 
   public inicializarPregunta() {
-    return new Preguntas(0, 0, '', 0,[]);
+    return new Preguntas(0, 0, '', 0,[],[]);
   }
 
   public inicializarOpciones(){
@@ -166,7 +166,7 @@ export class EncuestaCrearComponent implements OnInit {
   //agregar preguntas en un array
   public crearPreguntas(tipoPregunta: any): void {
     let codigoPregunta=this.arregloPreguntas.length+1;
-    let objPreguntica = new Preguntas(codigoPregunta, tipoPregunta, '', 0,[]);
+    let objPreguntica = new Preguntas(codigoPregunta, tipoPregunta, '', 0,[],[]);
     this.arregloPreguntas.push(objPreguntica);
   }
 
@@ -190,17 +190,10 @@ export class EncuestaCrearComponent implements OnInit {
      });
     }
 
-  public eliminarOpciones(indicePregunta: number) {
-    for (var i = 0; i < this.arregloPreguntas.length; i++) {
-      if (this.arregloPreguntas[i].codPregunta === indicePregunta) {
-        this.arregloPreguntas[i].arregloOpciones.map((codigoOpcion)=>{
-          codigoOpcion.textoOpcion.slice(i, 1);
-        })//es splice
-
-
-      }
-    }
+  public eliminarOpciones(indicePregunta: number, indiceOpcion:number) {
+    this.arregloPreguntas[indicePregunta].arregloOpciones.splice(indiceOpcion,1);
   }
+
 
   public crearEncuesta(formulario: NgForm): void {
     this.miSuscripcion = this.encuestaService

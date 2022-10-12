@@ -1,5 +1,4 @@
 import { mostrarMensaje } from 'src/app/utilidades/mensajes/toas.func';
-import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { Encuesta } from 'src/app/modelos/encuesta';
 import { TiposDependencia } from './../../../../modelos/tipo_dependencias';
@@ -35,11 +34,14 @@ export class EncuestaEditarComponent implements OnInit {
   //Atributos consumo servicios
   public temporal: any;
   public objEncuesta: Encuesta;
-  public objPregunta: Preguntas;
+  public objPregunta:Preguntas;
+  public objPreguntaNueva: Preguntas;
+  public objOpcion:Opciones;
   public miSuscripcion: Subscription;
   public cargaFinalizada: boolean;
   public miSuscripcionEliminar: Subscription;
   public codigoEncuesta: number;
+  public codigoOpcion:number;
 
 
   constructor(
@@ -60,8 +62,11 @@ export class EncuestaEditarComponent implements OnInit {
     this.arregloDependencias = [];
     this.arregloTiposDependencia = [];
     this.objEncuesta = this.inicializarEncuesta();
-    this.objPregunta = this.inicializarPregunta();
+    this.objPreguntaNueva = this.inicializarPregunta();
+    this.objPregunta=this.inicializarPregunta();
+    this.objOpcion=this.inicializarOpcion();
     this.codigoEncuesta = 0;
+    this.codigoOpcion=0,
 
 
     //Inicializar consumo de servicios
@@ -74,12 +79,13 @@ export class EncuestaEditarComponent implements OnInit {
     this.route.paramMap.subscribe((parametro: ParamMap) => {
       const valor = String(parametro.get('codEncuesta'));
       this.codigoEncuesta = parseInt(valor) as number;
-      this.listarEncuesta();
-      this.listarEventos();
-      this.listarTipoPreguntas();
-      this.listarDependencias();
-      this.obtenerTiposDependencia();
     });
+    this.listarEncuesta();
+    this.listarEventos();
+    this.listarTipoPreguntas();
+    this.listarDependencias();
+    this.obtenerTiposDependencia();
+
   }
 
   public listarEventos(): void {
@@ -141,7 +147,11 @@ export class EncuestaEditarComponent implements OnInit {
       .subscribe(observadorAny);
   }
 
-  //MODIFICAR ENCUESTA PREGUNTAS Y OPCIONES//
+  //MODIFICAR y LISTAR ENCUESTA//
+
+  public inicializarEncuesta(): Encuesta {
+    return new Encuesta(0, 0, 0, 0, '', '', '', '', 0, '', '');
+  }
 
   public listarEncuesta(): void {
     this.miSuscripcion = this.encuestaService
@@ -187,6 +197,12 @@ export class EncuestaEditarComponent implements OnInit {
       .subscribe(observadorAny);
   }
 
+   //MODIFICAR LISTAR Y ELIMINAR PREGUNTAS//
+
+   public inicializarPregunta() {
+    return new Preguntas(0, 0, '', 0, [],[]);
+  }
+
   public listarPreguntas(codigoEncuesta:number): void {
     this.miSuscripcion = this.preguntaService
       .seleccionarPregunta(codigoEncuesta)
@@ -209,9 +225,9 @@ export class EncuestaEditarComponent implements OnInit {
       .subscribe(observadorAny);
   }
 
-  public modificarPregunta(): void {
+  public modificarPregunta(objPreguntaNuevaModificar:Preguntas): void {
     this.miSuscripcion = this.preguntaService
-      .modificarPregunta(this.objPregunta)
+      .modificarPregunta(objPreguntaNuevaModificar)
       .pipe(
         map(() => {
           mostrarMensaje(
@@ -220,8 +236,6 @@ export class EncuestaEditarComponent implements OnInit {
             'Exito',
             this.toastrService
           );
-          console.log(this.arregloPreguntas)
-          this.router.navigate(['/private/encuestas/listar-encuesta']);
         }),
         catchError((miError) => {
           mostrarMensaje(
@@ -261,6 +275,12 @@ export class EncuestaEditarComponent implements OnInit {
         })
       )
       .subscribe(observadorAny);
+  }
+
+  //MODIFICAR LISTAR Y ELIMINAR OPCIONES//
+
+  public inicializarOpcion(){
+    return new Opciones (0,0,'')
   }
 
   public listarOpciones(codigoPregunta:number): void {
@@ -305,24 +325,38 @@ export class EncuestaEditarComponent implements OnInit {
       .subscribe(observadorAny);
   }
 
-
-
-  //Metodos obligatorios
-  public inicializarEncuesta(): Encuesta {
-    return new Encuesta(0, 0, 0, 0, '', '', '', '', 0, '', '');
-  }
-
-  public inicializarPregunta() {
-    return new Preguntas(0, 0, '', 0, []);
+  public modificarOpcion(opcion:Opciones): void {
+    this.miSuscripcion = this.opcionService
+      .modificarOpcion(opcion)
+      .pipe(
+        map(() => {
+          this.listarOpciones(opcion.codOpcion);
+          mostrarMensaje(
+            'success',
+            'Pregunta modificada correctamente',
+            'Exito',
+            this.toastrService
+          );
+        }),
+        catchError((miError) => {
+          mostrarMensaje(
+            'error',
+            'No se modifico la pregunta',
+            'Advertencia',
+            this.toastrService
+          );
+          throw miError;
+        })
+      )
+      .subscribe(observadorAny);
   }
 
 
   //CREAR NUEVAS PREGUNTAS Y OPCIONES
   public crearPreguntas(tipoPregunta: any): void {
     let codigoPregunta = this.arregloPreguntasNuevas.length + 1;
-    let objPreguntica = new Preguntas(codigoPregunta, tipoPregunta, '', this.codigoEncuesta, []);
+    let objPreguntica = new Preguntas(codigoPregunta, tipoPregunta, '', this.codigoEncuesta, [],[]);
     this.arregloPreguntasNuevas.push(objPreguntica);
-   console.log(this.arregloPreguntasNuevas)
   }
 
   public eliminarPreguntaNueva(codigo:number) {
@@ -334,18 +368,18 @@ export class EncuestaEditarComponent implements OnInit {
     }
   }
 
-  public agregarOpciones(codPregunta: number): void {
+  public agregarOpcionesNuevas(codPregunta: number): void {
     let objOpcion = new Opciones(0, codPregunta, '');
-    this.arregloPreguntasNuevas.map((pregunta) => {
-      if (pregunta.codPregunta === codPregunta) {
-        pregunta.arregloOpciones.push(objOpcion);
+    this.arregloPreguntasNuevas.map((preguntaNueva) => {
+      if (preguntaNueva.codPregunta === codPregunta) {
+        preguntaNueva.arregloOpcionesNuevas.push(objOpcion);
       }
     });
   }
 
-public eliminarOpcionesNuevas(){
-
-}
+  public eliminarOpcionesNuevas(indicePregunta: number, indiceOpcion:number){
+    this.arregloPreguntasNuevas[indicePregunta].arregloOpcionesNuevas.splice(indiceOpcion,1);
+  }
 
   public guardarPreguntas(): void {
     this.miSuscripcion = this.preguntaService

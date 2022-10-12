@@ -11,10 +11,12 @@ class OpcionRutas {
         this.listadoRutas();
     }
     listadoRutas() {
-        //seleccionar opcion
+        //listar opcion
         this.miRutaOpcion.get('/listar/:codPregunta', OpcionControlador_1.default.listarOpcion);
+        //seleccionar opcion
+        this.miRutaOpcion.get('/seleccionar/:codOpcion', OpcionControlador_1.default.seleccionarOpcion);
         //modificar
-        //this.miRutaOpcion.put('/modificar/:codPregunta', opcionControlador.modificarOpcion);
+        this.miRutaOpcion.put('/modificar/:codOpcion', OpcionControlador_1.default.modificarOpcion);
         //eliminar opcion
         this.miRutaOpcion.delete('/eliminar/:codOpcion', OpcionControlador_1.default.eliminarOpcion);
     }

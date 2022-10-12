@@ -14,8 +14,6 @@ export const SQL_REG_USU = {
   AGREGAR_INGRESO: 'INSERT INTO ingresos(cod_usuario, fecha_ingreso,hora_ingreso) \
 	VALUES ($1, CURRENT_DATE, CURRENT_TIME);',
 
-
-
   TODO_LISTO: 'SELECT u.cod_usuario, u.cod_rol, u.estado_usuario, r.nombre_rol, a.correo_acceso \
   FROM usuarios u INNER JOIN roles r ON u.cod_rol = r.cod_rol \
   INNER JOIN accesos a ON u.cod_usuario = a.cod_usuario \

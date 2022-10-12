@@ -1,3 +1,4 @@
+import { RolService } from './../../../../servicios/rol.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -50,6 +51,7 @@ export class UsuDatosComponent implements OnInit {
     public toastrService: ToastrService,
     private route: ActivatedRoute,
     private usuarioService: UsuarioService,
+    private rolService: RolService,
   ) {
     this.miSuscripcionUsu = this.temporal;
     this.objUsuario = this.inicializarUsuario();
@@ -136,8 +138,8 @@ export class UsuDatosComponent implements OnInit {
   }
 
   public obtenerTodosRoles(): void {
-    this.miSuscripcion = this.usuarioService
-      .obtenerRol()
+    this.miSuscripcion = this.rolService
+      .cargarRoles()
       .pipe(
         map((resultado: Rol[]) => {
           this.arregloRoles = resultado;

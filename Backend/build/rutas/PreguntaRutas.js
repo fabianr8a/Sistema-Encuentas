@@ -11,8 +11,10 @@ class PreguntaRutas {
         this.listadoRutas();
     }
     listadoRutas() {
-        //seleccionar pregunta para modificar
-        this.miRutaPregunta.get('/preguntas/:codEncuesta', PreguntaControlador_1.default.seleccionarPregunta);
+        //listar preguntas
+        this.miRutaPregunta.get('/preguntas/:codEncuesta', PreguntaControlador_1.default.listarPregunta);
+        //seleccionar pregunta
+        this.miRutaPregunta.get('/seleccionar/:codPregunta', PreguntaControlador_1.default.seleccionarPregunta);
         //modificar
         this.miRutaPregunta.put('/modificar/:codPregunta', PreguntaControlador_1.default.modificarPregunta);
         //eliminar pregunta

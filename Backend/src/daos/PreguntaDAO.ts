@@ -29,16 +29,28 @@ class PreguntaDAO {
       });
   }
 
-  protected static async seleccionarPregunta(sqlPregunta: string, parametros: any, res: Response): Promise<any> {
+  protected static async listarPregunta(sqlPregunta: string, parametros: any, res: Response): Promise<any> {
     await pool.result(sqlPregunta, parametros)
       .then((resultado: any) => {
-        if (!resultado) { res.status(400).json({ respuesta: 'Error seleccionando la pregunta a modificar' }); }
+        if (!resultado) { res.status(400).json({ respuesta: 'Error listando las preguntas' }); }
         res.status(200).json(resultado.rows);
         console.log(resultado)
       })
       .catch((miError: any) => {
         console.log(miError);
-        res.status(400).json({ respuesta: 'Error seleccionando la pregunta a modificar' });
+        res.status(400).json({ respuesta: 'Error listando las preguntas' });
+      });
+  }
+
+  protected static async seleccionarPregunta(sqlSeleccionar: string, parametros: any, res: Response): Promise<any> {
+    await pool.oneOrNone(sqlSeleccionar, parametros)
+      .then((resultado: any) => {
+        if(!resultado){ res.status(400).json({ respuesta: 'Error seleccionando la pregunta' });}
+        res.status(200).json(resultado);
+      })
+      .catch((miError: any) => {
+        console.log(miError);
+        res.status(400).json({ respuesta: 'Error seleccionando la pregunta' });
       });
   }
 

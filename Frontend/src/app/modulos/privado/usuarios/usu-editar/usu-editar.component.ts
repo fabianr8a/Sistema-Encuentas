@@ -1,3 +1,4 @@
+import { RolService } from 'src/app/servicios/rol.service';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
@@ -52,6 +53,7 @@ export class UsuEditarComponent implements OnInit {
     private route: ActivatedRoute,
     private usuarioService: UsuarioService,
     private router: Router,
+    private rolService:RolService,
   ) {
     this.miSuscripcionUsu = this.temporal;
     this.objUsuario = this.inicializarUsuario();
@@ -137,8 +139,8 @@ export class UsuEditarComponent implements OnInit {
   }
 
   public obtenerTodosRoles(): void {
-    this.miSuscripcion = this.usuarioService
-      .obtenerRol()
+    this.miSuscripcion = this.rolService
+      .cargarRoles()
       .pipe(
         map((resultado: Rol[]) => {
           this.arregloRoles = resultado;

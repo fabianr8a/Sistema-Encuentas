@@ -21,7 +21,7 @@ export class OpcionesService {
 
   public listarOpciones(codPregunta: number): Observable<Opciones[]> {
     return this.http.get<Opciones[]>(
-      `${this.apiListarOpciones}/ ${codPregunta}`
+      this.apiListarOpciones + '/' + codPregunta
     );
   }
 

@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 
 const routes: Routes = [
   { path: 'listar-encuesta', component: ListarEncuestasComponent  },
-  { path: 'responder-encuesta', component: ResponderEncuestaComponent },
+  { path: 'responder-encuesta/:codEncuesta', component: ResponderEncuestaComponent },
 
 
 

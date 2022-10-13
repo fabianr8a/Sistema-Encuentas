@@ -7,7 +7,6 @@ class PreguntaDAO {
         const codigoEncuesta = parametros[1]
       parametrosPregunta.map(async (pregunta: any) => {
         const arregloPregunta = [pregunta.codTipoPregunta, codigoEncuesta.codEncuesta, pregunta.descripcionPregunta];
-        console.log(arregloPregunta)
         let codigoPregunta = await consulta.one(sqlPregunta, arregloPregunta);
         if (pregunta.codTipoPregunta == 3) {
           pregunta.arregloOpciones.map(async (opcion: any) => {
@@ -34,7 +33,6 @@ class PreguntaDAO {
       .then((resultado: any) => {
         if (!resultado) { res.status(400).json({ respuesta: 'Error listando las preguntas' }); }
         res.status(200).json(resultado.rows);
-        console.log(resultado)
       })
       .catch((miError: any) => {
         console.log(miError);

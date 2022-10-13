@@ -20,7 +20,6 @@ class PreguntaDAO {
                 const codigoEncuesta = parametros[1];
                 parametrosPregunta.map((pregunta) => __awaiter(this, void 0, void 0, function* () {
                     const arregloPregunta = [pregunta.codTipoPregunta, codigoEncuesta.codEncuesta, pregunta.descripcionPregunta];
-                    console.log(arregloPregunta);
                     let codigoPregunta = yield consulta.one(sqlPregunta, arregloPregunta);
                     if (pregunta.codTipoPregunta == 3) {
                         pregunta.arregloOpciones.map((opcion) => __awaiter(this, void 0, void 0, function* () {
@@ -51,7 +50,6 @@ class PreguntaDAO {
                     res.status(400).json({ respuesta: 'Error listando las preguntas' });
                 }
                 res.status(200).json(resultado.rows);
-                console.log(resultado);
             })
                 .catch((miError) => {
                 console.log(miError);

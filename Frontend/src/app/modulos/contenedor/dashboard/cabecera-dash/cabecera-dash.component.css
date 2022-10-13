@@ -1,0 +1,14 @@
+.alineacion{
+  align-items: right;
+}
+
+.small1{
+  font-size: 90%;
+    font-weight: 400;
+}
+
+.drop-down-cabecera{
+  margin-top: -4px;
+    --bs-bg-opacity: 1;
+    background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
+}

@@ -21,9 +21,7 @@ export class PreguntaService {
   constructor(private http: HttpClient) {}
 
   public seleccionarPregunta(codEncuesta: number): Observable<Preguntas[]> {
-    return this.http.get<Preguntas[]>(
-      `${this.apiSeleccionarPregunta}/ ${codEncuesta}`
-    );
+    return this.http.get<Preguntas[]>(this.apiSeleccionarPregunta + '/' + codEncuesta);
   }
 
   public crearPregunta(preguntas: Preguntas[]): Observable<Preguntas> {

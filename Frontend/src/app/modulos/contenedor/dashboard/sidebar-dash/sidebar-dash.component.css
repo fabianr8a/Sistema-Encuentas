@@ -1,0 +1,12 @@
+.destacar-menu:hover {
+  color: white;
+  background: #1172c4;
+  border-color: #1172c4;
+  }
+  li.destacar-menu:hover a {
+  color:white;
+  }
+
+.destacar-menu{
+  cursor: pointer;
+}

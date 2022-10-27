@@ -1,9 +1,10 @@
+import { ARREGLO_ESTADOS } from './../../../../utilidades/dominios/estados';
 import { observadorAny } from 'src/app/utilidades/observadores/tipo-any';
 import { mostrarMensaje } from 'src/app/utilidades/mensajes/toas.func';
 import { RolService } from 'src/app/servicios/rol.service';
 import { ToastrService } from 'ngx-toastr';
-import { Router, ActivatedRoute, Params } from '@angular/router';
-import { Subscription, map, catchError, finalize, switchMap, tap } from 'rxjs';
+import { Router, ActivatedRoute} from '@angular/router';
+import { Subscription, map, catchError, switchMap } from 'rxjs';
 import { Rol } from 'src/app/modelos/rol';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
@@ -14,7 +15,9 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./rol-editar.component.css'],
 })
 export class RolEditarComponent implements OnInit {
+
   public temporal: any;
+  public arregloEstados: any[];
   public miSuscripcion: Subscription;
   public clickCrear: boolean;
   public objRol: Rol;
@@ -30,6 +33,7 @@ export class RolEditarComponent implements OnInit {
     this.clickCrear = false;
     this.cargaFinalizada = false;
     this.objRol=this.inicializarRol();
+    this.arregloEstados = ARREGLO_ESTADOS;
   }
 
   ngOnInit(): void {
@@ -54,7 +58,6 @@ export class RolEditarComponent implements OnInit {
             'exito',
             this.toastrService
           );
-          console.log(this.objRol)
           this.router.navigate(['/private/roles/listar-rol']);
           this.clickCrear = false;
         }),

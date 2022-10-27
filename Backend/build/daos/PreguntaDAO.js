@@ -32,13 +32,13 @@ class PreguntaDAO {
             }))
                 .then((resultado) => {
                 res.status(200).json({
-                    respuesta: "Encuesta creada",
+                    respuesta: "pregunta creada",
                     resultado: resultado.rowCount
                 });
             })
                 .catch((miError) => {
                 console.log(miError);
-                res.status(400).json({ respuesta: 'Error creando la encuesta' });
+                res.status(400).json({ respuesta: 'Error creando la pregunta' });
             });
         });
     }

@@ -1,0 +1,14 @@
+.scroll-to-top {
+  position: fixed;
+  bottom: 9px;
+  right: 15px;
+  opacity: 0;
+  transition: all .1s ease-in-out;
+ }
+ .show-scrollTop {
+  opacity: 1;
+  transition: all .1s ease-in-out;
+ }
+ .fa-angle-double-up{
+  color:#07285a;
+ }

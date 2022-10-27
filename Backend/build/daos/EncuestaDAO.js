@@ -18,7 +18,13 @@ class EncuestaDAO {
         return __awaiter(this, void 0, void 0, function* () {
             yield conexionBd_1.default.result(sql, parametros)
                 .then((resultado) => {
-                res.status(200).json(resultado.rows);
+                const arreglo = resultado.rows;
+                if (arreglo.length >= 1) {
+                    res.status(200).json(resultado.rows);
+                }
+                else {
+                    res.status(400).json({ respuesta: 'No hay elementos' });
+                }
             })
                 .catch((miError) => {
                 console.log(miError);
@@ -78,27 +84,25 @@ class EncuestaDAO {
         return __awaiter(this, void 0, void 0, function* () {
             yield conexionBd_1.default.task((consulta) => __awaiter(this, void 0, void 0, function* () {
                 const codigoEncuesta = yield consulta.one(sqlCrear, parametros);
-                parametrosPregunta.map((pregunta) => __awaiter(this, void 0, void 0, function* () {
-                    const arregloPregunta = [pregunta.codTipoPregunta, codigoEncuesta.codEncuesta, pregunta.descripcionPregunta];
+                for (const preguntica of parametrosPregunta) {
+                    const arregloPregunta = [preguntica.codTipoPregunta, codigoEncuesta.codEncuesta, preguntica.descripcionPregunta];
                     let codigoPregunta = yield consulta.one(sqlPregunta, arregloPregunta);
-                    if (pregunta.codTipoPregunta == 3) {
-                        pregunta.arregloOpciones.map((opcion) => __awaiter(this, void 0, void 0, function* () {
-                            const arregloOpciones = [codigoPregunta.codPregunta, opcion.textoOpcion];
-                            yield consulta.none(sqlOpcion, arregloOpciones);
-                        }));
+                    if (Number(preguntica.codTipoPregunta) === 3) {
+                        yield this.guardarOpciones(sqlOpcion, preguntica.arregloOpciones, codigoPregunta.codPregunta);
                     }
-                    ;
-                }));
+                    else {
+                        let opcion = [codigoPregunta.codPregunta, " Default"];
+                        yield consulta.none(sqlOpcion, opcion);
+                    }
+                }
                 const arregloUsuarioEncuestas = [parametros[6], codigoEncuesta.codEncuesta];
                 return yield consulta.result(sqlUsuarioEncuesta, arregloUsuarioEncuestas);
-            }))
-                .then((resultado) => {
+            })).then((resultado) => {
                 res.status(200).json({
                     respuesta: "Encuesta creada",
-                    resultado: resultado.rowCount
+                    resultado: resultado
                 });
-            })
-                .catch((miError) => {
+            }).catch((miError) => {
                 console.log(miError);
                 res.status(400).json({ respuesta: 'Error creando la encuesta' });
             });
@@ -136,6 +140,16 @@ class EncuestaDAO {
                 console.log(miError);
                 res.status(400).json({ respuesta: 'Error modificando la encuesta' });
             });
+        });
+    }
+    static guardarOpciones(sqlOpciones, arregloOpciones, codPregunta) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield conexionBd_1.default.task((consulta) => __awaiter(this, void 0, void 0, function* () {
+                for (const objOpcion of arregloOpciones) {
+                    let opcion = [codPregunta, objOpcion.textoOpcion];
+                    yield consulta.none(sqlOpciones, opcion);
+                }
+            }));
         });
     }
 }

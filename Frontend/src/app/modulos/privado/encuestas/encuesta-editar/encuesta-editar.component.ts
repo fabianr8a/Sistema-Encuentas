@@ -330,10 +330,9 @@ export class EncuestaEditarComponent implements OnInit {
       .modificarOpcion(opcion)
       .pipe(
         map(() => {
-          this.listarOpciones(opcion.codOpcion);
           mostrarMensaje(
             'success',
-            'Pregunta modificada correctamente',
+            'Opción modificada correctamente',
             'Exito',
             this.toastrService
           );
@@ -341,7 +340,7 @@ export class EncuestaEditarComponent implements OnInit {
         catchError((miError) => {
           mostrarMensaje(
             'error',
-            'No se modifico la pregunta',
+            'No se modifico la opción',
             'Advertencia',
             this.toastrService
           );
@@ -357,6 +356,7 @@ export class EncuestaEditarComponent implements OnInit {
     let codigoPregunta = this.arregloPreguntasNuevas.length + 1;
     let objPreguntica = new Preguntas(codigoPregunta, tipoPregunta, '', this.codigoEncuesta, [],[]);
     this.arregloPreguntasNuevas.push(objPreguntica);
+    console.log(this.arregloPreguntasNuevas)
   }
 
   public eliminarPreguntaNueva(codigo:number) {
@@ -381,7 +381,7 @@ export class EncuestaEditarComponent implements OnInit {
     this.arregloPreguntasNuevas[indicePregunta].arregloOpcionesNuevas.splice(indiceOpcion,1);
   }
 
-  public guardarPreguntas(): void {
+  public guardarPreguntasNuevas(): void {
     this.miSuscripcion = this.preguntaService
       .crearPregunta(this.arregloPreguntasNuevas)
       .pipe(
@@ -398,7 +398,7 @@ export class EncuestaEditarComponent implements OnInit {
         catchError((miError) => {
           mostrarMensaje(
             'error',
-            'No se creo la nueva información',
+            'No se creo la pregunta',
             'Error',
             this.toastrService
           );

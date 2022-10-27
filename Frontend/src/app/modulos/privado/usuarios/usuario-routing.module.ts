@@ -1,8 +1,8 @@
 import { ErrorDashComponent } from 'src/app/modulos/contenedor/dashboard/error-dash/error-dash.component';
-import { UsuDatosComponent } from './usu-datos/usu-datos.component';
-import { UsuEditarComponent } from './usu-editar/usu-editar.component';
-import { UsuCrearComponent } from './usu-crear/usu-crear.component';
-import { UsuListarComponent } from './usu-listar/usu-listar.component';
+import { UsuDatosComponent } from './usuarios-perfil/usu-datos.component';
+import { UsuEditarComponent } from './usuarios-editar/usu-editar.component';
+import { UsuCrearComponent } from './usuarios-crear/usu-crear.component';
+import { UsuListarComponent } from './usuarios-listar/usu-listar.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';

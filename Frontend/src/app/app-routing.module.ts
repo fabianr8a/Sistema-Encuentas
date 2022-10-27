@@ -1,12 +1,10 @@
 
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
 import { VigilanteGuard } from './vigilante.guard';
-import { RUTAS_LANDSCAPE } from './utilidades/rutas/landscape-rutas';
-import { RUTAS_DASHBOARD } from './utilidades/rutas/rutas';
+import { RUTAS_LANDSCAPE } from './utilidades/rutas/ruta-componente-publico';
+import { RUTAS_DASHBOARD } from './utilidades/rutas/rutas-privadas';
 import { ContenedorLandComponent } from './modulos/contenedor/landscape/contenedor-land/contenedor-land.component';
-import { ErrorLandComponent } from './modulos/contenedor/landscape/error-land/error-land.component';
 import { ContenedorDashComponent } from './modulos/contenedor/dashboard/contenedor-dash/contenedor-dash.component';
 
 const routes: Routes = [
@@ -16,7 +14,7 @@ const routes: Routes = [
 
 
 {path: '', redirectTo: 'land', pathMatch: 'full'},
-{path: '**', component: ErrorLandComponent}
+
 ];
 
 @NgModule({

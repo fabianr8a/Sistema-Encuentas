@@ -1,6 +1,6 @@
 import { mostrarMensaje } from 'src/app/utilidades/mensajes/toas.func';
 import { observadorAny } from 'src/app/utilidades/observadores/tipo-any';
-import { ARREGLO_ESTADOS_ROL } from 'src/app/utilidades/dominios/estado';
+import { ARREGLO_ESTADOS} from 'src/app/utilidades/dominios/estados';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription, map, catchError, finalize } from 'rxjs';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
@@ -46,7 +46,7 @@ export class RolListarComponent implements OnInit, OnDestroy {
   ) {
     //Inicializar atributos requeridos
     this.arregloRoles = [];
-    this.arregloEstados = ARREGLO_ESTADOS_ROL;
+    this.arregloEstados = ARREGLO_ESTADOS;
     this.rolSeleccionado = this.inicializarRol();
 
     //Inicializar atributos paginación

@@ -1,12 +1,19 @@
+import { Opcion } from './../modelos/Opcion';
 import { Response } from 'express';
 import pool from '../configuracion/conexion/conexionBd';
+import Pregunta from '../modelos/Pregunta';
 
 class EncuestaDAO {
 
   protected static async listarLasEncuestas(sql: string, parametros: any, res: Response): Promise<any> {
     await pool.result(sql, parametros)
       .then((resultado: any) => {
-        res.status(200).json(resultado.rows);
+        const arreglo = resultado.rows;
+        if (arreglo.length >= 1) {
+          res.status(200).json(resultado.rows);
+        } else {
+          res.status(400).json({ respuesta: 'No hay elementos' })
+        }
       })
       .catch((miError: any) => {
         console.log(miError);
@@ -58,32 +65,30 @@ class EncuestaDAO {
       });
   }
 
-  protected static async crearEncuesta(sqlCrear: string, sqlPregunta: string, sqlOpcion: string, sqlUsuarioEncuesta: string, parametros: any, parametrosPregunta: any[], res: Response): Promise<any> {
+  protected static async crearEncuesta(sqlCrear: string, sqlPregunta: string, sqlOpcion: string, sqlUsuarioEncuesta: string, parametros: any, parametrosPregunta: Pregunta[], res: Response): Promise<any> {
     await pool.task(async (consulta) => {
       const codigoEncuesta = await consulta.one(sqlCrear, parametros);
-      parametrosPregunta.map(async (pregunta: any) => {
-        const arregloPregunta = [pregunta.codTipoPregunta, codigoEncuesta.codEncuesta, pregunta.descripcionPregunta];
+      for (const preguntica of parametrosPregunta) {
+        const arregloPregunta = [preguntica.codTipoPregunta, codigoEncuesta.codEncuesta, preguntica.descripcionPregunta];
         let codigoPregunta = await consulta.one(sqlPregunta, arregloPregunta);
-        if (pregunta.codTipoPregunta == 3) {
-          pregunta.arregloOpciones.map(async (opcion: any) => {
-            const arregloOpciones = [codigoPregunta.codPregunta, opcion.textoOpcion];
-            await consulta.none(sqlOpcion, arregloOpciones);
-          });
-        };
-      });
+        if (Number(preguntica.codTipoPregunta) === 3) {
+          await this.guardarOpciones(sqlOpcion, preguntica.arregloOpciones, codigoPregunta.codPregunta);
+        } else {
+          let opcion = [codigoPregunta.codPregunta, " Default"];
+          await consulta.none(sqlOpcion, opcion);
+        }
+      }
       const arregloUsuarioEncuestas = [parametros[6], codigoEncuesta.codEncuesta];
       return await consulta.result(sqlUsuarioEncuesta, arregloUsuarioEncuestas);
-    })
-      .then((resultado: any) => {
-        res.status(200).json({
-          respuesta: "Encuesta creada",
-          resultado: resultado.rowCount
-        });
-      })
-      .catch((miError: any) => {
-        console.log(miError);
-        res.status(400).json({ respuesta: 'Error creando la encuesta' });
+    }).then((resultado: any) => {
+      res.status(200).json({
+        respuesta: "Encuesta creada",
+        resultado: resultado
       });
+    }).catch((miError: any) => {
+      console.log(miError);
+      res.status(400).json({ respuesta: 'Error creando la encuesta' });
+    });
   }
 
   //encuesta que se va a modificar
@@ -114,6 +119,16 @@ class EncuestaDAO {
         console.log(miError);
         res.status(400).json({ respuesta: 'Error modificando la encuesta' });
       });
+  }
+
+  private static async guardarOpciones(sqlOpciones: string, arregloOpciones: Opcion[], codPregunta: number) {
+    await pool.task(async (consulta) => {
+      for (const objOpcion of arregloOpciones) {
+        let opcion = [codPregunta, objOpcion.textoOpcion];
+        await consulta.none(sqlOpciones, opcion);
+      }
+    }
+  );
   }
 }
 export default EncuestaDAO;

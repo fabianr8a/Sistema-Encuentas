@@ -31,15 +31,12 @@ registerLocaleData(localeEs, 'es');
   imports: [
     BrowserModule,
     AppRoutingModule,
-
     FormsModule,
     ModalModule.forRoot(),
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
     NgxPaginationModule,
     HttpClientModule,
-
-
     ContenedorModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass:TokenInterceptor, multi:true },{ provide:LOCALE_ID, useValue: 'es',}],

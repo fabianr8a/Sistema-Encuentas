@@ -7,7 +7,7 @@ export const SQL_ENCUESTA = {
   inner join tipo_eventos as te \
   on e.cod_tipo_evento = te.cod_tipo_evento \
   where u.cod_usuario=$1 \
-  order by e.fecha_creacion_encuesta DESC',
+  order by e.fecha_creacion_encuesta DESC, e.cod_encuesta DESC',
 
   LISTAR_EVENTOS: 'SELECT * FROM tipo_eventos',
 

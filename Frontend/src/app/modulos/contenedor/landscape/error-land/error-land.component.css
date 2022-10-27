@@ -1,0 +1,10 @@
+.img-error {
+  max-width: 20rem;
+  height: 100%;
+  display: block;
+  margin: auto;
+}
+
+a{
+  text-decoration: none;
+}

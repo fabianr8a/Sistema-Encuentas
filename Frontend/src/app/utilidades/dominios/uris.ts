@@ -30,7 +30,7 @@ export const API_ROL_BUSCAR_ROL=API_URL + 'api/private/rol/buscar-rol'
 
 
 /**********************Encuestas****************/
-export const API_ENCUESTA = API_URL + 'api/private/encuesta/getAll';
+export const API_ENCUESTA = API_URL + 'api/private/encuesta';
 export const API_CREAR_ENCUESTA=API_URL + 'api/private/encuesta/crear';
 export const API_ENCUESTA_SELECCIONADA_MODIFICAR=API_URL + 'api/private/encuesta/encuestas';
 export const API_MODIFICAR_ENCUESTA=API_URL + 'api/private/encuesta/modificar';

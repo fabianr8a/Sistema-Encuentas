@@ -2,8 +2,14 @@ export const SQL_PREGUNTAS={
   CREAR_PREGUNTAS: 'INSERT INTO preguntas(cod_tipo_pregunta, cod_encuesta, descripcion_pregunta) \
 	VALUES ($1,$2,$3) RETURNING cod_pregunta',
 
-  LISTAR_PREGUNTAS:'SELECT cod_pregunta,descripcion_pregunta,cod_tipo_pregunta, cod_encuesta \
-  FROM preguntas p where p.cod_encuesta=$1',
+  LISTAR_PREGUNTAS:'select *, \
+	( \
+  SELECT array_to_json(array_agg(o)) \
+  FROM opciones o \
+  WHERE o.cod_pregunta = p.cod_pregunta \
+  ) AS JSON \
+  from preguntas as p \
+  where p.cod_encuesta=$1' ,
 
   SELECCIONAR_PREGUNTA:'SELECT cod_pregunta, cod_tipo_pregunta, cod_encuesta, descripcion_pregunta \
 	FROM preguntas \

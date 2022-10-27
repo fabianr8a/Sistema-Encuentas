@@ -11380,7 +11380,11 @@ body {
 }
 .sb-nav-fixed #layoutSidenav #layoutSidenav_content {
   padding-left: 225px;
-  top: 56px;
+  margin-top: 50px;
+}
+
+#errorDash{
+  padding-left: 225px;
 }
 
 #layoutError {
@@ -11394,10 +11398,6 @@ body {
 }
 #layoutError #layoutError_footer {
   min-width: 0;
-}
-
-.img-error {
-  max-width: 20rem;
 }
 
 .nav .nav-link .sb-nav-link-icon,
@@ -11686,12 +11686,6 @@ body {
   width: 20px !important;
   font-size: 0.75rem;
   border-radius: 0.25rem !important;
-}
-
-.card-header-inicio{
-  padding: 0.5rem 1rem;
-  margin-bottom: 0;
-  margin-top: 130px;
 }
 
 .user{

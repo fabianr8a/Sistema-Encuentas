@@ -34,7 +34,7 @@ export class EncuestaService {
   constructor(private http: HttpClient) {}
 
   public listarEncuestas(codUsuario:number): Observable<Encuesta[]> {
-    return this.http.get<Encuesta[]>( `${this.apiEncuesta}/${codUsuario}`);
+    return this.http.get<Encuesta[]>(this.apiEncuesta+"/getAll/"+codUsuario);
   }
 
   public listarEventos(): Observable<TipoEventos[]> {

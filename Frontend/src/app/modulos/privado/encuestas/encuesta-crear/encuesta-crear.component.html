@@ -9,7 +9,7 @@
           style="background-color: white; margin-top: 24px"
         >
           <li class="breadcrumb-item">
-            <a [routerLink]="['/private/inicio-dash']"
+            <a [routerLink]="['/private/inicio']"
               ><i class="fas fa-home"></i
             ></a>
           </li>
@@ -242,6 +242,7 @@
                         <div class="input-group-text">Tipo de pregunta</div>
                       </div>
                       <select
+                        id="tipo_pregunta"
                         class="form-control"
                         name="tipo_pregunta"
                         [(ngModel)]="objPregunta.codTipoPregunta"
@@ -261,11 +262,13 @@
                           {{ objTipoPregunta.nombreTipoPregunta }}
                         </option></select
                       >&nbsp;&nbsp;
-                      <i
-                        class="fa fa-circle-plus fa-2x"
-                        title="Agregar pregunta"
-                        (click)="crearPreguntas(objPregunta.codTipoPregunta)"
-                      ></i>
+                      <div *ngIf="objPregunta.codTipoPregunta !== 0">
+                        <i
+                          class="fa fa-circle-plus fa-2x"
+                          title="Agregar pregunta"
+                          (click)="crearPreguntas(objPregunta.codTipoPregunta)"
+                        ></i>
+                      </div>
                       <div
                         class="text-danger"
                         *ngIf="
@@ -319,7 +322,7 @@
                 <br />
                 <div>
                   <input
-                    class="fecha-encuesta"
+                    class="fecha-respuesta"
                     type="date"
                     id="respuesta_fecha"
                     name="respuesta_fecha"
@@ -364,8 +367,7 @@
                   <textarea
                     placeholder="Escriba aquí su respuesta"
                     class="respuesta-abierta"
-                  >
-                  </textarea>
+                  ></textarea>
                 </div>
               </div>
 
@@ -380,8 +382,8 @@
                   <textarea
                     class="pregunta"
                     placeholder="Escriba la pregunta"
-                    id="seleccion{{indice}}"
-                    name="seleccion{{indice}}"
+                    id="seleccion{{ indice }}"
+                    name="seleccion{{ indice }}"
                     [(ngModel)]="pregunta.descripcionPregunta"
                     #seleccion="ngModel"
                     [ngClass]="{
@@ -418,8 +420,8 @@
                       class="custom-control-label"
                       for="customRadio1"
                       placeholder="Opción"
-                      id="opcion{{indiceOp}}{{indice}}"
-                      name="opcion{{indiceOp}}{{indice}}"
+                      id="opcion{{ indiceOp }}{{ indice }}"
+                      name="opcion{{ indiceOp }}{{ indice }}"
                       #opcion="ngModel"
                       [(ngModel)]="opcion.textoOpcion"
                       required
@@ -430,7 +432,7 @@
                         class="fas fa-xmark"
                         title="Eliminar opción"
                         tooltip-dir="left"
-                        (click)="eliminarOpciones(indice,indiceOp)"
+                        (click)="eliminarOpciones(indice, indiceOp)"
                       ></i>
                     </div>
                   </div>
@@ -474,8 +476,11 @@
                 </div>
                 <br />
                 <div class="row">
-                  <div class="col-md-9" >
-                    <div class="form-check form-check-inline" *ngFor="let objEscala of arregloEscala">
+                  <div class="col-md-9">
+                    <div
+                      class="form-check form-check-inline"
+                      *ngFor="let objEscala of arregloEscala"
+                    >
                       <input
                         class="form-check-input"
                         type="radio"
@@ -483,20 +488,30 @@
                         id="inlineRadio1"
                         value="option1"
                       />
-                      <label class="form-check-label" for="inlineRadio1"
-                        >{{objEscala.nombre}}</label
-                      >
+                      <label class="form-check-label" for="inlineRadio1">{{
+                        objEscala.valor
+                      }}</label>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <p style="text-align: center; margin-bottom: 10px">
-            <button type="submit" class="btn btn-primary crear">
-              Crear encuesta
-            </button>
-          </p>
+          <div class="d-flex justify-content-center">
+            <div class="d-grid gap-2 d-md-flex">
+              <button type="submit" class="btn btn-primary cancelar">
+                Crear encuesta
+              </button>
+              <button
+                type="button"
+                class="btn btn-danger cancelar"
+                [routerLink]="['/private/encuestas/listar-encuesta']"
+              >
+                Cancelar
+              </button>
+              <app-scroll-to-top></app-scroll-to-top>
+            </div>
+          </div>
         </form>
       </div>
     </main>

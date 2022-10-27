@@ -1,7 +1,6 @@
 import cors from 'cors';
 import morgan from 'morgan';
 import express from 'express';
-
 import rutaAcceso from '../../rutas/AccesoRutas';
 import miRutaRol from '../../rutas/RolRutas';
 import miRutaUsuario from '../../rutas/UsuarioRutas';
@@ -10,11 +9,8 @@ import miRutaEstudiante from '../../rutas/EstudiantesRutas';
 import miRutaPregunta from '../../rutas/PreguntaRutas';
 import miRutaOpcion from '../../rutas/OpcionesRutas';
 
-
 class Servidor {
-
   public app: express.Application;
-
   constructor() {
     this.app = express();
     this.cargarConfiguracion();

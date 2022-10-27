@@ -37,7 +37,6 @@ class OpcionDAO {
                     res.status(400).json({ respuesta: 'Error listando las opciones' });
                 }
                 res.status(200).json(resultado.rows);
-                console.log(resultado);
             })
                 .catch((miError) => {
                 console.log(miError);

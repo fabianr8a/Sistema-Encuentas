@@ -39,7 +39,7 @@ export class EncuestaListarComponent implements OnInit {
   constructor(
     public encuestaService: EncuestaService,
     public modalService: BsModalService,
-    private acceso:AccesoService,
+    private acceso: AccesoService,
   ) {
     //Inicializar atributos requeridos
     this.arregloEncuesta = [];
@@ -65,11 +65,11 @@ export class EncuestaListarComponent implements OnInit {
 
   //Metodos obligatorios
   public inicializarEncuesta(): Encuesta {
-    return new Encuesta(0, 0, 0,0, '', '', '', '', this.acceso.objAcceso.codUsuario,  '','');
+    return new Encuesta(0, 0, 0, 0, '', '', '', '', this.acceso.objAcceso.codUsuario, '', '');
   }
 
   ngOnInit(): void {
-    this.listarEncuestas(this.encuestaSeleccionada.codUsuario);
+    this.listarEncuestas(this.acceso.objAcceso.codUsuario);
 
   }
 
@@ -83,7 +83,7 @@ export class EncuestaListarComponent implements OnInit {
 
 
 
-  public listarEncuestas(codUsuario:number): void {
+  public listarEncuestas(codUsuario: number): void {
     this.miSuscripcion = this.encuestaService
       .listarEncuestas(codUsuario)
       .pipe(

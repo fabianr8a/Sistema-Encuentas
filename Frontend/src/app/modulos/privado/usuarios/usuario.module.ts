@@ -3,11 +3,12 @@ import {FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UsuarioRoutingModule } from './usuario-routing.module';
-import { UsuCrearComponent } from './usu-crear/usu-crear.component';
-import { UsuEditarComponent } from './usu-editar/usu-editar.component';
-import { UsuListarComponent } from './usu-listar/usu-listar.component';
-import { UsuDatosComponent } from './usu-datos/usu-datos.component';
+import { UsuCrearComponent } from './usuarios-crear/usu-crear.component';
+import { UsuEditarComponent } from './usuarios-editar/usu-editar.component';
+import { UsuListarComponent } from './usuarios-listar/usu-listar.component';
+import { UsuDatosComponent } from './usuarios-perfil/usu-datos.component';
 import { NgPipesModule } from 'ngx-pipes';
+
 
 
 
@@ -23,7 +24,8 @@ import { NgPipesModule } from 'ngx-pipes';
     UsuarioRoutingModule,
     FormsModule,
     NgxPaginationModule,
-    NgPipesModule
+    NgPipesModule,
+
   ]
 })
 export class UsuarioModule { }

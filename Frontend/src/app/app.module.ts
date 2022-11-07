@@ -20,12 +20,15 @@ import { registerLocaleData } from '@angular/common';
 
 
 
+
+
 registerLocaleData(localeEs, 'es');
 
 
 @NgModule({
   declarations: [
     AppComponent,
+
 
   ],
   imports: [

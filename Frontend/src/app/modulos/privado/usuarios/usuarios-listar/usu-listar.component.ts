@@ -1,5 +1,5 @@
 import { UsuarioService } from 'src/app/servicios/usuario.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { Usuarios } from 'src/app/modelos/usuarios';
@@ -84,6 +84,10 @@ export class UsuListarComponent implements OnInit {
     this.obtenerTodosUsuarios();
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    console.log('probando change' + changes)
+  }
+
   ngOnDestroy(): void {
     if (this.miSuscripcion) {
       this.miSuscripcion.unsubscribe();
@@ -98,8 +102,6 @@ export class UsuListarComponent implements OnInit {
       .pipe(
         map((resultado: Usuarios[]) => {
           this.arregloUsuarios = resultado;
-          this.arregloUsuarios.map(() => {
-          });
         }),
         finalize(() => {
           this.cargaFinalizada = true;

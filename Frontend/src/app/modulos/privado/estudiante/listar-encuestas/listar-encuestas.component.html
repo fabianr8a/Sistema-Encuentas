@@ -30,34 +30,6 @@
           <div class="card-body">
             <div class="table-responsive">
               <div class="row buscar">
-                <div class="col-md-6">
-                  <div class="form-floating mb-3 mb-md-0">
-                    <div class="input-group mb-2 mr-sm-2">
-                      <div class="input-group-prepend">
-                        <label for="codRol" class="input-group-text"
-                          >Filtrar por</label
-                        >
-                      </div>
-                      <select
-                        class="form-select"
-                        id="tipoDependencia"
-                        name="tipoDependencia"
-                        [(ngModel)]="objTipoDependencia.nombreTipoDependencia"
-                        #tipoDependencia="ngModel"
-                      >
-                      <option value>Elija una facultad</option>
-                        <option
-                          *ngFor="
-                            let tipoDependencia of arregloTiposDependencia
-                          "
-                          [value]="tipoDependencia.nombreTipoDependencia"
-                        >
-                          {{ tipoDependencia.nombreTipoDependencia }}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
                 <div class="col-md-5">
                   <div class="input-group">
                     <button class="btn btn-primary btn-buscar">

@@ -131,6 +131,7 @@ a {
 .dataTable-input:focus {
   color: #212529;
   background-color: #fff;
+  border-bottom-color: #86b7fe;
   outline: 0;
 }
 
@@ -307,7 +308,7 @@ a {
 
 .fa-xmark {
   cursor: pointer;
-  color: rgb(187, 26, 26);
+  color: rgb(196, 46, 46);
 }
 
 .fa-pen-to-square{

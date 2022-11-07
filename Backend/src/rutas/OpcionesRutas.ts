@@ -10,14 +10,14 @@ class OpcionRutas {
   }
 
   public listadoRutas(): void {
-    //listar opcion
-    this.miRutaOpcion.get('/listar/:codPregunta', opcionControlador.listarOpcion);
     //seleccionar opcion
     this.miRutaOpcion.get('/seleccionar/:codOpcion', opcionControlador.seleccionarOpcion);
     //modificar
     this.miRutaOpcion.put('/modificar/:codOpcion', opcionControlador.modificarOpcion);
     //eliminar opcion
     this.miRutaOpcion.delete('/eliminar/:codOpcion', opcionControlador.eliminarOpcion);
+    //agregar opcion
+    this.miRutaOpcion.post('/crear', opcionControlador.crearOpciones);
 
   }
 }

@@ -6,15 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const PreguntaDAO_1 = __importDefault(require("../daos/PreguntaDAO"));
 const Preguntas_sql_1 = require("../repositorios/Preguntas_sql");
 const Opciones_sql_1 = require("../repositorios/Opciones_sql");
-const Encuestas_sql_1 = require("../repositorios/Encuestas_sql");
 class PreguntaControlador extends PreguntaDAO_1.default {
     crearPreguntas(req, res) {
-        const losParametros = [
-            req.body[0].codEncuesta,
-            req.body[0].codTipoPregunta,
-            req.body[0].descripcionPregunta,
-        ];
-        PreguntaControlador.crearPregunta(Encuestas_sql_1.SQL_ENCUESTA.CREAR_ENCUESTA, Preguntas_sql_1.SQL_PREGUNTAS.CREAR_PREGUNTAS, Opciones_sql_1.SQL_OPCIONES.CREAR_OPCIONES, losParametros, res);
+        const parametrosPregunta = req.body[0];
+        PreguntaControlador.crearPregunta(Preguntas_sql_1.SQL_PREGUNTAS.CREAR_PREGUNTAS, Opciones_sql_1.SQL_OPCIONES.CREAR_OPCIONES, parametrosPregunta, res);
     }
     listarPregunta(req, res) {
         const seleccionarPregunta = req.params.codEncuesta;

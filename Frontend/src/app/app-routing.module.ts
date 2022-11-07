@@ -1,7 +1,7 @@
 
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { VigilanteGuard } from './vigilante.guard';
+import { VigilanteGuard } from './utilidades/guards/vigilante.guard';
 import { RUTAS_LANDSCAPE } from './utilidades/rutas/ruta-componente-publico';
 import { RUTAS_DASHBOARD } from './utilidades/rutas/rutas-privadas';
 import { ContenedorLandComponent } from './modulos/contenedor/landscape/contenedor-land/contenedor-land.component';

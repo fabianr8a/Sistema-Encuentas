@@ -9,10 +9,11 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { NgPipesModule } from 'ngx-pipes';
 
 
+
 @NgModule({
   declarations: [
     ResponderEncuestaComponent,
-    ListarEncuestasComponent
+    ListarEncuestasComponent,
   ],
   imports: [
     CommonModule,

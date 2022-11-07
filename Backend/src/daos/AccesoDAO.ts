@@ -26,7 +26,6 @@ class AccesoDAO {
   protected static async crearElUsuario(sqlExiste: string,
     sqlAgreUsu: string,
     sqlAgreAcceso: string,
-    sqlAgreIngreso: string,
     sqlTodoListo: string,
     parametros: any,
     res: Response): Promise<any> {
@@ -42,7 +41,6 @@ class AccesoDAO {
         const nuevoUsuario = await consulta.one(sqlAgreUsu, [documento, nombres, apellidos,telefono]);
         const clavecita = parametros[5];
         await consulta.none(sqlAgreAcceso, [nuevoUsuario.codUsuario, correito, clavecita]);
-        await consulta.none(sqlAgreIngreso, [nuevoUsuario.codUsuario]);
         return await consulta.result(sqlTodoListo, [nuevoUsuario.codUsuario]);
       } else {
         return await consulta.result(sqlTodoListo, [-1]);
@@ -94,13 +92,16 @@ class AccesoDAO {
   }
 
   protected static async actualizarAcceso(sqlBuscar: string, parametros: any, res: Response): Promise<any> {
-    await pool.oneOrNone(sqlBuscar, parametros)
-      .then((resultado: any) => {
-        res.status(200).json(resultado);
+    await pool.task(async(consulta:any)=>{
+      return await consulta.result(sqlBuscar,parametros);
+    })
+      .then(() => {
+        res.status(200).json({respuesta: "Acceso actualizado",
+        });
       })
       .catch((miError: any) => {
         console.log(miError);
-        res.status(400).json({ respuesta: 'Error al actualizar el Acceso' });
+        res.status(400).json({ respuesta: 'Error actualizando el acceso' });
       });
   }
 }

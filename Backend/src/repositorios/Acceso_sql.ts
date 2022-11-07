@@ -7,8 +7,8 @@ export const SQL_ACCESO = {
 
   BUSCAR: 'SELECT correo_acceso, clave_acceso FROM accesos where cod_usuario = $1',
 
-  MODIFICAR: 'UPDATE accesos set correo_acceso = $2, clave_acceso = $3 \
-  where cod_usuario = $1;',
+  MODIFICAR: 'UPDATE accesos SET correo_acceso = $2, clave_acceso = $3 \
+  where cod_usuario = $1',
 
 
 }

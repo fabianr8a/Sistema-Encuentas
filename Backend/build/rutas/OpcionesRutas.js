@@ -11,14 +11,14 @@ class OpcionRutas {
         this.listadoRutas();
     }
     listadoRutas() {
-        //listar opcion
-        this.miRutaOpcion.get('/listar/:codPregunta', OpcionControlador_1.default.listarOpcion);
         //seleccionar opcion
         this.miRutaOpcion.get('/seleccionar/:codOpcion', OpcionControlador_1.default.seleccionarOpcion);
         //modificar
         this.miRutaOpcion.put('/modificar/:codOpcion', OpcionControlador_1.default.modificarOpcion);
         //eliminar opcion
         this.miRutaOpcion.delete('/eliminar/:codOpcion', OpcionControlador_1.default.eliminarOpcion);
+        //agregar opcion
+        this.miRutaOpcion.post('/crear', OpcionControlador_1.default.crearOpciones);
     }
 }
 const opcionRutas = new OpcionRutas();

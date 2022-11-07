@@ -14,32 +14,39 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const conexionBd_1 = __importDefault(require("../configuracion/conexion/conexionBd"));
 class PreguntaDAO {
-    static crearPregunta(parametros, sqlPregunta, sqlOpcion, parametrosPregunta, res) {
+    static crearPregunta(sqlPregunta, sqlOpcion, parametrosPregunta, res) {
         return __awaiter(this, void 0, void 0, function* () {
             yield conexionBd_1.default.task((consulta) => __awaiter(this, void 0, void 0, function* () {
-                const codigoEncuesta = parametros[1];
-                parametrosPregunta.map((pregunta) => __awaiter(this, void 0, void 0, function* () {
-                    const arregloPregunta = [pregunta.codTipoPregunta, codigoEncuesta.codEncuesta, pregunta.descripcionPregunta];
+                for (const preguntica of parametrosPregunta) {
+                    const arregloPregunta = [preguntica.codTipoPregunta, preguntica.codEncuesta, preguntica.descripcionPregunta];
                     let codigoPregunta = yield consulta.one(sqlPregunta, arregloPregunta);
-                    if (pregunta.codTipoPregunta == 3) {
-                        pregunta.arregloOpciones.map((opcion) => __awaiter(this, void 0, void 0, function* () {
-                            const arregloOpciones = [codigoPregunta.codPregunta, opcion.textoOpcion];
-                            yield consulta.none(sqlOpcion, arregloOpciones);
-                        }));
+                    if (Number(preguntica.codTipoPregunta) === 3) {
+                        yield this.guardarOpciones(sqlOpcion, preguntica.arregloOpciones, codigoPregunta.codPregunta);
                     }
-                    ;
-                }));
-            }))
-                .then((resultado) => {
+                    else {
+                        let opcion = [codigoPregunta.codPregunta, " Default"];
+                        yield consulta.none(sqlOpcion, opcion);
+                    }
+                }
+            })).then((resultado) => {
                 res.status(200).json({
-                    respuesta: "pregunta creada",
-                    resultado: resultado.rowCount
+                    respuesta: "Preguntas creadas",
+                    resultado: resultado
                 });
-            })
-                .catch((miError) => {
+            }).catch((miError) => {
                 console.log(miError);
-                res.status(400).json({ respuesta: 'Error creando la pregunta' });
+                res.status(400).json({ respuesta: 'Error creando las preguntas' });
             });
+        });
+    }
+    static guardarOpciones(sqlOpciones, arregloOpciones, codPregunta) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield conexionBd_1.default.task((consulta) => __awaiter(this, void 0, void 0, function* () {
+                for (const objOpcion of arregloOpciones) {
+                    let opcion = [codPregunta, objOpcion.textoOpcion];
+                    yield consulta.none(sqlOpciones, opcion);
+                }
+            }));
         });
     }
     static listarPregunta(sqlPregunta, parametros, res) {

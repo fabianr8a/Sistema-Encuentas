@@ -2,8 +2,8 @@ import { Response } from 'express';
 import pool from '../configuracion/conexion/conexionBd';
 
 class OpcionDAO {
-  protected static async crearLasOpciones(sql: string, parametros: any, res: Response): Promise<any> {
-    await pool.result(sql, parametros)
+  protected static async crearLasOpciones(sqlOpcion: string, parametrosOpcion: any, res: Response): Promise<any> {
+    await pool.result(sqlOpcion, parametrosOpcion)
       .then((resultado: any) => {
         res.status(200).json({
           respuesta: "Opciones creadas",
@@ -14,19 +14,9 @@ class OpcionDAO {
         console.log(miError);
         res.status(400).json({ respuesta: 'Error creando las opciones' });
       });
+        console.log(parametrosOpcion)
   }
 
-  protected static async listarOpcion(sqlOpciones: string, parametros: any, res: Response): Promise<any> {
-    await pool.result(sqlOpciones, parametros)
-      .then((resultado: any) => {
-        if (!resultado) { res.status(400).json({ respuesta: 'Error listando las opciones' }); }
-        res.status(200).json(resultado.rows);
-      })
-      .catch((miError: any) => {
-        console.log(miError);
-        res.status(400).json({ respuesta: 'Error listando las opciones' });
-      });
-  }
 
   protected static async eliminarOpcion(sqlEliminar: string, parametros: any, res: Response): Promise<any> {
     await pool.result(sqlEliminar, parametros)

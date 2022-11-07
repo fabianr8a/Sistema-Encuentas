@@ -1,6 +1,6 @@
 import { Acceso } from 'src/app/modelos/acceso';
 import { AccesoService } from './../../../../servicios/acceso.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { catchError, map, Subscription } from 'rxjs';
 import { Imagen } from 'src/app/modelos/imagen';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
@@ -14,11 +14,12 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
   styleUrls: ['./cabecera-dash.component.css']
 })
 export class CabeceraDashComponent implements OnInit {
-  objUsuarioSesion:Acceso;
+  public objUsuarioSesion:Acceso;
   public respuestaToken:Acceso;
   public codUsuario: number;
   public temporal: any;
   public objImagen: Imagen;
+
 
   //Propiedad de tipo suscripcion
   public miSuscripcion: Subscription;
@@ -27,12 +28,14 @@ export class CabeceraDashComponent implements OnInit {
     public accesoService:AccesoService,
     private usuarioService: UsuarioService,
     private route: ActivatedRoute,
+    public usuario:UsuarioService,
   ) {
     this.objUsuarioSesion= accesoService.obtenerAcceso();
     this.objImagen = this.inicializarImagen();
     this.respuestaToken = this.accesoService.objAcceso;
     this.miSuscripcion = this.temporal;
     this.codUsuario = 0;
+
    }
 
   ngOnInit(): void {
@@ -73,3 +76,5 @@ export class CabeceraDashComponent implements OnInit {
       .subscribe(observadorAny);
   }
 }
+
+

@@ -11,10 +11,10 @@ exports.SQL_ENCUESTA = {
   on e.cod_tipo_evento = te.cod_tipo_evento \
   where u.cod_usuario=$1 \
   order by e.fecha_creacion_encuesta DESC, e.cod_encuesta DESC',
-    LISTAR_EVENTOS: 'SELECT * FROM tipo_eventos',
-    LISTAR_TIPO_PREGUNTAS: 'select * from tipo_preguntas',
-    LISTAR_DEPENDENCIAS: 'select * from dependencias',
-    LISTAR_TIPO_DEPENDENCIAS: 'select * from tipo_dependencias',
+    LISTAR_EVENTOS: 'SELECT cod_tipo_evento, nombre_tipo_evento FROM tipo_eventos',
+    LISTAR_TIPO_PREGUNTAS: 'select cod_tipo_pregunta, nombre_tipo_pregunta from tipo_preguntas',
+    LISTAR_DEPENDENCIAS: 'select cod_dependencia, nombre_dependencia from dependencias',
+    LISTAR_TIPO_DEPENDENCIAS: 'select cod_tipo_dependencia, cod_dependencia, nombre_tipo_dependencia from tipo_dependencias',
     CREAR_ENCUESTA: 'INSERT INTO encuestas(cod_tipo_dependencia, cod_tipo_evento, nombre_encuesta, fecha_creacion_encuesta, fecha_cierre_encuesta, descripcion_encuesta) \
 	VALUES ($1, $2, $3, $4, $5, $6) RETURNING cod_encuesta',
     SELECCIONAR_ENCUESTA_MODIFICAR: 'SELECT cod_encuesta, cod_tipo_dependencia, cod_tipo_evento, nombre_encuesta,\

@@ -1,8 +1,9 @@
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { RegistroService } from './../../../servicios/registro.service';
 import { Component, OnInit } from '@angular/core';
 import { Registro } from 'src/app/modelos/registro';
-import { catchError, map, Subscription } from 'rxjs';
+import { catchError, map, Subscription, finalize } from 'rxjs';
 import { NgForm } from '@angular/forms';
 import { TOKEN_SISTEMA } from 'src/app/utilidades/dominios/sesiones';
 import { mostrarMensaje } from 'src/app/utilidades/mensajes/toas.func';
@@ -25,7 +26,8 @@ export class RegistroComponent implements OnInit {
 
   constructor(
     private registroService: RegistroService,
-    public toastrService: ToastrService
+    public toastrService: ToastrService,
+    private router: Router,
   ) {
     this.miSuscripcionRegistro = this.temporal;
     this.objRegistro = this.inicializarRegistro();
@@ -84,6 +86,9 @@ export class RegistroComponent implements OnInit {
           }
           formulario.resetForm();
           throw miError;
+        }),
+        finalize(()=>{
+          this.router.navigate(['/land/public/login']);
         })
       )
       .subscribe(observadorAny);

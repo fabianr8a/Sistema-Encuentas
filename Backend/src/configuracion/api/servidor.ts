@@ -8,6 +8,7 @@ import miRutaEncuesta from '../../rutas/EncuestaRutas';
 import miRutaEstudiante from '../../rutas/EstudiantesRutas';
 import miRutaPregunta from '../../rutas/PreguntaRutas';
 import miRutaOpcion from '../../rutas/OpcionesRutas';
+import miRutaResultados from '../../rutas/ResultadosEncuestaRutas';
 
 class Servidor {
   public app: express.Application;
@@ -36,6 +37,7 @@ class Servidor {
     this.app.use('/api/private/estudiante', miRutaEstudiante);
     this.app.use('/api/private/pregunta', miRutaPregunta);
     this.app.use('/api/private/opciones', miRutaOpcion);
+    this.app.use('/api/private/resultados', miRutaResultados);
   }
 
   //Arrancar el servidor

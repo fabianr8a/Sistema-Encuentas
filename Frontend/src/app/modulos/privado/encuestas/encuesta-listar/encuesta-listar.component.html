@@ -1,142 +1,140 @@
 <div id="layoutSidenav">
   <div id="layoutSidenav_content">
-<main>
-  <div class="container-fluid px-4">
-
-
+    <main>
+      <div class="container-fluid px-4">
         <h2 class="mt-4" style="font-size: 27px">Encuestas</h2>
-
-
         <ol
           class="breadcrumb d-flex justify-content-end"
-          style="background-color: white; "
+          style="background-color: white"
         >
           <li class="breadcrumb-item">
             <a [routerLink]="['/private/inicio']"
               ><i class="fas fa-home"></i
             ></a>
           </li>
-
           <li class="breadcrumb-item">
             <a href="javascript:void(0)">Encuestas</a>
           </li>
-
           <li class="breadcrumb-item active">Listado encuestas</li>
         </ol>
+        <div class="card mb-4">
+          <div
+            class="card-header"
+            style="
+              padding-bottom: 32px;
+              background-color: rgba(17, 17, 17, 0.116);
+            "
+          ></div>
 
-
-    <div class="card mb-4" >
-      <div
-        class="card-header"
-        style="padding-bottom: 32px; background-color: rgba(17, 17, 17, 0.116)"
-      ></div>
-
-      <div class="card-body">
-        <div class="table-responsive">
-          <div class="row buscar">
-            <div class="col-md-6">
-              <div class="input-group">
-                <button class="btn btn-primary btn-buscar">
-                  <i class="fas fa-search"></i>
-                </button>
-                <input
-                  style="margin-left: auto; margin-right: auto"
-                  class="busqueda-encuesta form-control"
-                  placeholder="Buscar"
-                  id="buscar"
-                  name="buscar"
-                  aria-label="Search"
-                  [(ngModel)]="busqueda"
-                />
+          <div class="card-body">
+            <div class="table-responsive">
+              <div class="row buscar">
+                <div class="col-md-6">
+                  <div class="input-group">
+                    <button class="btn btn-primary btn-buscar">
+                      <i class="fas fa-search"></i>
+                    </button>
+                    <input
+                      style="margin-left: auto; margin-right: auto"
+                      class="busqueda-encuesta form-control"
+                      placeholder="Buscar por tipo o nombre de evento"
+                      id="buscar"
+                      name="buscar"
+                      aria-label="Search"
+                      [(ngModel)]="busqueda"
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
 
-          <br />
-          <table
-            class="dataTable-table table-striped table-bordered"
-            id="searchTable"
-          >
-            <thead>
-              <tr>
-                <th style="width: 15%">Fecha de creación</th>
-                <th style="width: 15%">Fecha de cierre</th>
-                <th style="width: 15%">Tipo Evento</th>
-                <th style="width: 30%">Nombre Evento</th>
-                <th style="width: 15%"></th>
-                <th style="width: 10%"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                *ngFor="
-                  let objEncuesta of arregloEncuesta
-                    | filterBy: ['nombreEncuesta', 'nombreTipoEvento']:busqueda
-                    | paginate
-                      : {
-                          id: 'codiguitoPaginacion',
-                          itemsPerPage: cantidadMostrar,
-                          currentPage: paginaActual,
-                          totalItems: cantidadTotalRegistros
-                        }
-                "
+              <br />
+              <table
+                class="dataTable-table table-striped table-bordered"
+                id="searchTable"
               >
-                <td>
-                  {{ objEncuesta.fechaCreacionEncuesta }}
-                </td>
-                <td>
-                  {{ objEncuesta.fechaCierreEncuesta }}
-                </td>
-                <td>{{ objEncuesta.nombreTipoEvento }}</td>
-                <td>{{ objEncuesta.nombreEncuesta }}</td>
-                <td>
-                  <p style="text-align: center; margin: 0">
-                    <a
-                      [routerLink]="['/private/encuestas/resultados-encuesta']"
+                <thead>
+                  <tr>
+                    <th style="width: 15%">Fecha de creación</th>
+                    <th style="width: 15%">Fecha de cierre</th>
+                    <th style="width: 15%">Tipo Evento</th>
+                    <th style="width: 30%">Nombre Evento</th>
+                    <th style="width: 15%"></th>
+                    <th style="width: 10%"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="
+                      let objEncuesta of arregloEncuesta
+                        | filterBy
+                          : ['nombreEncuesta', 'nombreTipoEvento']
+                          : busqueda
+                        | paginate
+                          : {
+                              id: 'codiguitoPaginacion',
+                              itemsPerPage: cantidadMostrar,
+                              currentPage: paginaActual,
+                              totalItems: cantidadTotalRegistros
+                            }
+                    "
+                  >
+                    <td>
+                      {{ objEncuesta.fechaCreacionEncuesta }}
+                    </td>
+                    <td>
+                      {{ objEncuesta.fechaCierreEncuesta }}
+                    </td>
+                    <td>{{ objEncuesta.nombreTipoEvento }}</td>
+                    <td>{{ objEncuesta.nombreEncuesta }}</td>
+                    <td>
+                      <p style="text-align: center; margin: 0">
+                        <a
+                          [routerLink]="[
+                            '/private/encuestas/resultados-encuesta', objEncuesta.codEncuesta
+                          ]"
+                        >
+                          <i class="fa fa-chart-area"></i>&nbsp;Resultados
+                        </a>
+                      </p>
+                    </td>
+                    <td>
+                      <p style="text-align: center; margin: 0">
+                        <a
+                          [routerLink]="[
+                            '/private/encuestas/editar-encuesta',
+                            objEncuesta.codEncuesta
+                          ]"
+                          ><i class="far fa-edit" title="Modificar encuesta"></i
+                        ></a>
+                      </p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="row" style="width: 100%">
+                <div class="col-md-6" style="padding-left: 38px">
+                  <small
+                    ><strong>{{ cantidadTotalRegistros }} </strong>registros
+                    encontados en <strong>{{ cantidadPaginas }}</strong> páginas
+                  </small>
+                </div>
+                <div class="col-md-6 d-flex justify-content-end">
+                  <small>
+                    <pagination-controls
+                      id="codiguitoPaginacion"
+                      (pageChange)="paginaActual = $event"
+                      [directionLinks]="true"
+                      previousLabel="Anterior"
+                      nextLabel="Siguiente"
                     >
-                      <i class="fa fa-chart-area"></i>&nbsp;Resultados
-                    </a>
-                  </p>
-                </td>
-                <td>
-                  <p style="text-align: center; margin: 0">
-                    <a
-                      [routerLink]="[
-                        '/private/encuestas/editar-encuesta',
-                        objEncuesta.codEncuesta
-                      ]"
-                      ><i class="far fa-edit" title="Modificar encuesta"></i
-                    ></a>
-                  </p>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="row" style="width: 100%">
-            <div class="col-md-6" style="padding-left: 38px">
-              <small
-                ><strong>{{ cantidadTotalRegistros }} </strong>registros
-                encontados en <strong>{{ cantidadPaginas }}</strong> páginas
-              </small>
-            </div>
-            <div class="col-md-6 d-flex justify-content-end">
-              <small>
-                <pagination-controls
-                  id="codiguitoPaginacion"
-                  (pageChange)="paginaActual = $event"
-                  [directionLinks]="true"
-                  previousLabel="Anterior"
-                  nextLabel="Siguiente"
-                >
-                </pagination-controls>
-              </small>
+                    </pagination-controls>
+                  </small>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </main>
   </div>
-</main>
 </div>
-</div>
-

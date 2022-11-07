@@ -1,0 +1,186 @@
+<div id="layoutSidenav">
+  <div id="layoutSidenav_content">
+    <main>
+      <div class="container-fluid px-4">
+        <h2 class="mt-4" style="font-size: 27px">Resultados Encuesta</h2>
+        <ol
+          class="breadcrumb d-flex justify-content-end"
+          style="background-color: white; margin-top: 24px"
+        >
+          <li class="breadcrumb-item">
+            <a [routerLink]="['/private/inicio']"
+              ><i class="fas fa-home"></i
+            ></a>
+          </li>
+          <li class="breadcrumb-item">
+            <a href="javascript:void(0)">Encuestas</a>
+          </li>
+          <li class="breadcrumb-item">
+            <a [routerLink]="['/private/encuestas/listar-encuesta']"
+              >Listar encuestas</a
+            >
+          </li>
+          <li class="breadcrumb-item active">Resultados</li>
+        </ol>
+        <div class="card mb-4">
+          <div
+            class="card-header"
+            style="
+              padding-bottom: 32px;
+              background-color: rgba(17, 17, 17, 0.116);
+            "
+          ></div>
+          <div class="card-body">
+            <div>
+              <p class="titulo-encuesta">
+                <input
+                  type="text"
+                  id="titulo"
+                  name="titulo"
+                  [(ngModel)]="objEncuesta.nombreEncuesta"
+                  #titulo="ngModel"
+                  class="titulo-formulario"
+                  readonly
+                />
+              </p>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-13">
+                <div class="form-group">
+                  <div class="form-floating mb-3 mb-md-0">
+                    <div class="input-group mb-2 mr-sm-2">
+                      <div class="input-group-prepend">
+                        <label>Fecha de inicio:</label>
+                        <input
+                          class="fecha-encuesta"
+                          type="date"
+                          id="fecha_inicio"
+                          name="fecha_inicio"
+                          [(ngModel)]="objEncuesta.fechaCreacionEncuesta"
+                          #fecha_inicio="ngModel"
+                          readonly
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-13">
+                <div class="form-group">
+                  <div class="form-floating mb-3 mb-md-0">
+                    <div class="input-group mb-2 mr-sm-2">
+                      <div class="input-group-prepend">
+                        <label>Fecha de cierre:</label>
+                        <input
+                          class="fecha-encuesta"
+                          type="date"
+                          id="fecha_cierre"
+                          name="fecha_cierre"
+                          value="2022-07-22"
+                          [(ngModel)]="objEncuesta.fechaCierreEncuesta"
+                          #fecha_cierre="ngModel"
+                          readonly
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-13">
+                <label>Tipo de evento:</label>
+                <div class="form-group">
+                  <div class="form-floating mb-3 mb-md-0">
+                    <div class="input-group mb-2 mr-sm-2">
+                      <select
+                        name="eventos"
+                        id="eventos"
+                        class="fecha-encuesta"
+                        [(ngModel)]="objEncuesta.codTipoEvento"
+                        aria-label="Default select example"
+                        #eventos="ngModel"
+                        disabled=""
+                      >
+                        <option value="0">Elija una opción</option>
+                        <option
+                          *ngFor="let objEventos of arregloEvento"
+                          value="{{ objEventos.codTipoEvento }}"
+                        >
+                          {{ objEventos.nombreTipoEvento }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-13">
+                <label>Dependencia:</label>
+                <div class="form-group">
+                  <div class="form-floating mb-3 mb-md-0">
+                    <div class="input-group mb-2 mr-sm-2">
+                      <select
+                        name="tipo_dependencia"
+                        id="tipo_dependencia"
+                        class="opciones-dependencias responsive"
+                        aria-label="Default select example"
+                        [(ngModel)]="objEncuesta.codTipoDependencia"
+                        #tipo_dependencia="ngModel"
+                        required
+                        disabled
+                      >
+                        <option value="0">Elija una opción</option>
+                        <option
+                          *ngFor="
+                            let objTipoDependencia of arregloTiposDependencias
+                          "
+                          value="{{ objTipoDependencia.codTipoDependencia }}"
+                        >
+                          {{ objTipoDependencia.nombreTipoDependencia }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              _ngcontent-frp-c74=""
+              class="row-mb-3 form-group descripcion"
+            ></div>
+            <div>
+              <textarea
+                class="descripcion-formulario"
+                placeholder="Descripción del formulario"
+                id="descripcion"
+                name="descripcion"
+                [(ngModel)]="objEncuesta.descripcionEncuesta"
+                #descripcion="ngModel"
+                readonly
+              ></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class=" col-md-3 cantidadPreguntas">
+              <b
+                ><span class="total-preguntas">Respuestas totales: 3</span>
+              </b>
+            </div>
+            <br />
+            <div align="center">
+              ¿Cual fue su grado de satisfacción con el evento realizado? <br />
+              <img
+                class="imagen-resultado"
+                src="https://germangfeler.github.io/assets/img/dataviz2/piechart.png"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

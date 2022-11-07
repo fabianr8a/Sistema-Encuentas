@@ -1,5 +1,6 @@
 .alineacion{
   align-items: right;
+  margin-top: -12px
 }
 
 .small1{
@@ -11,4 +12,8 @@
   margin-top: -4px;
     --bs-bg-opacity: 1;
     background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
+}
+
+.imagen-navbar{
+  width: 50px
 }

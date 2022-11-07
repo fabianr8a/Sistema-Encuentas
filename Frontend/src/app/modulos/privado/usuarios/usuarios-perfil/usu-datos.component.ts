@@ -1,5 +1,7 @@
+import { Location } from '@angular/common';
+import { AccesoService } from 'src/app/servicios/acceso.service';
 import { RolService } from '../../../../servicios/rol.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output} from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { catchError, finalize, map, Subscription } from 'rxjs';
@@ -13,15 +15,19 @@ import { observadorAny } from 'src/app/utilidades/observadores/tipo-any';
 import * as miEncriptado from 'js-sha512';
 import { ARREGLO_TIPO_DOC } from 'src/app/utilidades/dominios/tipos-documento';
 
+
 @Component({
   selector: 'app-usu-datos',
   templateUrl: './usu-datos.component.html',
-  styleUrls: ['./usu-datos.component.css']
+  styleUrls: ['./usu-datos.component.css'],
 })
+
 export class UsuDatosComponent implements OnInit {
+
 
   public tmpBase64: any;
   public temporal: any;
+  public usuarioAcceso:Acceso;
   public objUsuario: Usuarios;
   public objAcceso: Acceso;
   public objImagen: Imagen;
@@ -29,38 +35,40 @@ export class UsuDatosComponent implements OnInit {
   public clickCrear: boolean;
   public miSuscripcion: Subscription;
   public arregloRoles: Rol[];
-  public arregloTiposDocumentos:any[];
+  public arregloTiposDocumentos: any[];
   public cargaFinalizada: boolean;
   public codUsuario: number;
 
   constructor(
     public toastrService: ToastrService,
     private route: ActivatedRoute,
+    public router: Router,
     private usuarioService: UsuarioService,
-    private rolService: RolService,
+    private acceso:AccesoService,
+    private rolService: RolService
   ) {
     this.miSuscripcionUsu = this.temporal;
     this.objUsuario = this.inicializarUsuario();
     this.objAcceso = this.inicializarAcceso();
     this.objImagen = this.inicializarImagen();
+    this.usuarioAcceso = this.acceso.objAcceso;
     this.clickCrear = false;
     this.miSuscripcion = this.temporal;
     this.arregloRoles = [];
-    this.arregloTiposDocumentos=ARREGLO_TIPO_DOC;
+    this.arregloTiposDocumentos = ARREGLO_TIPO_DOC;
     this.cargaFinalizada = false;
     this.codUsuario = 0;
   }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((parametro :ParamMap)=>{
+    this.route.paramMap.subscribe((parametro: ParamMap) => {
       const valor = String(parametro.get('codUsuario'));
       this.codUsuario = parseInt(valor) as number;
-      this.iniUsu();
-      this.iniAcceso();
-      this.iniIma();
-      this.obtenerTodosRoles();
-    })
-
+    });
+    this.iniUsu();
+    this.iniAcceso();
+    this.iniIma();
+    this.obtenerTodosRoles();
   }
 
   ngOnDestroy(): void {
@@ -82,45 +90,47 @@ export class UsuDatosComponent implements OnInit {
   }
 
   public iniUsu(): void {
-    this.miSuscripcionUsu = this.usuarioService.buscarUnUsuario(this.codUsuario)
+    this.miSuscripcionUsu = this.usuarioService
+      .buscarUnUsuario(this.codUsuario)
       .pipe(
-        map((respuesta:Usuarios)=>{
+        map((respuesta: Usuarios) => {
           this.objUsuario = respuesta;
           return respuesta;
         }),
-        catchError((err)=>{
+        catchError((err) => {
           throw err;
         })
-        )
+      )
       .subscribe(observadorAny);
-
   }
 
   public iniAcceso(): void {
-    this.miSuscripcionUsu = this.usuarioService.buscarUnAcceso(this.codUsuario)
+    this.miSuscripcionUsu = this.usuarioService
+      .buscarUnAcceso(this.codUsuario)
       .pipe(
-        map((respuesta:Acceso)=>{
+        map((respuesta: Acceso) => {
           this.objAcceso = respuesta;
           return respuesta;
         }),
-        catchError((err)=>{
+        catchError((err) => {
           throw err;
         })
-        )
+      )
       .subscribe(observadorAny);
   }
 
   public iniIma(): void {
-    this.miSuscripcionUsu = this.usuarioService.buscarUnaImagen(this.codUsuario)
+    this.miSuscripcionUsu = this.usuarioService
+      .buscarUnaImagen(this.codUsuario)
       .pipe(
-        map((respuesta:Imagen)=>{
+        map((respuesta: Imagen) => {
           this.objImagen = respuesta;
           return respuesta;
         }),
-        catchError((err)=>{
+        catchError((err) => {
           throw err;
         })
-        )
+      )
       .subscribe(observadorAny);
   }
 
@@ -167,12 +177,19 @@ export class UsuDatosComponent implements OnInit {
         this.objImagen.tipoImagen = input.target.files[0].type;
         this.objImagen.base64 = this.tmpBase64;
       };
-      reader.onerror = error => {
+      reader.onerror = () => {
         this.tmpBase64 = null;
       };
     } catch {
       return null;
     }
+  }
+
+  public reloadComponent() {
+    let currentUrl = this.router.url;
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+        this.router.onSameUrlNavigation = 'reload';
+        this.router.navigate([currentUrl]);
   }
 
   public modificarUsuario(): void {
@@ -188,6 +205,7 @@ export class UsuDatosComponent implements OnInit {
             this.toastrService
           );
           this.clickCrear = false;
+          this.router.navigate(['/private/inicio']);
         }),
         catchError((miError) => {
           mostrarMensaje(
@@ -197,21 +215,20 @@ export class UsuDatosComponent implements OnInit {
             this.toastrService
           );
           throw miError;
-        })
+        }),
       )
       .subscribe(observadorAny);
   }
 
   public modificarAcceso(): void {
-    this.clickCrear = true;
     const miHash = miEncriptado.sha512(this.objAcceso.claveAcceso);
     this.objAcceso.claveAcceso = miHash;
     this.objAcceso.reclaveAcceso = miHash;
-    const miClon = { ... this.objAcceso };
+    this.objAcceso.correoAcceso
     this.miSuscripcionUsu = this.usuarioService
-      .modificarAcceso(this.objUsuario ,this.objAcceso)
+      .modificarAcceso(this.objUsuario, this.objAcceso)
       .pipe(
-        map((respuesta) => {
+        map(() => {
           mostrarMensaje(
             'success',
             'Acceso se actualizó correctamente',
@@ -219,6 +236,7 @@ export class UsuDatosComponent implements OnInit {
             this.toastrService
           );
           this.clickCrear = false;
+          this.router.navigate(['/private/inicio']);
         }),
         catchError((miError) => {
           mostrarMensaje(
@@ -228,6 +246,8 @@ export class UsuDatosComponent implements OnInit {
             this.toastrService
           );
           throw miError;
+        }),
+        finalize(() => {
         })
       )
       .subscribe(observadorAny);
@@ -236,15 +256,9 @@ export class UsuDatosComponent implements OnInit {
   public modificarImagen(): void {
     this.clickCrear = true;
     this.miSuscripcionUsu = this.usuarioService
-      .modificarImagen(this.objUsuario ,this.objImagen)
+      .modificarImagen(this.objUsuario, this.objImagen)
       .pipe(
-        map((respuesta) => {
-          mostrarMensaje(
-            'success',
-            'La Imagen se actualizó correctamente',
-            'exito',
-            this.toastrService
-          );
+        map(() => {
           this.clickCrear = false;
         }),
         catchError((miError) => {
@@ -255,9 +269,11 @@ export class UsuDatosComponent implements OnInit {
             this.toastrService
           );
           throw miError;
+        }),
+        finalize(() => {
+          this.reloadComponent()
         })
       )
       .subscribe(observadorAny);
   }
-
 }

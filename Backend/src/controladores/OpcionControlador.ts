@@ -11,12 +11,6 @@ class OpcionControlador extends OpcionDAO {
     OpcionControlador.crearLasOpciones(SQL_OPCIONES.CREAR_OPCIONES, losParametros, res);
   }
 
-  public listarOpcion(req: Request, res: Response) {
-    const seleccionarOpcion = req.params.codPregunta;
-    const miParametro = [seleccionarOpcion];
-    if(!seleccionarOpcion){return res.status(400).json({'Error':'No se encontro un parametro'})}
-    OpcionControlador.listarOpcion(SQL_OPCIONES.LISTAR_OPCIONES, miParametro, res);
-  }
 
   public eliminarOpcion(req: Request, res: Response) {
     const codigo = req.params.codOpcion;

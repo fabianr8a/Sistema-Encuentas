@@ -7,6 +7,6 @@ exports.SQL_ACCESO = {
   FROM accesos a INNER JOIN usuarios u ON u.cod_usuario = a.cod_usuario \
   INNER JOIN roles r ON r.cod_rol = u.cod_rol WHERE correo_acceso = $1 AND clave_acceso = $2',
     BUSCAR: 'SELECT correo_acceso, clave_acceso FROM accesos where cod_usuario = $1',
-    MODIFICAR: 'UPDATE accesos set correo_acceso = $2, clave_acceso = $3 \
-  where cod_usuario = $1;',
+    MODIFICAR: 'UPDATE accesos SET correo_acceso = $2, clave_acceso = $3 \
+  where cod_usuario = $1',
 };

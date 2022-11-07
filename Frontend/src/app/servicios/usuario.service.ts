@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import {
   API_USUARIO,
   API_USUARIO_CREAR,
-  API_USUARIO_BUSCAR,
   API_USUARIO_BUSCAR_USUARIO,
   API_USUARIO_MODIFICAR,
   API_USUARIO_BUSCAR_ACCESO,
@@ -15,7 +14,7 @@ import {
 import { Injectable } from '@angular/core';
 import { Acceso } from '../modelos/acceso';
 import { Imagen } from '../modelos/imagen';
-import { Rol } from '../modelos/rol';
+
 
 @Injectable({
   providedIn: 'root'
@@ -32,12 +31,8 @@ export class UsuarioService {
     return this.http.post<Usuarios>(API_USUARIO_CREAR, objUsu);
   }
 
-  public buscarUsuarios(nombreUsu: string): Observable<Usuarios[]> {
-    return this.http.post<Usuarios[]>(API_USUARIO_BUSCAR, {nombresUsuario:nombreUsu});
-  }
-
   public buscarUnUsuario(idUsu: number): Observable<Usuarios> {
-    return this.http.get<Usuarios>(`${API_USUARIO_BUSCAR_USUARIO}/${idUsu}`);
+    return this.http.get<Usuarios>(API_USUARIO_BUSCAR_USUARIO + '/' + idUsu);
   }
 
   public buscarUnAcceso(idUsu: number): Observable<Acceso> {

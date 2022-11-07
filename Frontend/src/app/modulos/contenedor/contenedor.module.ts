@@ -1,3 +1,4 @@
+import { ScrollToTopComponent } from './shared/scroll-to-top/scroll-to-top.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -9,11 +10,6 @@ import { ErrorDashComponent } from './dashboard/error-dash/error-dash.component'
 import { ErrorLandComponent } from './landscape/error-land/error-land.component';
 import { SidebarDashComponent } from './dashboard/sidebar-dash/sidebar-dash.component';
 
-
-
-
-
-
 @NgModule({
   declarations: [
     ContenedorLandComponent,
@@ -23,6 +19,7 @@ import { SidebarDashComponent } from './dashboard/sidebar-dash/sidebar-dash.comp
     ErrorDashComponent,
     ErrorLandComponent,
     SidebarDashComponent,
+
   ],
   imports: [
     CommonModule,
@@ -30,7 +27,9 @@ import { SidebarDashComponent } from './dashboard/sidebar-dash/sidebar-dash.comp
   ],
   exports:[
     ContenedorLandComponent,
-    ContenedorDashComponent
+    ContenedorDashComponent,
+
+
   ]
 })
 export class ContenedorModule { }

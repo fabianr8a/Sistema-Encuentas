@@ -25,7 +25,7 @@ export class ResponderEncuestaComponent implements OnInit {
 
   arregloPreguntas: Preguntas[] = [];
   arregloOpciones: Opciones[] = [];
-  arregloPreguntasNuevas: Preguntas[] = [];
+
 
   public arregloEvento: TipoEventos[];
   public arregloTipoPreguntas: TipoPreguntas[];
@@ -37,13 +37,11 @@ export class ResponderEncuestaComponent implements OnInit {
   public temporal: any;
   public objEncuesta: Encuesta;
   public objPregunta:Preguntas;
-  public objPreguntaNueva: Preguntas;
-  public objOpcion:Opciones;
   public miSuscripcion: Subscription;
   public cargaFinalizada: boolean;
   public miSuscripcionEliminar: Subscription;
   public codigoEncuesta: number;
-  public codigoOpcion:number;
+
 
 
   constructor(
@@ -64,11 +62,9 @@ export class ResponderEncuestaComponent implements OnInit {
     this.arregloDependencias = [];
     this.arregloTiposDependencia = [];
     this.objEncuesta = this.inicializarEncuesta();
-    this.objPreguntaNueva = this.inicializarPregunta();
     this.objPregunta=this.inicializarPregunta();
-    this.objOpcion=this.inicializarOpcion();
     this.codigoEncuesta = 0;
-    this.codigoOpcion=0,
+
 
 
     //Inicializar consumo de servicios
@@ -173,36 +169,11 @@ export class ResponderEncuestaComponent implements OnInit {
       .subscribe(observadorAny);
   }
 
-  public modificarEncuesta(): void {
-    this.miSuscripcion = this.encuestaService
-      .modificarEncuesta(this.objEncuesta)
-      .pipe(
-        map(() => {
-          mostrarMensaje(
-            'success',
-            'Encuesta modificada correctamente',
-            'Exito',
-            this.toastrService
-          );
-          this.router.navigate(['/private/encuestas/listar-encuesta']);
-        }),
-        catchError((miError) => {
-          mostrarMensaje(
-            'error',
-            'No se modifico la encuesta',
-            'Advertencia',
-            this.toastrService
-          );
-          throw miError;
-        })
-      )
-      .subscribe(observadorAny);
-  }
 
    //MODIFICAR LISTAR Y ELIMINAR PREGUNTAS//
 
    public inicializarPregunta() {
-    return new Preguntas(0, 0, '', 0, [],[]);
+    return new Preguntas(0, 0, '', 0, []);
   }
 
   public listarPreguntas(codigoEncuesta:number): void {
@@ -216,199 +187,27 @@ export class ResponderEncuestaComponent implements OnInit {
         catchError((err) => {
           throw err;
         }),
-        finalize(()=>{
-          this.arregloPreguntas.map((pregunta)=>{
-            if (pregunta.codTipoPregunta===3) {
-              this.listarOpciones(pregunta.codPregunta);
-            }
-          })
-        })
-      )
-      .subscribe(observadorAny);
-  }
-
-  public modificarPregunta(objPreguntaNuevaModificar:Preguntas): void {
-    this.miSuscripcion = this.preguntaService
-      .modificarPregunta(objPreguntaNuevaModificar)
-      .pipe(
-        map(() => {
-          mostrarMensaje(
-            'success',
-            'Pregunta modificada correctamente',
-            'Exito',
-            this.toastrService
-          );
-        }),
-        catchError((miError) => {
-          mostrarMensaje(
-            'error',
-            'No se modifico la pregunta',
-            'Advertencia',
-            this.toastrService
-          );
-          throw miError;
-        })
-      )
-      .subscribe(observadorAny);
-  }
-
-  public eliminarPregunta(codPregunta: number): void {
-    this.miSuscripcionEliminar = this.preguntaService
-      .eliminarPregunta(codPregunta)
-      .pipe(
-        map((respuesta) => {
-          this.listarPreguntas(this.codigoEncuesta);
-          mostrarMensaje(
-            'success',
-            'Pregunta eliminada',
-            'Exito',
-            this.toastrService
-          );
-          return respuesta;
-        }),
-        catchError((miError) => {
-          mostrarMensaje(
-            'error',
-            'No se pudo eliminar la pregunta',
-            'Advertencia',
-            this.toastrService
-          );
-          throw miError;
-        })
-      )
-      .subscribe(observadorAny);
-  }
-
-  //MODIFICAR LISTAR Y ELIMINAR OPCIONES//
-
-  public inicializarOpcion(){
-    return new Opciones (0,0,'')
-  }
-
-  public listarOpciones(codigoPregunta:number): void {
-    this.miSuscripcion = this.opcionService
-      .listarOpciones(codigoPregunta)
-      .pipe(
-        map((respuesta: Opciones[]) => {
-          this.objPregunta.arregloOpciones = respuesta;
-          return respuesta;
-        }),
-        catchError((err) => {
-          throw err;
-        })
-      )
-      .subscribe(observadorAny);
-  }
-
-  public eliminarOpciones(opcion: Opciones) {
-    this.miSuscripcionEliminar = this.opcionService
-      .eliminarOpciones(opcion.codOpcion)
-      .pipe(
-        map((respuesta) => {
-          this.listarOpciones(opcion.codPregunta);
-          mostrarMensaje(
-            'success',
-            'Opcion eliminada',
-            'Exito',
-            this.toastrService
-          );
-          return respuesta;
-        }),
-        catchError((miError) => {
-          mostrarMensaje(
-            'error',
-            'No se pudo eliminar la opcion',
-            'Advertencia',
-            this.toastrService
-          );
-          throw miError;
-        })
-      )
-      .subscribe(observadorAny);
-  }
-
-  public modificarOpcion(opcion:Opciones): void {
-    this.miSuscripcion = this.opcionService
-      .modificarOpcion(opcion)
-      .pipe(
-        map(() => {
-          this.listarOpciones(opcion.codOpcion);
-          mostrarMensaje(
-            'success',
-            'Pregunta modificada correctamente',
-            'Exito',
-            this.toastrService
-          );
-        }),
-        catchError((miError) => {
-          mostrarMensaje(
-            'error',
-            'No se modifico la pregunta',
-            'Advertencia',
-            this.toastrService
-          );
-          throw miError;
-        })
       )
       .subscribe(observadorAny);
   }
 
 
-  //CREAR NUEVAS PREGUNTAS Y OPCIONES
-  public crearPreguntas(tipoPregunta: any): void {
-    let codigoPregunta = this.arregloPreguntasNuevas.length + 1;
-    let objPreguntica = new Preguntas(codigoPregunta, tipoPregunta, '', this.codigoEncuesta, [],[]);
-    this.arregloPreguntasNuevas.push(objPreguntica);
-  }
 
-  public eliminarPreguntaNueva(codigo:number) {
-    for (var i = 0; i < this.arregloPreguntasNuevas.length; i++) {
-      if (this.arregloPreguntasNuevas[i].codPregunta == codigo) {
-        this.arregloPreguntasNuevas.splice(i, 1);
-        break;
-      }
-    }
-  }
 
-  public agregarOpcionesNuevas(codPregunta: number): void {
-    let objOpcion = new Opciones(0, codPregunta, '');
-    this.arregloPreguntasNuevas.map((preguntaNueva) => {
-      if (preguntaNueva.codPregunta === codPregunta) {
-        preguntaNueva.arregloOpcionesNuevas.push(objOpcion);
-      }
-    });
-  }
 
-  public eliminarOpcionesNuevas(indicePregunta: number, indiceOpcion:number){
-    this.arregloPreguntasNuevas[indicePregunta].arregloOpcionesNuevas.splice(indiceOpcion,1);
-  }
 
-  public guardarPreguntas(): void {
-    this.miSuscripcion = this.preguntaService
-      .crearPregunta(this.arregloPreguntasNuevas)
-      .pipe(
-        map(() => {
-          mostrarMensaje(
-            'success',
-            'Creación exitosa',
-            'Exito',
-            this.toastrService,
-          );
-          console.log(this.arregloPreguntasNuevas)
-          this.router.navigate(['/private/encuestas/listar-encuesta']);
-        }),
-        catchError((miError) => {
-          mostrarMensaje(
-            'error',
-            'No se creo la nueva información',
-            'Error',
-            this.toastrService
-          );
-          throw miError;
-        })
-      )
-      .subscribe(observadorAny);
-  }
+
+
+
+
+
+
+
+
+
+
+
+
 
   ngOnDestroy(): void {
     if (this.miSuscripcion) {

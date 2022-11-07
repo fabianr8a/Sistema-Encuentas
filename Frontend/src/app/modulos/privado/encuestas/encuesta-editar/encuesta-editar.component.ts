@@ -1,3 +1,4 @@
+import { NgForm } from '@angular/forms';
 import { mostrarMensaje } from 'src/app/utilidades/mensajes/toas.func';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { Encuesta } from 'src/app/modelos/encuesta';
@@ -22,8 +23,9 @@ import { OpcionesService } from 'src/app/servicios/opciones.service';
 })
 export class EncuestaEditarComponent implements OnInit {
   arregloPreguntas: Preguntas[] = [];
-  arregloOpciones: Opciones[] = [];
-  arregloPreguntasNuevas: Preguntas[] = [];
+  arregloPreguntasNuevas:Preguntas[]=[];
+
+  arregloOpcionesNuevas:Opciones[]=[];
 
   public arregloEvento: TipoEventos[];
   public arregloTipoPreguntas: TipoPreguntas[];
@@ -34,21 +36,14 @@ export class EncuestaEditarComponent implements OnInit {
   //Atributos consumo servicios
   public temporal: any;
   public objEncuesta: Encuesta;
-  public objPregunta:Preguntas;
   public objPreguntaNueva: Preguntas;
-  public objOpcion:Opciones;
   public miSuscripcion: Subscription;
   public cargaFinalizada: boolean;
   public miSuscripcionEliminar: Subscription;
   public codigoEncuesta: number;
-  public codigoOpcion:number;
-
+  public codigoPregunta:number;
 
   constructor(
-    public tipoEventosService: EncuestaService,
-    public tipoPreguntasService: EncuestaService,
-    public dependenciasService: EncuestaService,
-    public tipoDependenciasService: EncuestaService,
     public encuestaService: EncuestaService,
     public preguntaService: PreguntaService,
     public opcionService: OpcionesService,
@@ -63,11 +58,8 @@ export class EncuestaEditarComponent implements OnInit {
     this.arregloTiposDependencia = [];
     this.objEncuesta = this.inicializarEncuesta();
     this.objPreguntaNueva = this.inicializarPregunta();
-    this.objPregunta=this.inicializarPregunta();
-    this.objOpcion=this.inicializarOpcion();
     this.codigoEncuesta = 0;
-    this.codigoOpcion=0,
-
+    this.codigoPregunta=0;
 
     //Inicializar consumo de servicios
     this.miSuscripcion = this.temporal;
@@ -85,11 +77,10 @@ export class EncuestaEditarComponent implements OnInit {
     this.listarTipoPreguntas();
     this.listarDependencias();
     this.obtenerTiposDependencia();
-
   }
 
   public listarEventos(): void {
-    this.miSuscripcion = this.tipoEventosService
+    this.miSuscripcion = this.encuestaService
       .listarEventos()
       .pipe(
         map((resultado: TipoEventos[]) => {
@@ -103,7 +94,7 @@ export class EncuestaEditarComponent implements OnInit {
   }
 
   public listarTipoPreguntas(): void {
-    this.miSuscripcion = this.tipoPreguntasService
+    this.miSuscripcion = this.encuestaService
       .listarTipoPreguntas()
       .pipe(
         map((resultado: TipoPreguntas[]) => {
@@ -117,7 +108,7 @@ export class EncuestaEditarComponent implements OnInit {
   }
 
   public listarDependencias(): void {
-    this.miSuscripcion = this.dependenciasService
+    this.miSuscripcion = this.encuestaService
       .listarDependencias()
       .pipe(
         map((resultado: Dependencias[]) => {
@@ -131,7 +122,7 @@ export class EncuestaEditarComponent implements OnInit {
   }
 
   public obtenerTiposDependencia(): void {
-    this.miSuscripcion = this.tipoDependenciasService
+    this.miSuscripcion = this.encuestaService
       .listarTipoDependencias()
       .pipe(
         map((respuesta) => {
@@ -172,6 +163,14 @@ export class EncuestaEditarComponent implements OnInit {
   }
 
   public modificarEncuesta(): void {
+    if (this.objEncuesta.fechaCierreEncuesta<this.objEncuesta.fechaCreacionEncuesta) {
+      mostrarMensaje(
+        'error',
+        'Las fechas no son correctas',
+        'Error',
+        this.toastrService
+      );
+    }else
     this.miSuscripcion = this.encuestaService
       .modificarEncuesta(this.objEncuesta)
       .pipe(
@@ -200,7 +199,7 @@ export class EncuestaEditarComponent implements OnInit {
    //MODIFICAR LISTAR Y ELIMINAR PREGUNTAS//
 
    public inicializarPregunta() {
-    return new Preguntas(0, 0, '', 0, [],[]);
+    return new Preguntas(0, 0, '', 0, []);
   }
 
   public listarPreguntas(codigoEncuesta:number): void {
@@ -215,19 +214,15 @@ export class EncuestaEditarComponent implements OnInit {
           throw err;
         }),
         finalize(()=>{
-          this.arregloPreguntas.map((pregunta)=>{
-            if (pregunta.codTipoPregunta===3) {
-              this.listarOpciones(pregunta.codPregunta);
-            }
-          })
+          this.cargaFinalizada = true;
         })
       )
       .subscribe(observadorAny);
   }
 
-  public modificarPregunta(objPreguntaNuevaModificar:Preguntas): void {
+  public modificarPregunta(objPreguntaModificar:Preguntas): void {
     this.miSuscripcion = this.preguntaService
-      .modificarPregunta(objPreguntaNuevaModificar)
+      .modificarPregunta(objPreguntaModificar)
       .pipe(
         map(() => {
           mostrarMensaje(
@@ -260,8 +255,9 @@ export class EncuestaEditarComponent implements OnInit {
             'success',
             'Pregunta eliminada',
             'Exito',
-            this.toastrService
+            this.toastrService,
           );
+          this.router.navigate(['/private/encuestas/listar-encuesta']);
           return respuesta;
         }),
         catchError((miError) => {
@@ -283,27 +279,12 @@ export class EncuestaEditarComponent implements OnInit {
     return new Opciones (0,0,'')
   }
 
-  public listarOpciones(codigoPregunta:number): void {
-    this.miSuscripcion = this.opcionService
-      .listarOpciones(codigoPregunta)
-      .pipe(
-        map((respuesta: Opciones[]) => {
-          this.objPregunta.arregloOpciones = respuesta;
-          return respuesta;
-        }),
-        catchError((err) => {
-          throw err;
-        })
-      )
-      .subscribe(observadorAny);
-  }
-
   public eliminarOpciones(opcion: Opciones) {
     this.miSuscripcionEliminar = this.opcionService
       .eliminarOpciones(opcion.codOpcion)
       .pipe(
         map((respuesta) => {
-          this.listarOpciones(opcion.codPregunta);
+          this.listarPreguntas(this.codigoEncuesta);
           mostrarMensaje(
             'success',
             'Opcion eliminada',
@@ -350,13 +331,18 @@ export class EncuestaEditarComponent implements OnInit {
       .subscribe(observadorAny);
   }
 
+  public reloadComponent() {
+    let currentUrl = this.router.url;
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+        this.router.onSameUrlNavigation = 'reload';
+        this.router.navigate([currentUrl]);
+  }
 
   //CREAR NUEVAS PREGUNTAS Y OPCIONES
-  public crearPreguntas(tipoPregunta: any): void {
+  public crearPreguntasNuevas(tipoPregunta: number): void {
     let codigoPregunta = this.arregloPreguntasNuevas.length + 1;
-    let objPreguntica = new Preguntas(codigoPregunta, tipoPregunta, '', this.codigoEncuesta, [],[]);
-    this.arregloPreguntasNuevas.push(objPreguntica);
-    console.log(this.arregloPreguntasNuevas)
+    let objPregunta = new Preguntas(codigoPregunta, tipoPregunta, '', this.codigoEncuesta, []);
+    this.arregloPreguntasNuevas.push(objPregunta);
   }
 
   public eliminarPreguntaNueva(codigo:number) {
@@ -372,28 +358,27 @@ export class EncuestaEditarComponent implements OnInit {
     let objOpcion = new Opciones(0, codPregunta, '');
     this.arregloPreguntasNuevas.map((preguntaNueva) => {
       if (preguntaNueva.codPregunta === codPregunta) {
-        preguntaNueva.arregloOpcionesNuevas.push(objOpcion);
+        preguntaNueva.arregloOpciones.push(objOpcion);
       }
     });
   }
 
   public eliminarOpcionesNuevas(indicePregunta: number, indiceOpcion:number){
-    this.arregloPreguntasNuevas[indicePregunta].arregloOpcionesNuevas.splice(indiceOpcion,1);
+    this.arregloPreguntasNuevas[indicePregunta].arregloOpciones.splice(indiceOpcion,1);
   }
 
-  public guardarPreguntasNuevas(): void {
+
+  public guardarPreguntasNuevas(formulario:NgForm): void {
     this.miSuscripcion = this.preguntaService
       .crearPregunta(this.arregloPreguntasNuevas)
       .pipe(
         map(() => {
           mostrarMensaje(
             'success',
-            'Creación exitosa',
+            'Pregunta(s) creada(s)',
             'Exito',
             this.toastrService,
           );
-          console.log(this.arregloPreguntasNuevas)
-          this.router.navigate(['/private/encuestas/listar-encuesta']);
         }),
         catchError((miError) => {
           mostrarMensaje(
@@ -402,8 +387,12 @@ export class EncuestaEditarComponent implements OnInit {
             'Error',
             this.toastrService
           );
+          formulario.resetForm();
           throw miError;
-        })
+        }),
+        finalize(()=>{
+          this.reloadComponent()
+        }),
       )
       .subscribe(observadorAny);
   }

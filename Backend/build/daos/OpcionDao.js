@@ -14,9 +14,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const conexionBd_1 = __importDefault(require("../configuracion/conexion/conexionBd"));
 class OpcionDAO {
-    static crearLasOpciones(sql, parametros, res) {
+    static crearLasOpciones(sqlOpcion, parametrosOpcion, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield conexionBd_1.default.result(sql, parametros)
+            yield conexionBd_1.default.result(sqlOpcion, parametrosOpcion)
                 .then((resultado) => {
                 res.status(200).json({
                     respuesta: "Opciones creadas",
@@ -27,21 +27,7 @@ class OpcionDAO {
                 console.log(miError);
                 res.status(400).json({ respuesta: 'Error creando las opciones' });
             });
-        });
-    }
-    static listarOpcion(sqlOpciones, parametros, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            yield conexionBd_1.default.result(sqlOpciones, parametros)
-                .then((resultado) => {
-                if (!resultado) {
-                    res.status(400).json({ respuesta: 'Error listando las opciones' });
-                }
-                res.status(200).json(resultado.rows);
-            })
-                .catch((miError) => {
-                console.log(miError);
-                res.status(400).json({ respuesta: 'Error listando las opciones' });
-            });
+            console.log(parametrosOpcion);
         });
     }
     static eliminarOpcion(sqlEliminar, parametros, res) {

@@ -7,6 +7,7 @@ import { EncuestaCrearComponent } from '../encuestas/encuesta-crear/encuesta-cre
 import { EncuestaListarComponent } from '../encuestas/encuesta-listar/encuesta-listar.component';
 import { EncuestaEditarComponent } from '../encuestas/encuesta-editar/encuesta-editar.component';
 import { NgPipesModule } from 'ngx-pipes';
+import { EncuestaResultadosComponent } from './encuesta-resultados/encuesta-resultados.component';
 import { ScrollToTopComponent } from '../../contenedor/shared/scroll-to-top/scroll-to-top.component';
 
 
@@ -15,7 +16,8 @@ import { ScrollToTopComponent } from '../../contenedor/shared/scroll-to-top/scro
     EncuestaCrearComponent,
     EncuestaEditarComponent,
     EncuestaListarComponent,
-    ScrollToTopComponent
+    EncuestaResultadosComponent,
+    ScrollToTopComponent,
   ],
   imports: [
     CommonModule,

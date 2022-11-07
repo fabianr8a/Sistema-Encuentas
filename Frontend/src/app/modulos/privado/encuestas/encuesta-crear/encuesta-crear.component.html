@@ -187,13 +187,13 @@
                     <div class="form-floating mb-3 mb-md-0">
                       <div class="input-group mb-2 mr-sm-2">
                         <select
+                        required aria-required="true"
                           name="tipo_dependencia"
                           id="tipo_dependencia"
                           class="fecha-encuesta"
                           aria-label="Default select example"
                           [(ngModel)]="objEncuesta.codTipoDependencia"
                           #tipo_dependencia="ngModel"
-                          required
                         >
                           <option value="0">Elija una opción</option>
                           <option
@@ -294,7 +294,7 @@
                 <i
                   class="fas fa-trash-can"
                   title="Eliminar pregunta"
-                  (click)="eliminarPregunta(pregunta.descripcionPregunta)"
+                  (click)="eliminarPregunta(pregunta.codPregunta)"
                 ></i>
                 <div class="form-floating">
                   <textarea
@@ -338,7 +338,7 @@
                 <i
                   class="fas fa-trash-can"
                   title="Eliminar pregunta"
-                  (click)="eliminarPregunta(pregunta.descripcionPregunta)"
+                  (click)="eliminarPregunta(pregunta.codPregunta)"
                 ></i>
                 <div class="form-floating">
                   <textarea
@@ -376,7 +376,7 @@
                 <i
                   class="fas fa-trash-can"
                   title="Eliminar pregunta"
-                  (click)="eliminarPregunta(pregunta.descripcionPregunta)"
+                  (click)="eliminarPregunta(pregunta.codPregunta)"
                 ></i>
                 <div class="form-floating">
                   <textarea
@@ -437,63 +437,11 @@
                     </div>
                   </div>
                 </div>
-
                 <span
                   (click)="agregarOpciones(pregunta.codPregunta)"
                   class="otra-opcion"
                   >Añadir opción</span
                 >
-              </div>
-
-              <!--Pregunta y respuesta de escala---->
-              <div *ngSwitchCase="4" class="card mb-4 seccion-preguntas">
-                <i
-                  class="fas fa-trash-can"
-                  title="Eliminar pregunta"
-                  (click)="eliminarPregunta(pregunta.descripcionPregunta)"
-                ></i>
-                <div class="form-floating">
-                  <textarea
-                    class="pregunta"
-                    placeholder="Pregunta"
-                    id="floatingTextarea2"
-                    [name]="escala + '_' + indice"
-                    [(ngModel)]="pregunta.descripcionPregunta"
-                    #escala="ngModel"
-                    [ngClass]="{
-                      'is-invalid': frmCrearEncuesta.submitted && escala.invalid
-                    }"
-                    required
-                  ></textarea>
-                  <div
-                    class="text-danger"
-                    *ngIf="frmCrearEncuesta.submitted && escala.invalid"
-                  >
-                    <span *ngIf="escala.errors?.['required']"
-                      >Campo obligatorio</span
-                    >
-                  </div>
-                </div>
-                <br />
-                <div class="row">
-                  <div class="col-md-9">
-                    <div
-                      class="form-check form-check-inline"
-                      *ngFor="let objEscala of arregloEscala"
-                    >
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="inlineRadioOptions"
-                        id="inlineRadio1"
-                        value="option1"
-                      />
-                      <label class="form-check-label" for="inlineRadio1">{{
-                        objEscala.valor
-                      }}</label>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -509,7 +457,7 @@
               >
                 Cancelar
               </button>
-              <app-scroll-to-top></app-scroll-to-top>
+            <app-scroll-to-top></app-scroll-to-top>
             </div>
           </div>
         </form>

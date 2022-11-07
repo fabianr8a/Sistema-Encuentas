@@ -1,31 +1,42 @@
 import { Response } from 'express';
 import pool from '../configuracion/conexion/conexionBd';
+import Pregunta from '../modelos/Pregunta';
+import { Opcion } from './../modelos/Opcion';
 
 class PreguntaDAO {
-  protected static async crearPregunta( parametros:any, sqlPregunta: string, sqlOpcion: string, parametrosPregunta: any[], res: Response): Promise<any> {
+  protected static async crearPregunta( sqlPregunta: string, sqlOpcion: string,  parametrosPregunta: Pregunta[], res: Response): Promise<any> {
     await pool.task(async (consulta) => {
-        const codigoEncuesta = parametros[1]
-      parametrosPregunta.map(async (pregunta: any) => {
-        const arregloPregunta = [pregunta.codTipoPregunta, codigoEncuesta.codEncuesta, pregunta.descripcionPregunta];
+      for (const preguntica of parametrosPregunta) {
+        const arregloPregunta = [preguntica.codTipoPregunta, preguntica.codEncuesta,preguntica.descripcionPregunta];
         let codigoPregunta = await consulta.one(sqlPregunta, arregloPregunta);
-        if (pregunta.codTipoPregunta == 3) {
-          pregunta.arregloOpciones.map(async (opcion: any) => {
-            const arregloOpciones = [codigoPregunta.codPregunta, opcion.textoOpcion];
-            await consulta.none(sqlOpcion, arregloOpciones);
-          });
-        };
+        if (Number(preguntica.codTipoPregunta) === 3) {
+          await this.guardarOpciones(sqlOpcion, preguntica.arregloOpciones, codigoPregunta.codPregunta);
+        } else {
+          let opcion = [codigoPregunta.codPregunta, " Default"];
+          await consulta.none(sqlOpcion, opcion);
+        }
+      }
+    }).then((resultado: any) => {
+      res.status(200).json({
+        respuesta: "Preguntas creadas",
+        resultado: resultado
       });
-    })
-      .then((resultado: any) => {
-        res.status(200).json({
-          respuesta: "pregunta creada",
-          resultado: resultado.rowCount
-        });
-      })
-      .catch((miError: any) => {
-        console.log(miError);
-        res.status(400).json({ respuesta: 'Error creando la pregunta' });
-      });
+    }).catch((miError: any) => {
+      console.log(miError);
+      res.status(400).json({ respuesta: 'Error creando las preguntas' });
+    });
+  }
+
+
+
+  private static async guardarOpciones(sqlOpciones: string, arregloOpciones: Opcion[], codPregunta: number) {
+    await pool.task(async (consulta) => {
+      for (const objOpcion of arregloOpciones) {
+        let opcion = [codPregunta, objOpcion.textoOpcion];
+        await consulta.none(sqlOpciones, opcion);
+      }
+    }
+  );
   }
 
   protected static async listarPregunta(sqlPregunta: string, parametros: any, res: Response): Promise<any> {

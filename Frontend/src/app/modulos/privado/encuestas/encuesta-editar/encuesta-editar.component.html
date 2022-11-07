@@ -92,7 +92,7 @@
                 ></div>
 
                 <div class="card-body">
-                  <div class="tiulo-encuesta">
+                  <div>
                     <p style="text-align: center">
                       <input
                         type="text"
@@ -333,7 +333,7 @@
             role="tabpanel"
             aria-labelledby="profile-tab"
           >
-            <form #frmModificarPreguntas="ngForm" novalidate>
+            <form>
               <div class="card-body">
                 <div
                   class="card-header"
@@ -354,7 +354,7 @@
                     <div *ngSwitchCase="1" class="card mb-4 seccion-preguntas">
                       <div class="col-md-1 opciones-editar">
                         <i
-                          class="fa-solid fa-file-pen opciones-editar"
+                          class="fa-solid fa-file-pen"
                           title="Modificar pregunta"
                           (click)="modificarPregunta(pregunta)"
                         ></i
@@ -395,7 +395,7 @@
                       <br />
                       <div>
                         <input
-                          class="fecha-encuesta"
+                          class="fecha-respuesta"
                           type="date"
                           id="respuesta_fecha"
                           name="respuesta_fecha"
@@ -453,8 +453,7 @@
                         <textarea
                           placeholder="Escriba aquí su respuesta"
                           class="respuesta-abierta"
-                        >
-                        </textarea>
+                        ></textarea>
                       </div>
                     </div>
 
@@ -505,7 +504,7 @@
                       <div
                         class="row"
                         *ngFor="
-                          let opcion of objPregunta.arregloOpciones;
+                          let opcion of pregunta.arregloOpciones;
                           let indiceOp = index
                         "
                       >
@@ -545,114 +544,6 @@
                       </div>
                     </div>
 
-                    <!--Pregunta y respuesta de escala---->
-                    <div *ngSwitchCase="4" class="card mb-4 seccion-preguntas">
-                      <div class="col-md-1 opciones-editar">
-                        <i
-                          class="fa-solid fa-file-pen"
-                          title="Modificar pregunta"
-                          (click)="modificarPregunta(pregunta)"
-                        ></i
-                        >&nbsp;
-                        <i
-                          class="fas fa-trash-can"
-                          title="Eliminar pregunta"
-                          (click)="eliminarPregunta(pregunta.codPregunta)"
-                        ></i>
-                      </div>
-                      <div class="col-md-11">
-                        <div class="form-floating">
-                          <textarea
-                            class="pregunta"
-                            placeholder="Pregunta"
-                            id="floatingTextarea2"
-                            [name]="escala + '_' + indice"
-                            [(ngModel)]="pregunta.descripcionPregunta"
-                            #escala="ngModel"
-                            [ngClass]="{
-                              'is-invalid':
-                                frmModificarEncuesta.submitted && escala.invalid
-                            }"
-                            required
-                          ></textarea>
-                          <div
-                            class="text-danger"
-                            *ngIf="
-                              frmModificarEncuesta.submitted && escala.invalid
-                            "
-                          >
-                            <span *ngIf="escala.errors?.['required']"
-                              >Campo obligatorio</span
-                            >
-                          </div>
-                        </div>
-                      </div>
-                      <br />
-                      <div class="row">
-                        <div class="col-md-9">
-                          <div class="form-check form-check-inline">
-                            <input
-                              class="form-check-input"
-                              type="radio"
-                              name="inlineRadioOptions"
-                              id="inlineRadio1"
-                              value="option1"
-                            />
-                            <label class="form-check-label" for="inlineRadio1"
-                              >1</label
-                            >
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input
-                              class="form-check-input"
-                              type="radio"
-                              name="inlineRadioOptions"
-                              id="inlineRadio2"
-                              value="option2"
-                            />
-                            <label class="form-check-label" for="inlineRadio2"
-                              >2</label
-                            >
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input
-                              class="form-check-input"
-                              type="radio"
-                              name="inlineRadioOptions"
-                              id="inlineRadio3"
-                              value="option3"
-                            />
-                            <label class="form-check-label" for="inlineRadio3"
-                              >3</label
-                            >
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input
-                              class="form-check-input"
-                              type="radio"
-                              name="inlineRadioOptions"
-                              id="inlineRadio4"
-                              value="option4"
-                            />
-                            <label class="form-check-label" for="inlineRadio4"
-                              >4</label
-                            >
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input
-                              class="form-check-input"
-                              type="radio"
-                              name="inlineRadioOptions"
-                              id="inlineRadio5"
-                              value="option5"
-                            />
-                            <label class="form-check-label" for="inlineRadio4"
-                              >5</label
-                            >
-                          </div>
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -674,360 +565,287 @@
             class="tab-pane fade"
             id="contact"
             role="tabpanel"
-            aria-labelledby="profile-tab"
+            aria-labelledby="contact-tab"
           >
-            <div class="card-body">
-              <div
-                class="card-header"
-                style="
-                  padding-bottom: 32px;
-                  background-color: rgba(17, 17, 17, 0.116);
-                "
-              ></div>
-              <div class="card seccion-tipo-pregunta">
-                <div class="row mb-3 tipo-pregunta">
-                  <div class="col-5">
-                    <div class="form-floating mb-3 mb-md-0">
-                      <div class="input-group mb-2 mr-sm-2 tipo-pregunta">
-                        <div class="input-group-prepend">
-                          <div class="input-group-text">Tipo de pregunta</div>
+            <form
+              #frmGuardarPreguntasNuevas="ngForm"
+              (submit)="
+                frmGuardarPreguntasNuevas.valid &&
+                  guardarPreguntasNuevas(frmGuardarPreguntasNuevas)
+              "
+            >
+              <div class="card-body">
+                <div
+                  class="card-header"
+                  style="
+                    padding-bottom: 32px;
+                    background-color: rgba(17, 17, 17, 0.116);
+                  "
+                ></div>
+                <div class="card seccion-tipo-pregunta">
+                  <div class="row mb-3 tipo-pregunta">
+                    <div class="col-5">
+                      <div class="form-floating mb-3 mb-md-0">
+                        <div class="input-group mb-2 mr-sm-2 tipo-pregunta">
+                          <div class="input-group-prepend">
+                            <div class="input-group-text">Tipo de pregunta</div>
+                          </div>
+                          <select
+                            class="form-control"
+                            name="tipo_pregunta"
+                            [(ngModel)]="objPreguntaNueva.codTipoPregunta"
+                            #tipo_pregunta="ngModel"
+                            aria-label="Default select example"
+                            [ngClass]="{
+                              'is-invalid':
+                                frmGuardarPreguntasNuevas.submitted &&
+                                tipo_pregunta.invalid
+                            }"
+                            required
+                          >
+                            <option value="0">Elija una opción</option>
+                            <option
+                              *ngFor="
+                                let objTipoPregunta of arregloTipoPreguntas
+                              "
+                              value="{{ objTipoPregunta.codTipoPregunta }}"
+                            >
+                              {{ objTipoPregunta.nombreTipoPregunta }}
+                            </option></select
+                          >&nbsp;&nbsp;
+                          <div *ngIf="objPreguntaNueva.codTipoPregunta !== 0">
+                            <i
+                              class="fa fa-circle-plus fa-2x"
+                              title="Agregar pregunta"
+                              (click)="crearPreguntasNuevas(objPreguntaNueva.codTipoPregunta)"
+                            ></i>
+                          </div>
+                          <div
+                            class="text-danger"
+                            *ngIf="
+                              frmGuardarPreguntasNuevas.submitted &&
+                              tipo_pregunta.invalid
+                            "
+                          >
+                            <span *ngIf="descripcion.errors?.['required']"
+                              >Campo obligatorio</span
+                            >
+                          </div>
                         </div>
-                        <select
-                          class="form-control"
-                          name="tipo_pregunta"
-                          [(ngModel)]="objPreguntaNueva.codTipoPregunta"
-                          #tipo_pregunta="ngModel"
-                          aria-label="Default select example"
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!--Seccion de preguntas---->
+              <div class="card-body">
+                <div
+                  *ngFor="
+                    let nuevaPregunta of arregloPreguntasNuevas;
+                    let indiceP = index
+                  "
+                >
+                  <div [ngSwitch]="nuevaPregunta.codTipoPregunta">
+                    <!--Pregunta y respuesta de fecha---->
+                    <div *ngSwitchCase="1" class="card mb-4 seccion-preguntas">
+                      <i
+                        class="fas fa-trash-can eliminar"
+                        title="Eliminar pregunta"
+                        (click)="
+                          eliminarPreguntaNueva(nuevaPregunta.codPregunta)
+                        "
+                      ></i>
+                      <div class="form-floating">
+                        <textarea
+                          class="pregunta"
+                          placeholder="Escriba la pregunta"
+                          id="floatingTextareaFecha"
+                          [name]="fecha + '_' + indiceP"
+                          [(ngModel)]="nuevaPregunta.descripcionPregunta"
+                          #fecha="ngModel"
                           [ngClass]="{
                             'is-invalid':
-                              frmModificarEncuesta.submitted &&
-                              tipo_pregunta.invalid
+                              frmGuardarPreguntasNuevas.submitted &&
+                              fecha.invalid
                           }"
                           required
-                        >
-                          <option value="0">Elija una opción</option>
-                          <option
-                            *ngFor="let objTipoPregunta of arregloTipoPreguntas"
-                            value="{{ objTipoPregunta.codTipoPregunta }}"
-                          >
-                            {{ objTipoPregunta.nombreTipoPregunta }}
-                          </option></select
-                        >&nbsp;&nbsp;
-                        <div *ngIf="objPreguntaNueva.codTipoPregunta !== 0">
-                          <i
-                            class="fa fa-circle-plus fa-2x"
-                            title="Agregar pregunta"
-                            (click)="
-                              crearPreguntas(objPreguntaNueva.codTipoPregunta)
-                            "
-                          ></i>
-                        </div>
+                        ></textarea>
+
                         <div
                           class="text-danger"
                           *ngIf="
-                            frmModificarEncuesta.submitted &&
-                            tipo_pregunta.invalid
+                            frmGuardarPreguntasNuevas.submitted && fecha.invalid
                           "
                         >
-                          <span *ngIf="descripcion.errors?.['required']"
+                          <span *ngIf="fecha.errors?.['required']"
                             >Campo obligatorio</span
                           >
                         </div>
                       </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!--Seccion de preguntas---->
-            <div class="card-body">
-              <div
-                *ngFor="
-                  let nuevaPregunta of arregloPreguntasNuevas;
-                  let indice = index
-                "
-              >
-                <div [ngSwitch]="nuevaPregunta.codTipoPregunta">
-                  <!--Pregunta y respuesta de fecha---->
-                  <div *ngSwitchCase="1" class="card mb-4 seccion-preguntas">
-                    <i
-                      class="fas fa-trash-can eliminar"
-                      title="Eliminar pregunta"
-                      (click)="eliminarPreguntaNueva(nuevaPregunta.codPregunta)"
-                    ></i>
-                    <div class="form-floating">
-                      <textarea
-                        class="pregunta"
-                        placeholder="Escriba la pregunta"
-                        id="floatingTextareaFecha"
-                        [name]="fecha + '_' + indice"
-                        [(ngModel)]="nuevaPregunta.descripcionPregunta"
-                        #fecha="ngModel"
-                        [ngClass]="{
-                          'is-invalid':
-                            frmModificarEncuesta.submitted && fecha.invalid
-                        }"
-                        required
-                      ></textarea>
-
-                      <div
-                        class="text-danger"
-                        *ngIf="frmModificarEncuesta.submitted && fecha.invalid"
-                      >
-                        <span *ngIf="fecha.errors?.['required']"
-                          >Campo obligatorio</span
-                        >
-                      </div>
-                    </div>
-                    <br />
-                    <div>
-                      <input
-                        class="fecha-respuesta"
-                        type="date"
-                        id="respuesta_fecha"
-                        name="respuesta_fecha"
-                        min="2022-01-01"
-                        max="2040-12-31"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <!--Pregunta y respuesta abierta---->
-                  <div *ngSwitchCase="2" class="card mb-4 seccion-preguntas">
-                    <i
-                      class="fas fa-trash-can eliminar"
-                      title="Eliminar pregunta"
-                      (click)="eliminarPreguntaNueva(nuevaPregunta.codPregunta)"
-                    ></i>
-                    <div class="form-floating">
-                      <textarea
-                        class="pregunta"
-                        placeholder="Escriba la pregunta"
-                        id="floatingTextareaAbierta"
-                        [name]="abierta + '_' + indice"
-                        [(ngModel)]="nuevaPregunta.descripcionPregunta"
-                        #abierta="ngModel"
-                        [ngClass]="{
-                          'is-invalid':
-                            frmModificarEncuesta.submitted && abierta.invalid
-                        }"
-                        required
-                      ></textarea>
-                      <div
-                        class="text-danger"
-                        *ngIf="
-                          frmModificarEncuesta.submitted && abierta.invalid
-                        "
-                      >
-                        <span *ngIf="abierta.errors?.['required']"
-                          >Campo obligatorio</span
-                        >
-                      </div>
-                    </div>
-                    <div>
-                      <textarea
-                        placeholder="Escriba aquí su respuesta"
-                        class="respuesta-abierta"
-                      ></textarea>
-                    </div>
-                  </div>
-
-                  <!--!--Pregunta y respuesta de selección multiple-->
-                  <div *ngSwitchCase="3" class="card mb-4 seccion-preguntas">
-                    <i
-                      class="fas fa-trash-can eliminar"
-                      title="Eliminar pregunta"
-                      (click)="eliminarPreguntaNueva(nuevaPregunta.codPregunta)"
-                    ></i>
-                    <div class="form-floating">
-                      <textarea
-                        class="pregunta"
-                        placeholder="Escriba la pregunta"
-                        id="seleccion{{ indice }}"
-                        name="seleccion{{ indice }}"
-                        [(ngModel)]="nuevaPregunta.descripcionPregunta"
-                        #seleccion="ngModel"
-                        [ngClass]="{
-                          'is-invalid':
-                            frmModificarEncuesta.submitted && seleccion.invalid
-                        }"
-                        required
-                      ></textarea>
-                      <div
-                        class="text-danger"
-                        *ngIf="
-                          frmModificarEncuesta.submitted && seleccion.invalid
-                        "
-                      >
-                        <span *ngIf="seleccion.errors?.['required']"
-                          >Campo obligatorio</span
-                        >
-                      </div>
-                    </div>
-                    <div
-                      class="row"
-                      *ngFor="
-                        let opcionNueva of nuevaPregunta.arregloOpcionesNuevas;
-                        let indiceOp = index
-                      "
-                    >
-                      <div class="col-md-9 custom-control custom-radio">
+                      <br />
+                      <div>
                         <input
-                          type="radio"
-                          name="customRadio"
-                          class="custom-control-input"
-                          id="radio"
-                        />
-                        <input
-                          type="text"
-                          class="custom-control-label"
-                          for="customRadio1"
-                          placeholder="Opción"
-                          id="opcion{{ indiceOp }}{{ indice }}"
-                          name="opcion{{ indiceOp }}{{ indice }}"
-                          #opcion="ngModel"
-                          [(ngModel)]="opcionNueva.textoOpcion"
+                          class="fecha-respuesta"
+                          type="date"
+                          id="respuesta_fecha"
+                          name="respuesta_fecha"
+                          min="2022-01-01"
+                          max="2040-12-31"
                           required
                         />
-
-                        <div class="col-md-3 custom-control custom-radio">
-                          <i
-                            class="fas fa-xmark"
-                            title="Eliminar opción"
-                            tooltip-dir="left"
-                            (click)="eliminarOpcionesNuevas(indice, indiceOp)"
-                          ></i>
-                        </div>
                       </div>
                     </div>
 
-                    <span
-                      (click)="agregarOpcionesNuevas(nuevaPregunta.codPregunta)"
-                      class="otra-opcion"
-                      >Añadir opción</span
-                    >
-                  </div>
-
-                  <!--Pregunta y respuesta de escala---->
-                  <div *ngSwitchCase="4" class="card mb-4 seccion-preguntas">
-                    <i
-                      class="fas fa-trash-can eliminar"
-                      title="Eliminar pregunta"
-                      (click)="eliminarPreguntaNueva(nuevaPregunta.codPregunta)"
-                    ></i>
-                    <div class="form-floating">
-                      <textarea
-                        class="pregunta"
-                        placeholder="Pregunta"
-                        id="floatingTextarea2"
-                        [name]="escala + '_' + indice"
-                        [(ngModel)]="nuevaPregunta.descripcionPregunta"
-                        #escala="ngModel"
-                        [ngClass]="{
-                          'is-invalid':
-                            frmModificarEncuesta.submitted && escala.invalid
-                        }"
-                        required
-                      ></textarea>
-                      <div
-                        class="text-danger"
-                        *ngIf="frmModificarEncuesta.submitted && escala.invalid"
-                      >
-                        <span *ngIf="escala.errors?.['required']"
-                          >Campo obligatorio</span
+                    <!--Pregunta y respuesta abierta---->
+                    <div *ngSwitchCase="2" class="card mb-4 seccion-preguntas">
+                      <i
+                        class="fas fa-trash-can eliminar"
+                        title="Eliminar pregunta"
+                        (click)="
+                          eliminarPreguntaNueva(nuevaPregunta.codPregunta)
+                        "
+                      ></i>
+                      <div class="form-floating">
+                        <textarea
+                          class="pregunta"
+                          placeholder="Escriba la pregunta"
+                          id="pAbierta"
+                          [name]="pAbierta + '_' + indiceP"
+                          [(ngModel)]="nuevaPregunta.descripcionPregunta"
+                          #pAbierta="ngModel"
+                          [ngClass]="{
+                            'is-invalid':
+                              frmGuardarPreguntasNuevas.submitted &&
+                              pAbierta.invalid
+                          }"
+                          required
+                        ></textarea>
+                        <div
+                          class="text-danger"
+                          *ngIf="
+                            frmGuardarPreguntasNuevas.submitted &&
+                            pAbierta.invalid
+                          "
                         >
+                          <span *ngIf="pAbierta.errors?.['required']"
+                            >Campo obligatorio</span
+                          >
+                        </div>
+                      </div>
+                      <div>
+                        <textarea
+                          placeholder="Escriba aquí su respuesta"
+                          class="respuesta-abierta"
+                        ></textarea>
                       </div>
                     </div>
-                    <br />
-                    <div class="row">
-                      <div class="col-md-9">
-                        <div class="form-check form-check-inline">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="inlineRadioOptions"
-                            id="inlineRadio1"
-                            value="option1"
-                          />
-                          <label class="form-check-label" for="inlineRadio1"
-                            >1</label
-                          >
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="inlineRadioOptions"
-                            id="inlineRadio2"
-                            value="option2"
-                          />
-                          <label class="form-check-label" for="inlineRadio2"
-                            >2</label
-                          >
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="inlineRadioOptions"
-                            id="inlineRadio3"
-                            value="option3"
-                          />
-                          <label class="form-check-label" for="inlineRadio3"
-                            >3</label
-                          >
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="inlineRadioOptions"
-                            id="inlineRadio4"
-                            value="option4"
-                          />
-                          <label class="form-check-label" for="inlineRadio4"
-                            >4</label
-                          >
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="inlineRadioOptions"
-                            id="inlineRadio5"
-                            value="option5"
-                          />
-                          <label class="form-check-label" for="inlineRadio4"
-                            >5</label
+
+                    <!--!--Pregunta y respuesta de selección multiple-->
+                    <div *ngSwitchCase="3" class="card mb-4 seccion-preguntas">
+                      <i
+                        class="fas fa-trash-can eliminar"
+                        title="Eliminar pregunta"
+                        (click)="
+                          eliminarPreguntaNueva(nuevaPregunta.codPregunta)
+                        "
+                      ></i>
+                      <div class="form-floating">
+                        <textarea
+                          class="pregunta"
+                          placeholder="Escriba la pregunta"
+                          id="seleccion{{ indiceP }}"
+                          name="seleccion{{ indiceP }}"
+                          [(ngModel)]="nuevaPregunta.descripcionPregunta"
+                          #seleccion="ngModel"
+                          [ngClass]="{
+                            'is-invalid':
+                              frmGuardarPreguntasNuevas.submitted &&
+                              seleccion.invalid
+                          }"
+                          required
+                        ></textarea>
+                        <div
+                          class="text-danger"
+                          *ngIf="
+                            frmGuardarPreguntasNuevas.submitted &&
+                            seleccion.invalid
+                          "
+                        >
+                          <span *ngIf="seleccion.errors?.['required']"
+                            >Campo obligatorio</span
                           >
                         </div>
                       </div>
+                      <div
+                        class="row"
+                        *ngFor="
+                          let opcionNueva of nuevaPregunta.arregloOpciones;
+                          let indiceOpcion = index
+                        "
+                      >
+                        <div class="col-md-9 custom-control custom-radio">
+                          <input
+                            type="radio"
+                            name="customRadio"
+                            class="custom-control-input"
+                            id="radio"
+                          />
+                          <input
+                            type="text"
+                            class="custom-control-label"
+                            for="customRadio1"
+                            placeholder="Opción"
+                            id="opcion{{ indiceOpcion }}{{ indiceP }}"
+                            name="opcion{{ indiceOpcion }}{{ indiceP }}"
+                            #opcion="ngModel"
+                            [(ngModel)]="opcionNueva.textoOpcion"
+                            required
+                          />
+
+                          <div class="col-md-3 custom-control custom-radio">
+                            <i
+                              class="fas fa-xmark"
+                              title="Eliminar opción"
+                              tooltip-dir="left"
+                              (click)="
+                                eliminarOpcionesNuevas(indiceP, indiceOpcion)
+                              "
+                            ></i>
+                          </div>
+                        </div>
+                      </div>
+
+                      <span
+                        (click)="
+                          agregarOpcionesNuevas(nuevaPregunta.codPregunta)
+                        "
+                        class="otra-opcion"
+                        >Añadir opción</span
+                      >
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="d-flex justify-content-center">
-              <div class="d-grid gap-2 d-md-flex">
-                <button
-                  type="button"
-                  class="btn btn-primary cancelar-preguntas"
-                  (click)="guardarPreguntasNuevas()"
-                >
-                  Crear pregunta
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-danger cancelar-preguntas"
-                  [routerLink]="['/private/encuestas/listar-encuesta']"
-                >
-                  Cancelar
-                </button>
-                <app-scroll-to-top></app-scroll-to-top>
+              <div class="d-flex justify-content-center">
+                <div class="d-grid gap-2 d-md-flex">
+                  <button
+                    type="submit"
+                    class="btn btn-primary cancelar-preguntas"
+                  >
+                    Crear pregunta
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger cancelar-preguntas"
+                    [routerLink]="['/private/encuestas/listar-encuesta']"
+                  >
+                    Cancelar
+                  </button>
+                  <app-scroll-to-top></app-scroll-to-top>
+                </div>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>

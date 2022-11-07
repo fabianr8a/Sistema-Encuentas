@@ -178,6 +178,13 @@ export class UsuEditarComponent implements OnInit {
     }
   }
 
+  public reloadComponent() {
+    let currentUrl = this.router.url;
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+        this.router.onSameUrlNavigation = 'reload';
+        this.router.navigate([currentUrl]);
+  }
+
   public modificarUsuario(): void {
     this.clickCrear = true;
     this.miSuscripcionUsu = this.usuarioService
@@ -261,6 +268,9 @@ export class UsuEditarComponent implements OnInit {
             this.toastrService
           );
           throw miError;
+        }),
+        finalize(()=>{
+          this.reloadComponent()
         })
       )
       .subscribe(observadorAny);

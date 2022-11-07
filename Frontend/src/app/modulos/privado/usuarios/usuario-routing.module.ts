@@ -6,12 +6,25 @@ import { UsuListarComponent } from './usuarios-listar/usu-listar.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
+import { AdminGuard } from 'src/app/utilidades/guards/admin.guard';
 
 const routes: Routes = [
-  { path: 'listar-usuario', component: UsuListarComponent  },
-  { path: 'crear-usuario', component: UsuCrearComponent  },
-  { path: 'editar-usuario/:codUsuario', component: UsuEditarComponent  },
-  { path: 'perfil-usuario/:codUsuario', component: UsuDatosComponent  },
+  {
+    path: 'listar-usuario',
+    component: UsuListarComponent,
+    canActivate: [AdminGuard],
+  },
+  {
+    path: 'crear-usuario',
+    component: UsuCrearComponent,
+    canActivate: [AdminGuard],
+  },
+  {
+    path: 'editar-usuario/:codUsuario',
+    component: UsuEditarComponent,
+    canActivate: [AdminGuard],
+  },
+  { path: 'perfil-usuario/:codUsuario', component: UsuDatosComponent },
 
   { path: '', redirectTo: 'listar-usuario', pathMatch: 'full' },
   { path: '**', component: ErrorDashComponent },
@@ -19,8 +32,7 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [],
-  imports:
-    [CommonModule,RouterModule.forChild(routes)],
-    exports:[RouterModule],
+  imports: [CommonModule, RouterModule.forChild(routes)],
+  exports: [RouterModule],
 })
-export class UsuarioRoutingModule { }
+export class UsuarioRoutingModule {}

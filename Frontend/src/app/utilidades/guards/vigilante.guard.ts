@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router} from '@angular/router';
-import { AccesoService } from './servicios/acceso.service';
+import { CanActivate, Router } from '@angular/router';
+import { AccesoService } from '../../servicios/acceso.service';
 
 @Injectable({
   providedIn: 'root',
@@ -8,12 +8,11 @@ import { AccesoService } from './servicios/acceso.service';
 export class VigilanteGuard implements CanActivate {
   constructor(private accesoService: AccesoService, private router: Router) {}
   canActivate(): boolean {
-    if (this.accesoService.verificarUsuario()) {
+    if (this.accesoService.verificarAcceso()) {
       return true;
+    } else {
+      this.router.navigate(['/land/public/login']);
+      return false;
     }
-    this.router.navigate(['/land/public/login']);
-    return false;
   }
 }
-
-

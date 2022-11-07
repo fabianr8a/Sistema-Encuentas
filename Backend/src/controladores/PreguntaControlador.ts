@@ -2,18 +2,15 @@ import { Request, Response } from 'express';
 import PreguntaDAO from '../daos/PreguntaDAO';
 import {SQL_PREGUNTAS} from '../repositorios/Preguntas_sql';
 import {SQL_OPCIONES} from '../repositorios/Opciones_sql';
-import { SQL_ENCUESTA } from '../repositorios/Encuestas_sql';
+
 
 
 class PreguntaControlador extends PreguntaDAO {
 
   public crearPreguntas(req: Request, res: Response) {
-    const losParametros = [
-      req.body[0].codEncuesta,
-      req.body[0].codTipoPregunta,
-      req.body[0].descripcionPregunta,
-    ];
-    PreguntaControlador.crearPregunta(SQL_ENCUESTA.CREAR_ENCUESTA,SQL_PREGUNTAS.CREAR_PREGUNTAS, SQL_OPCIONES.CREAR_OPCIONES,  losParametros,  res);
+   const parametrosPregunta =
+     req.body[0];
+    PreguntaControlador.crearPregunta(SQL_PREGUNTAS.CREAR_PREGUNTAS, SQL_OPCIONES.CREAR_OPCIONES, parametrosPregunta, res);
   }
 
   public listarPregunta(req: Request, res: Response) {

@@ -36,7 +36,7 @@ class AccesoDAO {
             });
         });
     }
-    static crearElUsuario(sqlExiste, sqlAgreUsu, sqlAgreAcceso, sqlAgreIngreso, sqlTodoListo, parametros, res) {
+    static crearElUsuario(sqlExiste, sqlAgreUsu, sqlAgreAcceso, sqlTodoListo, parametros, res) {
         return __awaiter(this, void 0, void 0, function* () {
             yield conexionBd_1.default.task((consulta) => __awaiter(this, void 0, void 0, function* () {
                 const correito = parametros[0];
@@ -49,7 +49,6 @@ class AccesoDAO {
                     const nuevoUsuario = yield consulta.one(sqlAgreUsu, [documento, nombres, apellidos, telefono]);
                     const clavecita = parametros[5];
                     yield consulta.none(sqlAgreAcceso, [nuevoUsuario.codUsuario, correito, clavecita]);
-                    yield consulta.none(sqlAgreIngreso, [nuevoUsuario.codUsuario]);
                     return yield consulta.result(sqlTodoListo, [nuevoUsuario.codUsuario]);
                 }
                 else {
@@ -104,13 +103,16 @@ class AccesoDAO {
     }
     static actualizarAcceso(sqlBuscar, parametros, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield conexionBd_1.default.oneOrNone(sqlBuscar, parametros)
-                .then((resultado) => {
-                res.status(200).json(resultado);
+            yield conexionBd_1.default.task((consulta) => __awaiter(this, void 0, void 0, function* () {
+                return yield consulta.result(sqlBuscar, parametros);
+            }))
+                .then(() => {
+                res.status(200).json({ respuesta: "Acceso actualizado",
+                });
             })
                 .catch((miError) => {
                 console.log(miError);
-                res.status(400).json({ respuesta: 'Error al actualizar el Acceso' });
+                res.status(400).json({ respuesta: 'Error actualizando el acceso' });
             });
         });
     }

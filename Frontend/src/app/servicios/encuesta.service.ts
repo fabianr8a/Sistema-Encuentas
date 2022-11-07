@@ -60,7 +60,7 @@ export class EncuestaService {
   }
 
   public seleccionarEncuestaModificar(idEncuesta: number): Observable<Encuesta> {
-    return this.http.get<Encuesta>(`${this.apiSeleccionarEncuestaModificar}/${idEncuesta}`);
+    return this.http.get<Encuesta>(this.apiSeleccionarEncuestaModificar + '/' + idEncuesta);
   }
 
   public modificarEncuesta(objEncuesta:Encuesta): Observable<Encuesta>{

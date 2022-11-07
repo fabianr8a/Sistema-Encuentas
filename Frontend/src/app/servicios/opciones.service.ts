@@ -19,11 +19,6 @@ export class OpcionesService {
   public apiModificarOpcion: string = API_MODIFICAR_OPCIONES;
   constructor(private http: HttpClient) {}
 
-  public listarOpciones(codPregunta: number): Observable<Opciones[]> {
-    return this.http.get<Opciones[]>(
-      this.apiListarOpciones + '/' + codPregunta
-    );
-  }
 
   public eliminarOpciones(codOpcion: number): Observable<Opciones> {
     return this.http.delete<Opciones>(
@@ -33,7 +28,7 @@ export class OpcionesService {
 
   public seleccionarOpcion(codOpcion: number): Observable<Opciones> {
     return this.http.get<Opciones>(
-      `${this.apiSeleccionarOpcion}/${codOpcion}`
+      this.apiSeleccionarOpcion + '/' + codOpcion
     );
   }
 

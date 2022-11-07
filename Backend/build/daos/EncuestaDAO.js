@@ -18,13 +18,7 @@ class EncuestaDAO {
         return __awaiter(this, void 0, void 0, function* () {
             yield conexionBd_1.default.result(sql, parametros)
                 .then((resultado) => {
-                const arreglo = resultado.rows;
-                if (arreglo.length >= 1) {
-                    res.status(200).json(resultado.rows);
-                }
-                else {
-                    res.status(400).json({ respuesta: 'No hay elementos' });
-                }
+                res.status(200).json(resultado.rows);
             })
                 .catch((miError) => {
                 console.log(miError);

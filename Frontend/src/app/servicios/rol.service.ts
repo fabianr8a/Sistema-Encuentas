@@ -38,6 +38,6 @@ export class RolService {
   }
 
   public buscarUnRol(idRol: string): Observable<Rol> {
-    return this.http.get<Rol>(`${this.apiRolBuscarRol}/${idRol}`);
+    return this.http.get<Rol>(this.apiRolBuscarRol + '/'+ idRol);
   }
 }

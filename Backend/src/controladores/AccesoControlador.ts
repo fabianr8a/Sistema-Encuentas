@@ -12,7 +12,6 @@ class AccesoControlador extends AccesoDAO {
   }
 
   public crearUsuario(req: Request, res: Response): void {
-    console.log(req.body);
     const parametros = [
       req.body[0].correoRegistro,
       req.body[0].nombresRegistro,
@@ -25,7 +24,6 @@ class AccesoControlador extends AccesoDAO {
     AccesoControlador.crearElUsuario(SQL_REG_USU.EXISTE_CORREO,
       SQL_REG_USU.AGREGAR_USUARIO,
       SQL_REG_USU.AGREGAR_ACCESO,
-      SQL_REG_USU.AGREGAR_INGRESO,
       SQL_REG_USU.TODO_LISTO,
       parametros, res);
   }

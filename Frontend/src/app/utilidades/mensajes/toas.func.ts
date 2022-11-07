@@ -6,7 +6,7 @@ export function mostrarMensaje(tipo: string, textoMensaje: string,  alerta: stri
     enableHtml: true,
     progressBar: true,
     positionClass: 'toast-bottom-right',
-    timeOut: 6000,
+    timeOut: 5000,
   };
 
   switch (tipo) {

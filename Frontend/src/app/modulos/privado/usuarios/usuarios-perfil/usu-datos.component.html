@@ -40,16 +40,6 @@
 
               <div class="row g-4 align-items-center">
                 <div class="col-md-5">
-                  <div>
-                    <img
-                      align="left"
-                      class="foto_usuario"
-                      [src]="'data:image/png;base64,' + objImagen.base64"
-                      alt="foto_usuario"
-                      onerror="this.src='/assets/img/user.png'"
-                    />
-                  </div>
-                  <div class="col-md-9">
                     <h6>
                       <strong>{{
                         objUsuario.nombresUsuario +
@@ -57,9 +47,8 @@
                           objUsuario.apellidosUsuario
                       }}</strong>
                     </h6>
+                    <h6>{{ objAcceso.correoAcceso }}</h6>
                     <h6>{{ objUsuario.documentoUsuario }}</h6>
-                    <h6>{{ objUsuario.telefonoUsuario }}</h6>
-                  </div>
                 </div>
               </div>
               <br />
@@ -141,19 +130,19 @@
                             id="nom"
                             name="nom"
                             [(ngModel)]="objUsuario.nombresUsuario"
-                            #nomUsu="ngModel"
+                            #nom="ngModel"
                             [ngClass]="{
                               'is-invalid':
-                                frmUsuModi.submitted && nomUsu.invalid
+                                frmUsuModi.submitted && nom.invalid
                             }"
                             required
                           />
                         </div>
                         <span
                           class="text-danger"
-                          *ngIf="frmUsuModi.submitted && nomUsu.invalid"
+                          *ngIf="frmUsuModi.submitted && nom.invalid"
                         >
-                          <span *ngIf="nomUsu?.errors?.['required']">
+                          <span *ngIf="nom?.errors?.['required']">
                             Nombre obligatorio
                           </span>
                         </span>
@@ -176,19 +165,19 @@
                             id="ape"
                             name="ape"
                             [(ngModel)]="objUsuario.apellidosUsuario"
-                            #apeUsu="ngModel"
+                            #ape="ngModel"
                             [ngClass]="{
                               'is-invalid':
-                                frmUsuModi.submitted && apeUsu.invalid
+                                frmUsuModi.submitted && ape.invalid
                             }"
                             required
                           />
                         </div>
                         <span
                           class="text-danger"
-                          *ngIf="frmUsuModi.submitted && apeUsu.invalid"
+                          *ngIf="frmUsuModi.submitted && ape.invalid"
                         >
-                          <span *ngIf="apeUsu?.errors?.['required']">
+                          <span *ngIf="ape?.errors?.['required']">
                             Apellidos obligatorios
                           </span>
                         </span>
@@ -211,8 +200,8 @@
                           <input
                             type="text"
                             class="form-control"
-                            id="doc"
-                            name="doc"
+                            id="docUsu"
+                            name="docUsu"
                             [(ngModel)]="objUsuario.documentoUsuario"
                             #docUsu="ngModel"
                             [ngClass]="{
@@ -363,17 +352,13 @@
                       type="button"
                       class="btn btn-primary me-md-2"
                       (click)="modificarUsuario()"
-                      [routerLink]="[
-                        '/private/usuario/perfil-usuario',
-                        objUsuario.codUsuario
-                      ]"
                     >
                       Actualizar
                     </button>
                     <button
                       type="button"
                       class="btn btn-danger"
-                      [routerLink]="['/private/inicio-dash']"
+                      [routerLink]="['/private/inicio']"
                     >
                       Cancelar
                     </button>
@@ -507,17 +492,13 @@
                         type="button"
                         class="btn btn-primary me-md-2"
                         (click)="modificarAcceso()"
-                        [routerLink]="[
-                          '/private/usuario/perfil-usuario',
-                          objUsuario.codUsuario
-                        ]"
                       >
                         Actualizar
                       </button>
                       <button
                         type="button"
                         class="btn btn-danger"
-                        [routerLink]="['/private/inicio-dash']"
+                        [routerLink]="['/private/inicio']"
                       >
                         Cancelar
                       </button>
@@ -540,7 +521,7 @@
                           <div *ngIf="tmpBase64">
                             <img
                               class="foto_usuario"
-                              [src]="tmpBase64"
+                              [src]="objImagen.base64"
                               alt="foto_usuario"
                             />
                           </div>
@@ -573,17 +554,13 @@
                       type="button"
                       class="btn btn-primary me-md-2"
                       (click)="modificarImagen()"
-                      [routerLink]="[
-                        '/private/usuario/perfil-usuario',
-                        objUsuario.codUsuario
-                      ]"
                     >
                       Actualizar
                     </button>
                     <button
                       type="button"
                       class="btn btn-danger"
-                      [routerLink]="['/private/inicio-dash']"
+                      [routerLink]="['/private/inicio']"
                     >
                       Cancelar
                     </button>
@@ -598,3 +575,4 @@
     </main>
   </div>
 </div>
+

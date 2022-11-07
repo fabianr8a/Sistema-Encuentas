@@ -30,6 +30,7 @@ export class AccesoService {
     return this.objAcceso;
   }
 
+
   // Lógica de negocio
   public salir(): void {
     localStorage.removeItem(TOKEN_SISTEMA);
@@ -44,7 +45,7 @@ export class AccesoService {
     return this.http.post<RespuestaAcceso>(this.urlInicioSesion, miAcceso);
   }
 
-  public verificarUsuario(): boolean {
+  public verificarAcceso(): boolean {
     if (localStorage.getItem(TOKEN_SISTEMA)) {
       try {
         const objetoVerificado: any = jwtDecode(this.obtenerToken());
@@ -61,7 +62,41 @@ export class AccesoService {
         return false;
       }
     }
-
     return false;
+  }
+
+  public verificarRutasAdmin():boolean{
+    if (this.objAcceso.nombreRol==='Administrador')
+     {
+      return true;
+    }else return false;
+  }
+
+  public verificarRutasDocente():boolean{
+    if (this.objAcceso.nombreRol==='Docente')
+     {
+      return true;
+    }else return false;
+  }
+
+  public verificarRutasSecretaria():boolean{
+    if (this.objAcceso.nombreRol==='Auxiliar')
+     {
+      return true;
+    }else return false;
+  }
+
+  public verificarRutasInvitado():boolean{
+    if (this.objAcceso.nombreRol==='Invitado')
+     {
+      return true;
+    }else return false;
+  }
+
+  public verificarRutasEstudiante():boolean{
+    if (this.objAcceso.nombreRol==='Estudiante')
+     {
+      return true;
+    }else return false;
   }
 }

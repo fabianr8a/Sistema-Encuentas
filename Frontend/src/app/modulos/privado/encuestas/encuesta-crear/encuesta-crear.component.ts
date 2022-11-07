@@ -22,14 +22,6 @@ import { Opciones } from 'src/app/modelos/opciones';
   styleUrls: ['./encuesta-crear.component.css'],
 })
 export class EncuestaCrearComponent implements OnInit {
-  arregloEscala = [
-    { valor: '1' },
-    { valor: '2' },
-    { valor: '3' },
-    { valor: '4' },
-    { valor: '5' },
-  ];
-
   arregloPreguntas: Preguntas[] = [];
   arregloOpciones: Opciones[] = [];
 
@@ -86,15 +78,16 @@ export class EncuestaCrearComponent implements OnInit {
     this.listarTipoPreguntas();
     this.listarDependencias();
     this.obtenerTiposDependencia();
+
   }
 
   //Metodos obligatorios
   public inicializarEncuesta(): Encuesta {
-    return new Encuesta(0,0,0,0,'','','','',this.acceso.objAcceso.codUsuario,'','');
+    return new Encuesta(0, 0,0,0,'','','','',this.acceso.objAcceso.codUsuario,'','');
   }
 
   public inicializarPregunta() {
-    return new Preguntas(0, 0, '', 0, [], []);
+    return new Preguntas(0, 0, '', 0, []);
   }
 
   public inicializarOpciones() {
@@ -165,13 +158,14 @@ export class EncuestaCrearComponent implements OnInit {
   //agregar preguntas en un array
   public crearPreguntas(tipoPregunta: any): void {
     let codigoPregunta = this.arregloPreguntas.length + 1;
-    let objPreguntica = new Preguntas(codigoPregunta,tipoPregunta,'',0,[],[]);
+    let objPreguntica = new Preguntas(codigoPregunta,tipoPregunta,'',0,[]);
     this.arregloPreguntas.push(objPreguntica);
+    console.log(this.arregloPreguntas)
   }
 
-  public eliminarPregunta(descripcion: string) {
+  public eliminarPregunta(codigo:number) {
     for (var i = 0; i < this.arregloPreguntas.length; i++) {
-      if (this.arregloPreguntas[i].descripcionPregunta == descripcion) {
+      if (this.arregloPreguntas[i].codPregunta == codigo) {
         this.arregloPreguntas.splice(i, 1);
         break;
       }
@@ -190,12 +184,20 @@ export class EncuestaCrearComponent implements OnInit {
 
   public eliminarOpciones(indicePregunta: number, indiceOpcion: number) {
     this.arregloPreguntas[indicePregunta].arregloOpciones.splice(
-      indiceOpcion,
-      1
+      indiceOpcion,1
     );
   }
 
+
   public crearEncuesta(formulario: NgForm): void {
+    if (this.objEncuesta.fechaCierreEncuesta<this.objEncuesta.fechaCreacionEncuesta) {
+      mostrarMensaje(
+        'error',
+        'Las fechas no son correctas',
+        'Error',
+        this.toastrService
+      );
+    }else
     this.miSuscripcion = this.encuestaService
       .crearEncuesta(this.objEncuesta, this.arregloPreguntas)
       .pipe(
@@ -206,6 +208,7 @@ export class EncuestaCrearComponent implements OnInit {
             'Exito',
             this.toastrService
           );
+          this.router.navigate(['/private/encuestas/listar-encuesta']);
         }),
         catchError((miError) => {
           mostrarMensaje(
@@ -217,9 +220,6 @@ export class EncuestaCrearComponent implements OnInit {
           formulario.resetForm();
           throw miError;
         }),
-        finalize(() => {
-          this.router.navigate(['/private/encuestas/listar-encuesta']);
-        })
       )
       .subscribe(observadorAny);
   }

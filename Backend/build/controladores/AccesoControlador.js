@@ -12,7 +12,6 @@ class AccesoControlador extends AccesoDAO_1.default {
         AccesoControlador.iniciarSesion(Acceso_sql_1.SQL_ACCESO.INICIAR_SESION_DATOS, parametros, res);
     }
     crearUsuario(req, res) {
-        console.log(req.body);
         const parametros = [
             req.body[0].correoRegistro,
             req.body[0].nombresRegistro,
@@ -21,7 +20,7 @@ class AccesoControlador extends AccesoDAO_1.default {
             req.body[0].telefonoRegistro,
             req.body[0].claveRegistro,
         ];
-        AccesoControlador.crearElUsuario(RegistrarUsuario_sql_1.SQL_REG_USU.EXISTE_CORREO, RegistrarUsuario_sql_1.SQL_REG_USU.AGREGAR_USUARIO, RegistrarUsuario_sql_1.SQL_REG_USU.AGREGAR_ACCESO, RegistrarUsuario_sql_1.SQL_REG_USU.AGREGAR_INGRESO, RegistrarUsuario_sql_1.SQL_REG_USU.TODO_LISTO, parametros, res);
+        AccesoControlador.crearElUsuario(RegistrarUsuario_sql_1.SQL_REG_USU.EXISTE_CORREO, RegistrarUsuario_sql_1.SQL_REG_USU.AGREGAR_USUARIO, RegistrarUsuario_sql_1.SQL_REG_USU.AGREGAR_ACCESO, RegistrarUsuario_sql_1.SQL_REG_USU.TODO_LISTO, parametros, res);
     }
     buscarUnAcceso(req, res) {
         const codUsu = req.params.codUsuario;

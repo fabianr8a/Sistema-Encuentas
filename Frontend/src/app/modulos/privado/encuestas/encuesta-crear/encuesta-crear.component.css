@@ -94,6 +94,7 @@ a {
 .dataTable-input:focus {
   color: #212529;
   background-color: #fff;
+  border-bottom-color: #86b7fe;
   outline: 0;
 }
 

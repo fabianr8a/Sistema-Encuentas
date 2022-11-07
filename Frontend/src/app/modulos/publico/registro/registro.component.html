@@ -201,32 +201,31 @@
                                     for="claveUsu"
                                     class="input-group-text"
                                     style="background-color: #cfd3d4"
-                                    >Telefono</label
+                                    >Contraseña</label
                                   >
                                 </div>
                                 <input
-                                  type="number"
-                                  class="form-control"
-                                  id="telefono"
-                                  name="telefono"
-                                  required
-                                  [(ngModel)]="objRegistro.telefonoRegistro"
-                                  #telefono="ngModel"
-                                  [ngClass]="{
-                                    'is-invalid':
-                                      frmRegistrar.submitted && telefono.invalid
+                                type="password"
+                                class="form-control"
+                                id="contra"
+                                name="contra"
+                                required
+                                [(ngModel)]="objRegistro.claveRegistro"
+                                #contra="ngModel"
+                                [ngClass]="{
+                                  'is-invalid':
+                                    frmRegistrar.submitted && contra.invalid
                                   }"
                                 />
                               </div>
-
                               <span
-                                class="text-danger"
-                                *ngIf="frmRegistrar.submitted && telefono.invalid"
-                              >
-                                <span *ngIf="telefono.errors?.['required']">
-                                  Teléfono obligatorio
-                                </span>
+                              class="text-danger"
+                              *ngIf="frmRegistrar.submitted && contra.invalid"
+                            >
+                              <span *ngIf="contra.errors?.['required']">
+                                Contraseña obligatoria
                               </span>
+                            </span>
                             </div>
                           </div>
                         </div>
@@ -240,32 +239,36 @@
                                     for="claveUsu"
                                     class="input-group-text"
                                     style="background-color: #cfd3d4"
-                                    >Contraseña</label
+                                    >Confirmar contraseña</label
                                   >
                                 </div>
                                 <input
-                                  type="password"
-                                  class="form-control"
-                                  id="contra"
-                                  name="contra"
-                                  required
-                                  [(ngModel)]="objRegistro.claveRegistro"
-                                  #contra="ngModel"
-                                  [ngClass]="{
-                                    'is-invalid':
-                                      frmRegistrar.submitted && contra.invalid
-                                  }"
+                                type="password"
+                                class="form-control"
+                                id="cla"
+                                name="cla"
+                                required
+                                class="form-control fs-13px"
+                                [(ngModel)]="objRegistro.confirmarClaveRegistro"
+                                [pattern]="objRegistro.claveRegistro"
+                                #cla="ngModel"
+                                [ngClass]="{
+                                  'is-invalid':
+                                    frmRegistrar.submitted && cla.invalid
+                                }"
                                 />
                               </div>
-
                               <span
-                                class="text-danger"
-                                *ngIf="frmRegistrar.submitted && contra.invalid"
-                              >
-                                <span *ngIf="contra.errors?.['required']">
-                                  Contraseña obligatoria
-                                </span>
+                              class="text-danger"
+                              *ngIf="frmRegistrar.submitted && cla.invalid"
+                            >
+                              <span *ngIf="cla.errors?.['required']">
+                                Contraseña obligatoria
                               </span>
+                              <span *ngIf="cla.errors?.['pattern']">
+                                Contraseña Diferente
+                              </span>
+                            </span>
                             </div>
                           </div>
                         </div>
@@ -281,34 +284,29 @@
                                   for="reclave"
                                   style="background-color: #cfd3d4"
                                 >
-                                  Confirmar contraseña
+                                  Teléfono
                                 </div>
                               </div>
                               <input
-                                type="password"
-                                class="form-control"
-                                id="cla"
-                                name="cla"
-                                required
-                                class="form-control fs-13px"
-                                [(ngModel)]="objRegistro.confirmarClaveRegistro"
-                                [pattern]="objRegistro.claveRegistro"
-                                #cla="ngModel"
-                                [ngClass]="{
-                                  'is-invalid':
-                                    frmRegistrar.submitted && cla.invalid
-                                }"
+                              type="number"
+                              class="form-control"
+                              id="telefono"
+                              name="telefono"
+                              required
+                              [(ngModel)]="objRegistro.telefonoRegistro"
+                              #telefono="ngModel"
+                              [ngClass]="{
+                                'is-invalid':
+                                  frmRegistrar.submitted && telefono.invalid
+                              }"
                               />
                             </div>
                             <span
                               class="text-danger"
-                              *ngIf="frmRegistrar.submitted && cla.invalid"
+                              *ngIf="frmRegistrar.submitted && telefono.invalid"
                             >
-                              <span *ngIf="cla.errors?.['required']">
-                                Contraseña obligatoria
-                              </span>
-                              <span *ngIf="cla.errors?.['pattern']">
-                                Contraseña Diferente
+                              <span *ngIf="telefono.errors?.['required']">
+                                Teléfono obligatorio
                               </span>
                             </span>
                           </div>

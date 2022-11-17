@@ -12,6 +12,8 @@ export class Usuarios {
   public reclaveUsuario:string;
   public tipoDocumentoUsuario: number;
   public codImagen:number;
+  public codTipoDependencia:number;
+
 
   constructor(
     cod:number,
@@ -27,7 +29,7 @@ export class Usuarios {
     reclave:string,
     tipoDocumento:number,
     codImagen:number,
-
+    codTipoDependencia:number,
   ){
     this.codUsuario=cod;
     this.codRol = codiRol;
@@ -42,5 +44,6 @@ export class Usuarios {
     this.estadoUsuario=estado;
     this.tipoDocumentoUsuario = tipoDocumento;
     this.codImagen=codImagen;
+    this.codTipoDependencia=codTipoDependencia;
 }
 }

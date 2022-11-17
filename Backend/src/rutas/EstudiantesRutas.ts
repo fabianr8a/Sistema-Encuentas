@@ -11,9 +11,7 @@ class EstudianteRutas {
 
   public listadoRutas(): void {
     //listar encuestas
-    this.miRutaEstudiante.get('/getAll',estudianteControlador.listarEncuestas);
-    //obtener tipo dependencias
-    this.miRutaEstudiante.get('/tipoDependencias',estudianteControlador.listarTiposDependencia);
+    this.miRutaEstudiante.get('/getAll/:codUsuario',estudianteControlador.listarEncuestas);
   }
 }
 const estudianteRutas = new EstudianteRutas();

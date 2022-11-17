@@ -18,6 +18,7 @@ class UsuarioControlador extends UsuarioDAO {
       req.body.nombresUsuario,
       req.body.apellidosUsuario,
       req.body.telefonoUsuario,
+      req.body.codTipoDependencia,
       req.body.correoAcceso,
       req.body.claveUsuario,
     ];
@@ -38,10 +39,11 @@ class UsuarioControlador extends UsuarioDAO {
       req.body.apellidosUsuario,
       req.body.telefonoUsuario,
       req.body.estadoUsuario,
-      req.body.codUsuario
+      req.body.codTipoDependencia,
+      req.body.codImagen,
+      req.params.codUsuario,
     ];
-    UsuarioControlador.actualizarUsuario(SQL_USUARIO.MODIFICAR,
-      misParametros, res);
+    UsuarioControlador.actualizarUsuario(SQL_USUARIO.MODIFICAR, misParametros, res);
   }
 
   public buscarUnUsuario(req: Request, res: Response) {

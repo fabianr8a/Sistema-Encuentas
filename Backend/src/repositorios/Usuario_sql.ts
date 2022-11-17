@@ -18,7 +18,7 @@ export const SQL_USUARIO = {
   BUSCAR_USUARIO: 'select * from usuarios where cod_usuario = $1',
 
   MODIFICAR: 'UPDATE usuarios set cod_rol = $1, documento_usuario = $2, tipo_documento_usuario = $3, \
-  nombres_usuario = $4, apellidos_usuario = $5, telefono_usuario = $6, estado_usuario = $7, cod_tipo_dependencia=$8 \
-  where cod_usuario = $9;',
+  nombres_usuario = $4, apellidos_usuario = $5, telefono_usuario = $6, estado_usuario = $7, cod_imagen=$8, cod_tipo_dependencia=$9 \
+  where cod_usuario = $10',
 
 }

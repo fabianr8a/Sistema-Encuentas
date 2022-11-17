@@ -36,13 +36,10 @@ export class ResponderEncuestaComponent implements OnInit {
   //Atributos consumo servicios
   public temporal: any;
   public objEncuesta: Encuesta;
-  public objPregunta:Preguntas;
   public miSuscripcion: Subscription;
   public cargaFinalizada: boolean;
   public miSuscripcionEliminar: Subscription;
   public codigoEncuesta: number;
-
-
 
   constructor(
     public tipoEventosService: EncuestaService,
@@ -62,7 +59,6 @@ export class ResponderEncuestaComponent implements OnInit {
     this.arregloDependencias = [];
     this.arregloTiposDependencia = [];
     this.objEncuesta = this.inicializarEncuesta();
-    this.objPregunta=this.inicializarPregunta();
     this.codigoEncuesta = 0;
 
 
@@ -81,7 +77,6 @@ export class ResponderEncuestaComponent implements OnInit {
     this.listarEncuesta();
     this.listarEventos();
     this.listarTipoPreguntas();
-    this.listarDependencias();
     this.obtenerTiposDependencia();
 
   }
@@ -114,19 +109,7 @@ export class ResponderEncuestaComponent implements OnInit {
       .subscribe(observadorAny);
   }
 
-  public listarDependencias(): void {
-    this.miSuscripcion = this.dependenciasService
-      .listarDependencias()
-      .pipe(
-        map((resultado: Dependencias[]) => {
-          this.arregloDependencias = resultado;
-        }),
-        finalize(() => {
-          this.cargaFinalizada = true;
-        })
-      )
-      .subscribe(observadorAny);
-  }
+
 
   public obtenerTiposDependencia(): void {
     this.miSuscripcion = this.tipoDependenciasService
@@ -172,9 +155,7 @@ export class ResponderEncuestaComponent implements OnInit {
 
    //MODIFICAR LISTAR Y ELIMINAR PREGUNTAS//
 
-   public inicializarPregunta() {
-    return new Preguntas(0, 0, '', 0, []);
-  }
+
 
   public listarPreguntas(codigoEncuesta:number): void {
     this.miSuscripcion = this.preguntaService

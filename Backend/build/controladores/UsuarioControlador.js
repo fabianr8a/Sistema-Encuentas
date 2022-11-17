@@ -18,6 +18,7 @@ class UsuarioControlador extends UsuarioDAO_1.default {
             req.body.nombresUsuario,
             req.body.apellidosUsuario,
             req.body.telefonoUsuario,
+            req.body.codTipoDependencia,
             req.body.correoAcceso,
             req.body.claveUsuario,
         ];
@@ -32,7 +33,9 @@ class UsuarioControlador extends UsuarioDAO_1.default {
             req.body.apellidosUsuario,
             req.body.telefonoUsuario,
             req.body.estadoUsuario,
-            req.body.codUsuario
+            req.body.codTipoDependencia,
+            req.body.codImagen,
+            req.params.codUsuario,
         ];
         UsuarioControlador.actualizarUsuario(Usuario_sql_1.SQL_USUARIO.MODIFICAR, misParametros, res);
     }

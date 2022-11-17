@@ -29,7 +29,7 @@ class UsuarioDAO {
     static crearUsuario(sqlExiste, sqlCrearUsu, sqlAgreAcceso, sqlTodoListo, parametros, res) {
         return __awaiter(this, void 0, void 0, function* () {
             yield conexionBd_1.default.task((consulta) => __awaiter(this, void 0, void 0, function* () {
-                const correooo = parametros[6];
+                const correooo = parametros[7];
                 const correo = yield consulta.one(sqlExiste, correooo);
                 if (correo.existe == 0) {
                     const codigoRol = parametros[0];
@@ -38,8 +38,9 @@ class UsuarioDAO {
                     const nombres = parametros[3];
                     const apellidos = parametros[4];
                     const telefono = parametros[5];
-                    const nuevoUsuario = yield consulta.one(sqlCrearUsu, [codigoRol, documento, tipoDocumento, nombres, apellidos, telefono]);
-                    const clavecita = parametros[7];
+                    const codigoDependencia = parametros[6];
+                    const nuevoUsuario = yield consulta.one(sqlCrearUsu, [codigoRol, documento, tipoDocumento, nombres, apellidos, telefono, codigoDependencia]);
+                    const clavecita = parametros[8];
                     yield consulta.none(sqlAgreAcceso, [nuevoUsuario.codUsuario, correooo, clavecita]);
                     return yield consulta.result(sqlTodoListo, [nuevoUsuario.codUsuario]);
                 }

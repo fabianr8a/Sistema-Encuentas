@@ -22,7 +22,7 @@ class UsuarioDAO {
     res: Response): Promise<any> {
 
     await pool.task(async consulta =>{
-      const correooo = parametros[6];
+      const correooo = parametros[7];
       const correo = await consulta.one(sqlExiste, correooo);
 
       if (correo.existe == 0) {
@@ -32,8 +32,9 @@ class UsuarioDAO {
         const nombres = parametros[3];
         const apellidos = parametros[4];
         const telefono = parametros[5];
-        const nuevoUsuario = await consulta.one(sqlCrearUsu, [codigoRol, documento, tipoDocumento, nombres, apellidos, telefono]);
-        const clavecita = parametros[7];
+        const codigoDependencia=parametros[6]
+        const nuevoUsuario = await consulta.one(sqlCrearUsu, [codigoRol, documento, tipoDocumento, nombres, apellidos, telefono, codigoDependencia]);
+        const clavecita = parametros[8];
         await consulta.none(sqlAgreAcceso, [nuevoUsuario.codUsuario, correooo, clavecita]);
         return await consulta.result(sqlTodoListo, [nuevoUsuario.codUsuario]);
       } else {

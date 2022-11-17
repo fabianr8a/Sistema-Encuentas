@@ -7,10 +7,9 @@ const EstudianteDAO_1 = __importDefault(require("../daos/EstudianteDAO"));
 const Estudiantes_sql_1 = require("../repositorios/Estudiantes_sql");
 class EstudianteControlador extends EstudianteDAO_1.default {
     listarEncuestas(req, res) {
-        EstudianteControlador.listarLasEncuestas(Estudiantes_sql_1.SQL_ENCUESTA_ESTUDIANTES.LISTAR_ENCUESTAS, req, res);
-    }
-    listarTiposDependencia(req, res) {
-        EstudianteControlador.listarLosTiposDependencia(Estudiantes_sql_1.SQL_ENCUESTA_ESTUDIANTES.LISTAR_TIPO_DEPENDENCIAS, req, res);
+        const codigoUsuario = req.params.codUsuario;
+        const miParametro = [codigoUsuario];
+        EstudianteControlador.listarLasEncuestas(Estudiantes_sql_1.SQL_ENCUESTA_ESTUDIANTES.LISTAR_ENCUESTAS, miParametro, res);
     }
 }
 const estudianteControlador = new EstudianteControlador();

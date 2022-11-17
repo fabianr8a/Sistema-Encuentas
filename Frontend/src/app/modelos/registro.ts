@@ -6,6 +6,7 @@ export class Registro {
   public telefonoRegistro: string;
   public claveRegistro: string;
   public confirmarClaveRegistro?: string;
+  public codTipoDependencia:number;
 
   constructor(
     nombre: string,
@@ -14,6 +15,7 @@ export class Registro {
     correo: string,
     telefono:string,
     clave: string,
+    codTipoDependencia:number,
   ) {
     this.nombresRegistro = nombre;
     this.apellidosRegistro = apellido;
@@ -21,5 +23,6 @@ export class Registro {
     this.correoRegistro = correo;
     this.telefonoRegistro=telefono;
     this.claveRegistro = clave;
+    this.codTipoDependencia=codTipoDependencia;
   }
 }

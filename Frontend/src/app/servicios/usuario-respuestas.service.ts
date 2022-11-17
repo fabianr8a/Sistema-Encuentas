@@ -15,12 +15,8 @@ export class UsuarioEncuestaService {
 
   constructor(private http: HttpClient) {}
 
-  public listarEncuestasUsuarios(): Observable<Encuesta[]> {
-    return this.http.get<Encuesta[]>(this.apiListarEncuesta);
-  }
-
-  public listarTipoDependencias(): Observable<TiposDependencia[]> {
-    return this.http.get<TiposDependencia[]>(this.apiListarTipoDependencias);
+  public listarEncuestasUsuarios(codUsuario:number): Observable<Encuesta[]> {
+    return this.http.get<Encuesta[]>(this.apiListarEncuesta + '/' +codUsuario);
   }
 
 }

@@ -9,7 +9,7 @@ class EncuestaDAO {
     await pool.result(sql, parametros)
       .then((resultado: any) => {
           res.status(200).json(resultado.rows);
-        }) 
+        })
       .catch((miError: any) => {
         console.log(miError);
         res.status(400).json({ respuesta: 'Error en la consulta de encuestas' });
@@ -92,7 +92,6 @@ class EncuestaDAO {
       .then((resultado: any) => {
         if (!resultado) { res.status(400).json({ respuesta: 'Error seleccionando la encuesta a modificar' }); }
         res.status(200).json(resultado);
-        console.log(resultado)
       })
       .catch((miError: any) => {
         console.log(miError);

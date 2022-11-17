@@ -397,3 +397,8 @@ a {
   margin-top: -16px;
   margin-bottom: 16px;
 }
+
+.fa-broom{
+  cursor: pointer;
+  color: rgb(58, 177, 58);
+}

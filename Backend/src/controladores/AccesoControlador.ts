@@ -18,6 +18,7 @@ class AccesoControlador extends AccesoDAO {
       req.body[0].apellidosRegistro,
       req.body[0].documentoRegistro,
       req.body[0].telefonoRegistro,
+      req.body[0].codTipoDependencia,
       req.body[0].claveRegistro,
 
     ];

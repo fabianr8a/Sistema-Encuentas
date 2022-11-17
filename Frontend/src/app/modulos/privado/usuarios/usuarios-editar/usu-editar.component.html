@@ -40,32 +40,6 @@
                 style="border-bottom: 1px solid rgba(0, 0, 0, 0.19)"
               ></div>
               <br />
-
-              <div class="row g-4 align-items-center">
-                <div class="col-md-5">
-                  <div>
-                    <img
-                      align="left"
-                      class="foto_usuario"
-                      [src]="'data:image/png;base64,' + objImagen.base64"
-                      alt="foto_usuario"
-                      onerror="this.src='/assets/img/user.png'"
-                    />
-                  </div>
-                  <div class="col-md-9">
-                    <h6>
-                      <strong>{{
-                        objUsuario.nombresUsuario +
-                          " " +
-                          objUsuario.apellidosUsuario
-                      }}</strong>
-                    </h6>
-                    <h6>{{ objUsuario.documentoUsuario }}</h6>
-                    <h6>{{ objUsuario.telefonoUsuario }}</h6>
-                  </div>
-                </div>
-              </div>
-              <br />
               <!-- Tabs navs -->
               <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
@@ -205,41 +179,6 @@
                         <div class="input-group mb-2 mr-sm-2">
                           <div class="input-group-prepend">
                             <label
-                              for="docUsu"
-                              class="input-group-text"
-                              id="text_input"
-                              >Documento</label
-                            >
-                          </div>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="doc"
-                            name="doc"
-                            [(ngModel)]="objUsuario.documentoUsuario"
-                            #docUsu="ngModel"
-                            [ngClass]="{
-                              'is-invalid':
-                                frmUsuModi.submitted && docUsu.invalid
-                            }"
-                            required
-                          />
-                        </div>
-                        <span
-                          class="text-danger"
-                          *ngIf="frmUsuModi.submitted && docUsu.invalid"
-                        >
-                          <span *ngIf="docUsu?.errors?.['required']">
-                            Número de documento obligatorio
-                          </span>
-                        </span>
-                      </div>
-                    </div>
-                    <div class="col-md-5">
-                      <div class="form-group">
-                        <div class="input-group mb-2 mr-sm-2">
-                          <div class="input-group-prepend">
-                            <label
                               for="tipDocUsu"
                               class="input-group-text"
                               id="text_input"
@@ -276,9 +215,80 @@
                         </span>
                       </div>
                     </div>
+
+                    <div class="col-md-5">
+                      <div class="form-group">
+                        <div class="input-group mb-2 mr-sm-2">
+                          <div class="input-group-prepend">
+                            <label
+                              for="docUsu"
+                              class="input-group-text"
+                              id="text_input"
+                              >Documento</label
+                            >
+                          </div>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="doc"
+                            name="doc"
+                            [(ngModel)]="objUsuario.documentoUsuario"
+                            #docUsu="ngModel"
+                            [ngClass]="{
+                              'is-invalid':
+                                frmUsuModi.submitted && docUsu.invalid
+                            }"
+                            required
+                          />
+                        </div>
+                        <span
+                          class="text-danger"
+                          *ngIf="frmUsuModi.submitted && docUsu.invalid"
+                        >
+                          <span *ngIf="docUsu?.errors?.['required']">
+                            Número de documento obligatorio
+                          </span>
+                        </span>
+                      </div>
+                    </div>
                   </div>
                   <!---->
                   <div class="row g-4 align-items-center">
+                    <div class="col-md-5">
+                      <div class="form-group">
+                        <div class="input-group mb-2 mr-sm-2">
+                          <div class="input-group-prepend">
+                            <label
+                              for="telUsu"
+                              class="input-group-text"
+                              id="text_input"
+                              >Teléfono</label
+                            >
+                          </div>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="tel"
+                            name="tel"
+                            [(ngModel)]="objUsuario.telefonoUsuario"
+                            #tel="ngModel"
+                            [ngClass]="{
+                              'is-invalid': frmUsuModi.submitted && tel.invalid
+                            }"
+                            required
+                          />
+                        </div>
+                        <span
+                          class="text-danger"
+                          *ngIf="frmUsuModi.submitted && tel.invalid"
+                        >
+                          <span *ngIf="tel?.errors?.['required']">
+                            Teléfono obligatorio
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+
                     <div class="col-md-5">
                       <div class="form-group">
                         <div class="input-group mb-2 mr-sm-2">
@@ -315,41 +325,6 @@
                         >
                           <span *ngIf="nombreRol?.errors?.['required']">
                             Rol obligatorio
-                          </span>
-                        </span>
-                      </div>
-                    </div>
-
-                    <div class="col-md-5">
-                      <div class="form-group">
-                        <div class="input-group mb-2 mr-sm-2">
-                          <div class="input-group-prepend">
-                            <label
-                              for="telUsu"
-                              class="input-group-text"
-                              id="text_input"
-                              >Teléfono</label
-                            >
-                          </div>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="tel"
-                            name="tel"
-                            [(ngModel)]="objUsuario.telefonoUsuario"
-                            #tel="ngModel"
-                            [ngClass]="{
-                              'is-invalid': frmUsuModi.submitted && tel.invalid
-                            }"
-                            required
-                          />
-                        </div>
-                        <span
-                          class="text-danger"
-                          *ngIf="frmUsuModi.submitted && tel.invalid"
-                        >
-                          <span *ngIf="tel?.errors?.['required']">
-                            Teléfono obligatorio
                           </span>
                         </span>
                       </div>
@@ -396,6 +371,36 @@
                             Teléfono obligatorio
                           </span>
                         </span>
+                      </div>
+                    </div>
+
+                    <div class="col-md-5">
+                      <div class="form-group">
+                        <div class="input-group mb-2 mr-sm-2">
+                          <div class="input-group-prepend">
+                            <label
+                              for="telUsu"
+                              class="input-group-text"
+                              id="text_input"
+                              >Facultad</label
+                            >
+                          </div>
+                          <select
+                            class="form-select"
+                            id="facultad"
+                            name="facultad"
+                            [(ngModel)]="objUsuario.codTipoDependencia"
+                            #facultad="ngModel"
+                            required
+                          >
+                            <option
+                              *ngFor="let objFacultad of arregloTiposDependencia"
+                              value="{{ objFacultad.codTipoDependencia }}"
+                            >
+                              {{ objFacultad.nombreTipoDependencia }}
+                            </option>
+                          </select>
+                        </div>
                       </div>
                     </div>
                   </div>

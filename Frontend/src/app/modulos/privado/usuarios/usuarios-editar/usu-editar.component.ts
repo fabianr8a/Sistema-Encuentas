@@ -13,6 +13,8 @@ import { mostrarMensaje } from 'src/app/utilidades/mensajes/toas.func';
 import { observadorAny } from 'src/app/utilidades/observadores/tipo-any';
 import * as miEncriptado from 'js-sha512';
 import { ARREGLO_TIPO_DOC } from 'src/app/utilidades/dominios/tipos-documento';
+import { TiposDependencia } from 'src/app/modelos/tipo_dependencias';
+import { EncuestaService } from 'src/app/servicios/encuesta.service';
 
 @Component({
   selector: 'app-usu-editar',
@@ -32,6 +34,7 @@ export class UsuEditarComponent implements OnInit {
   public arregloRoles: Rol[];
   public arregloEstados: any[];
   public arregloTiposDocumentos:any[];
+  public arregloTiposDependencia: TiposDependencia[];
   public cargaFinalizada: boolean;
   public codUsuario: number;
 
@@ -41,6 +44,7 @@ export class UsuEditarComponent implements OnInit {
     private usuarioService: UsuarioService,
     private router: Router,
     private rolService:RolService,
+    private encuestaService:EncuestaService,
   ) {
     this.miSuscripcionUsu = this.temporal;
     this.objUsuario = this.inicializarUsuario();
@@ -49,6 +53,7 @@ export class UsuEditarComponent implements OnInit {
     this.clickCrear = false;
     this.miSuscripcion = this.temporal;
     this.arregloRoles = [];
+    this.arregloTiposDependencia=[];
     this.arregloEstados = ARREGLO_ESTADOS;
     this.arregloTiposDocumentos=ARREGLO_TIPO_DOC;
     this.cargaFinalizada = false;
@@ -59,12 +64,12 @@ export class UsuEditarComponent implements OnInit {
     this.route.paramMap.subscribe((parametro :ParamMap)=>{
       const valor = String(parametro.get('codUsuario'));
       this.codUsuario = parseInt(valor) as number;
-      this.iniUsu();
+    })
+    this.iniUsu();
       this.iniAcceso();
       this.iniIma();
       this.obtenerTodosRoles();
-    })
-
+      this.obtenerTiposDependencia();
   }
 
   ngOnDestroy(): void {
@@ -74,7 +79,7 @@ export class UsuEditarComponent implements OnInit {
   }
 
   public inicializarUsuario(): Usuarios {
-    return new Usuarios(0, 0, '', '', '', '', '', '', 0, '', '', 0, 0);
+    return new Usuarios(0, 0, '', '', '', '', '', '', 0, '', '', 0, 0,0);
   }
 
   public inicializarAcceso(): Acceso {
@@ -139,6 +144,23 @@ export class UsuEditarComponent implements OnInit {
         })
       )
       .subscribe(observadorAny);
+  }
+
+  public obtenerTiposDependencia():void{
+    this.miSuscripcion = this.encuestaService
+    .listarTipoDependencias()
+    .pipe(
+      map((respuesta) => {
+        this.arregloTiposDependencia = respuesta;
+      }),
+      catchError((err) => {
+        throw err;
+      }),
+      finalize(() => {
+        this.cargaFinalizada = true;
+      })
+    )
+    .subscribe(observadorAny);
   }
 
   public seleccionarFoto(input: any): any {
@@ -211,6 +233,7 @@ export class UsuEditarComponent implements OnInit {
         })
       )
       .subscribe(observadorAny);
+      console.log(this.objUsuario)
   }
 
   public modificarAcceso(): void {

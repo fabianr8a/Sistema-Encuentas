@@ -25,7 +25,7 @@ export class EncuestaEditarComponent implements OnInit {
   arregloPreguntas: Preguntas[] = [];
   arregloPreguntasNuevas:Preguntas[]=[];
 
-  arregloOpcionesNuevas:Opciones[]=[];
+
 
   public arregloEvento: TipoEventos[];
   public arregloTipoPreguntas: TipoPreguntas[];
@@ -41,7 +41,7 @@ export class EncuestaEditarComponent implements OnInit {
   public cargaFinalizada: boolean;
   public miSuscripcionEliminar: Subscription;
   public codigoEncuesta: number;
-  public codigoPregunta:number;
+
 
   constructor(
     public encuestaService: EncuestaService,
@@ -59,7 +59,7 @@ export class EncuestaEditarComponent implements OnInit {
     this.objEncuesta = this.inicializarEncuesta();
     this.objPreguntaNueva = this.inicializarPregunta();
     this.codigoEncuesta = 0;
-    this.codigoPregunta=0;
+
 
     //Inicializar consumo de servicios
     this.miSuscripcion = this.temporal;
@@ -72,10 +72,10 @@ export class EncuestaEditarComponent implements OnInit {
       const valor = String(parametro.get('codEncuesta'));
       this.codigoEncuesta = parseInt(valor) as number;
     });
+
     this.listarEncuesta();
     this.listarEventos();
     this.listarTipoPreguntas();
-    this.listarDependencias();
     this.obtenerTiposDependencia();
   }
 
@@ -245,11 +245,31 @@ export class EncuestaEditarComponent implements OnInit {
       .subscribe(observadorAny);
   }
 
+  public limpiarPregunta(opcion: Opciones) {
+    this.miSuscripcionEliminar = this.opcionService
+      .eliminarOpciones(opcion.codOpcion)
+      .pipe(
+        map(() => {
+          this.listarPreguntas(this.codigoEncuesta);
+        }),
+        catchError((miError) => {
+          mostrarMensaje(
+            'error',
+            'No se pudo eliminar la opcion',
+            'Advertencia',
+            this.toastrService
+          );
+          throw miError;
+        }),
+      )
+      .subscribe(observadorAny);
+  }
+
   public eliminarPregunta(codPregunta: number): void {
     this.miSuscripcionEliminar = this.preguntaService
       .eliminarPregunta(codPregunta)
       .pipe(
-        map((respuesta) => {
+        map(() => {
           this.listarPreguntas(this.codigoEncuesta);
           mostrarMensaje(
             'success',
@@ -257,8 +277,6 @@ export class EncuestaEditarComponent implements OnInit {
             'Exito',
             this.toastrService,
           );
-          this.router.navigate(['/private/encuestas/listar-encuesta']);
-          return respuesta;
         }),
         catchError((miError) => {
           mostrarMensaje(
@@ -268,7 +286,10 @@ export class EncuestaEditarComponent implements OnInit {
             this.toastrService
           );
           throw miError;
-        })
+        }),
+        finalize(()=>{
+          this.reloadComponent()
+        }),
       )
       .subscribe(observadorAny);
   }

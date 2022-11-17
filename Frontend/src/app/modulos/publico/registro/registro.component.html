@@ -193,6 +193,83 @@
 
                       <div class="row mb-3">
                         <div class="col-md-6" style="width: 50%">
+                          <div class="form-floating mb-3 mb-md-0">
+                            <div class="input-group mb-2 mr-sm-2">
+                              <div class="input-group-prepend">
+                                <div
+                                  class="input-group-text color-label"
+                                  for="reclave"
+                                  style="background-color: #cfd3d4"
+                                >
+                                  Teléfono
+                                </div>
+                              </div>
+                              <input
+                              type="number"
+                              class="form-control"
+                              id="telefono"
+                              name="telefono"
+                              required
+                              [(ngModel)]="objRegistro.telefonoRegistro"
+                              #telefono="ngModel"
+                              [ngClass]="{
+                                'is-invalid':
+                                  frmRegistrar.submitted && telefono.invalid
+                              }"
+                              />
+                            </div>
+                            <span
+                              class="text-danger"
+                              *ngIf="frmRegistrar.submitted && telefono.invalid"
+                            >
+                              <span *ngIf="telefono.errors?.['required']">
+                                Teléfono obligatorio
+                              </span>
+                            </span>
+                          </div>
+                        </div>
+
+                        <div class="col-md-6" style="width: 50%">
+                          <div class="form-floating mb-3 mb-md-0">
+                            <div class="input-group mb-2 mr-sm-2">
+                              <div class="input-group-prepend">
+                                <div
+                                  class="input-group-text color-label"
+                                  for="reclave"
+                                  style="background-color: #cfd3d4"
+                                >
+                                  Facultad
+                                </div>
+                              </div>
+                              <select
+                              class="form-select"
+                              name="nomRol"
+                              [(ngModel)]="objRegistro.codTipoDependencia"
+                              #nombreRol="ngModel"
+                              required
+                            >
+                              <option
+                                *ngFor="let objTipoDependencia of arregloTiposDependencia"
+                                value="{{ objTipoDependencia.codTipoDependencia }}"
+                              >
+                                {{ objTipoDependencia.nombreTipoDependencia }}
+                              </option>
+                            </select>
+                            </div>
+                            <span
+                              class="text-danger"
+                              *ngIf="frmRegistrar.submitted && telefono.invalid"
+                            >
+                              <span *ngIf="telefono.errors?.['required']">
+                                Teléfono obligatorio
+                              </span>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <div class="col-md-6" style="width: 50%">
                           <div class="form-group">
                             <div class="form-floating mb-3 mb-md-0">
                               <div class="input-group mb-2 mr-sm-2">
@@ -274,44 +351,6 @@
                         </div>
                       </div>
 
-                      <div class="row mb-3">
-                        <div class="col-md-6" style="width: 50%">
-                          <div class="form-floating mb-3 mb-md-0">
-                            <div class="input-group mb-2 mr-sm-2">
-                              <div class="input-group-prepend">
-                                <div
-                                  class="input-group-text color-label"
-                                  for="reclave"
-                                  style="background-color: #cfd3d4"
-                                >
-                                  Teléfono
-                                </div>
-                              </div>
-                              <input
-                              type="number"
-                              class="form-control"
-                              id="telefono"
-                              name="telefono"
-                              required
-                              [(ngModel)]="objRegistro.telefonoRegistro"
-                              #telefono="ngModel"
-                              [ngClass]="{
-                                'is-invalid':
-                                  frmRegistrar.submitted && telefono.invalid
-                              }"
-                              />
-                            </div>
-                            <span
-                              class="text-danger"
-                              *ngIf="frmRegistrar.submitted && telefono.invalid"
-                            >
-                              <span *ngIf="telefono.errors?.['required']">
-                                Teléfono obligatorio
-                              </span>
-                            </span>
-                          </div>
-                        </div>
-                      </div>
                       <p style="text-align: center; margin-bottom: 0">
                         <button type="submit" class="btn btn-primary">
                           Registrar

@@ -1,3 +1,5 @@
+import { EncuestaService } from 'src/app/servicios/encuesta.service';
+import { TiposDependencia } from 'src/app/modelos/tipo_dependencias';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { RegistroService } from './../../../servicios/registro.service';
@@ -22,16 +24,21 @@ export class RegistroComponent implements OnInit {
   public Click: boolean;
   public objRegistro: Registro;
   public miSuscripcionRegistro: Subscription;
+  public arregloTiposDependencia: TiposDependencia[];
+  public cargaFinalizada: boolean;
   public patronCorreo = '^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$';
 
   constructor(
     private registroService: RegistroService,
     public toastrService: ToastrService,
     private router: Router,
+    private encuestaService:EncuestaService,
   ) {
     this.miSuscripcionRegistro = this.temporal;
     this.objRegistro = this.inicializarRegistro();
+    this.arregloTiposDependencia=[];
     this.Click = false;
+    this.cargaFinalizada = false;
   }
 
   ngOnDestroy(): void {
@@ -39,12 +46,14 @@ export class RegistroComponent implements OnInit {
       this.miSuscripcionRegistro.unsubscribe();
     }
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.obtenerTiposDependencia();
+  }
 
   //Métodos obligatorios
   // ********************************************/
   public inicializarRegistro(): Registro {
-    return new Registro('', '', '', '','', '');
+    return new Registro('', '', '', '','', '',0);
   }
 
   //Lógica del negocio
@@ -92,5 +101,22 @@ export class RegistroComponent implements OnInit {
         })
       )
       .subscribe(observadorAny);
+  }
+
+  public obtenerTiposDependencia():void{
+    this.miSuscripcionRegistro = this.encuestaService
+    .listarTipoDependencias()
+    .pipe(
+      map((respuesta) => {
+        this.arregloTiposDependencia = respuesta;
+      }),
+      catchError((err) => {
+        throw err;
+      }),
+      finalize(() => {
+        this.cargaFinalizada = true;
+      })
+    )
+    .subscribe(observadorAny);
   }
 }

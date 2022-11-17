@@ -38,8 +38,9 @@ class AccesoDAO {
         const apellidos = parametros[2];
         const documento = parametros[3];
         const telefono=parametros[4];
-        const nuevoUsuario = await consulta.one(sqlAgreUsu, [documento, nombres, apellidos,telefono]);
-        const clavecita = parametros[5];
+        const dependencia=parametros[5];
+        const nuevoUsuario = await consulta.one(sqlAgreUsu, [documento, nombres, apellidos,telefono,dependencia]);
+        const clavecita = parametros[6];
         await consulta.none(sqlAgreAcceso, [nuevoUsuario.codUsuario, correito, clavecita]);
         return await consulta.result(sqlTodoListo, [nuevoUsuario.codUsuario]);
       } else {

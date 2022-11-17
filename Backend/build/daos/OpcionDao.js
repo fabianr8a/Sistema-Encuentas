@@ -27,7 +27,6 @@ class OpcionDAO {
                 console.log(miError);
                 res.status(400).json({ respuesta: 'Error creando las opciones' });
             });
-            console.log(parametrosOpcion);
         });
     }
     static eliminarOpcion(sqlEliminar, parametros, res) {

@@ -1,4 +1,4 @@
-export class usuariosPreguntas {
+export class usuariosRespuestas {
   public codUsuario: number;
   public codPregunta: number;
   public respuestaAbierta: string;

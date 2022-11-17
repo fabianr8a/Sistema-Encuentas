@@ -12,9 +12,7 @@ class EstudianteRutas {
     }
     listadoRutas() {
         //listar encuestas
-        this.miRutaEstudiante.get('/getAll', EstudianteControlador_1.default.listarEncuestas);
-        //obtener tipo dependencias
-        this.miRutaEstudiante.get('/tipoDependencias', EstudianteControlador_1.default.listarTiposDependencia);
+        this.miRutaEstudiante.get('/getAll/:codUsuario', EstudianteControlador_1.default.listarEncuestas);
     }
 }
 const estudianteRutas = new EstudianteRutas();

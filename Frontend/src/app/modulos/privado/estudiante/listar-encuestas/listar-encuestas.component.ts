@@ -8,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 import { TipoEventos } from 'src/app/modelos/tipo_eventos';
 import { UsuarioEncuestaService } from 'src/app/servicios/usuario-respuestas.service';
 import { TiposDependencia } from 'src/app/modelos/tipo_dependencias';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { AccesoService } from 'src/app/servicios/acceso.service';
 
 @Component({
   selector: 'app-listar-encuestas',
@@ -16,8 +18,6 @@ import { TiposDependencia } from 'src/app/modelos/tipo_dependencias';
 })
 export class ListarEncuestasComponent implements OnInit {
   public arregloEncuesta: Encuesta[];
-  public arregloTiposDependencia: TiposDependencia[];
-  public objTipoDependencia:TiposDependencia;
   public objEncuesta: Encuesta;
   public busqueda: string = '';
 
@@ -38,20 +38,16 @@ export class ListarEncuestasComponent implements OnInit {
   public miSuscripcion: Subscription;
   public miSuscripcionEliminar: Subscription;
   public cargaFinalizada: boolean;
-  public fechaActual: string = '';
-  public fechaCierre: string = '';
-  public comprobarFecha: boolean = true;
+
 
   constructor(
     public encuestaService: UsuarioEncuestaService,
     public modalService: BsModalService,
-    public tipoDependenciasService: UsuarioEncuestaService,
+    private acceso: AccesoService,
   ) {
     //Inicializar atributos requeridos
     this.arregloEncuesta = [];
     this.objEncuesta = this.inicializarEncuesta();
-    this.arregloTiposDependencia = [];
-    this.objTipoDependencia=this.inicializarTipoDependencia();
 
     //Inicializar modales
     this.modalTitulo = '';
@@ -73,7 +69,7 @@ export class ListarEncuestasComponent implements OnInit {
 
   //Metodos obligatorios
   public inicializarEncuesta(): Encuesta {
-    return new Encuesta(0, 0, 0, 0,'', '', '', '',0,  '','');
+    return new Encuesta(0, 0, 0, 0,'', '', '', '',this.acceso.objAcceso.codUsuario,  '','');
   }
 
   public inicializarTipoDependencia(): TiposDependencia {
@@ -81,8 +77,7 @@ export class ListarEncuestasComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.listarEncuestasUsuarios();
-    this.listarTiposDependencia();
+    this.listarEncuestasUsuarios(this.acceso.objAcceso.codUsuario);
   }
 
   ngOnDestroy(): void {
@@ -96,26 +91,9 @@ export class ListarEncuestasComponent implements OnInit {
 
   //Lógica del negocio - Servicios
 
-  public listarTiposDependencia(): void {
-    this.miSuscripcion = this.tipoDependenciasService
-      .listarTipoDependencias()
-      .pipe(
-        map((respuesta) => {
-          this.arregloTiposDependencia = respuesta;
-        }),
-        catchError((err) => {
-          throw err;
-        }),
-        finalize(() => {
-          this.cargaFinalizada = true;
-        })
-      )
-      .subscribe(observadorAny);
-  }
-
-  public listarEncuestasUsuarios(): void {
+  public listarEncuestasUsuarios(codUsuario:number): void {
     this.miSuscripcion = this.encuestaService
-      .listarEncuestasUsuarios()
+      .listarEncuestasUsuarios(codUsuario)
       .pipe(
         map((resultado: Encuesta[]) => {
           this.arregloEncuesta = resultado;
@@ -127,8 +105,6 @@ export class ListarEncuestasComponent implements OnInit {
       )
       .subscribe(observadorAny);
   }
-
-
 
   // Paginador
   public verificarPaginador(): void {

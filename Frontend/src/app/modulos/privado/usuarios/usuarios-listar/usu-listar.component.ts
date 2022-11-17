@@ -1,3 +1,4 @@
+import { Rol } from 'src/app/modelos/rol';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
 import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
@@ -6,6 +7,7 @@ import { Usuarios } from 'src/app/modelos/usuarios';
 import { observadorAny } from 'src/app/utilidades/observadores/tipo-any';
 import { finalize, map, Subscription } from 'rxjs';
 import { ARREGLO_ESTADOS } from '../../../../utilidades/dominios/estados';
+import { RolService } from 'src/app/servicios/rol.service';
 
 
 @Component({
@@ -17,6 +19,7 @@ export class UsuListarComponent implements OnInit {
   //Atributos requeridos
   public arregloUsuarios: Usuarios[];
   public arregloEstados: any[];
+  public arregloRoles: Rol[];
   public cadena: string = '';
   public usuario_selec: Usuarios;
   public modalRef: BsModalRef;
@@ -39,11 +42,13 @@ export class UsuListarComponent implements OnInit {
   constructor(
     private usuarioService: UsuarioService,
     public modalService: BsModalService,
+    private rolService:RolService,
     private toastr: ToastrService,
   ) {
 
     //Inicializar atributos requeridos
     this.arregloUsuarios = [];
+    this.arregloRoles = [];
     this.arregloEstados=ARREGLO_ESTADOS;
     this.usuario_selec = this.inicializarUsuario();
 
@@ -77,16 +82,14 @@ export class UsuListarComponent implements OnInit {
 
   //Métodos obligatorios
   public inicializarUsuario(): Usuarios {
-    return new Usuarios(0, 0, '', '', '', '', '', '', 0, '', '', 0, 0);
+    return new Usuarios(0, 0, '', '', '', '', '', '', 0, '', '', 0, 0,0);
   }
 
   ngOnInit(): void {
     this.obtenerTodosUsuarios();
+    this.obtenerTodosRoles();
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    console.log('probando change' + changes)
-  }
 
   ngOnDestroy(): void {
     if (this.miSuscripcion) {
@@ -106,6 +109,20 @@ export class UsuListarComponent implements OnInit {
         finalize(() => {
           this.cargaFinalizada = true;
           this.verificarPaginador();
+        })
+      )
+      .subscribe(observadorAny);
+  }
+
+  public obtenerTodosRoles(): void {
+    this.miSuscripcion = this.rolService
+      .cargarRoles()
+      .pipe(
+        map((resultado: Rol[]) => {
+          this.arregloRoles = resultado;
+        }),
+        finalize(() => {
+          this.cargaFinalizada = true;
         })
       )
       .subscribe(observadorAny);

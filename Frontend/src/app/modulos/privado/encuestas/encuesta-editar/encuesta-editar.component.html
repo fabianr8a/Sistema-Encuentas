@@ -360,10 +360,11 @@
                         ></i
                         >&nbsp;
                         <i
+                        *ngFor="let opcion of pregunta.arregloOpciones"
                           class="fas fa-trash-can"
                           title="Eliminar pregunta"
-                          (click)="eliminarPregunta(pregunta.codPregunta)"
-                        ></i>
+                          (click)="limpiarPregunta(opcion);eliminarPregunta(pregunta.codPregunta)"
+                        ></i>&nbsp;
                       </div>
                       <div class="col-md-11">
                         <div class="form-floating">
@@ -416,9 +417,10 @@
                         ></i
                         >&nbsp;
                         <i
+                        *ngFor="let opcion of pregunta.arregloOpciones"
                           class="fas fa-trash-can"
                           title="Eliminar pregunta"
-                          (click)="eliminarPregunta(pregunta.codPregunta)"
+                          (click)="limpiarPregunta(opcion);eliminarPregunta(pregunta.codPregunta)"
                         ></i>
                       </div>
                       <div class="col-md-11">
@@ -543,7 +545,6 @@
                         </div>
                       </div>
                     </div>
-
                   </div>
                 </div>
               </div>
@@ -617,7 +618,11 @@
                             <i
                               class="fa fa-circle-plus fa-2x"
                               title="Agregar pregunta"
-                              (click)="crearPreguntasNuevas(objPreguntaNueva.codTipoPregunta)"
+                              (click)="
+                                crearPreguntasNuevas(
+                                  objPreguntaNueva.codTipoPregunta
+                                )
+                              "
                             ></i>
                           </div>
                           <div

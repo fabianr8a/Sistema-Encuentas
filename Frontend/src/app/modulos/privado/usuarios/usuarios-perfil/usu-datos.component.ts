@@ -14,6 +14,8 @@ import { mostrarMensaje } from 'src/app/utilidades/mensajes/toas.func';
 import { observadorAny } from 'src/app/utilidades/observadores/tipo-any';
 import * as miEncriptado from 'js-sha512';
 import { ARREGLO_TIPO_DOC } from 'src/app/utilidades/dominios/tipos-documento';
+import { TiposDependencia } from 'src/app/modelos/tipo_dependencias';
+import { EncuestaService } from 'src/app/servicios/encuesta.service';
 
 
 @Component({
@@ -36,6 +38,7 @@ export class UsuDatosComponent implements OnInit {
   public miSuscripcion: Subscription;
   public arregloRoles: Rol[];
   public arregloTiposDocumentos: any[];
+  public arregloTiposDependencia: TiposDependencia[];
   public cargaFinalizada: boolean;
   public codUsuario: number;
 
@@ -45,7 +48,8 @@ export class UsuDatosComponent implements OnInit {
     public router: Router,
     private usuarioService: UsuarioService,
     private acceso:AccesoService,
-    private rolService: RolService
+    private rolService: RolService,
+    private encuestaService:EncuestaService,
   ) {
     this.miSuscripcionUsu = this.temporal;
     this.objUsuario = this.inicializarUsuario();
@@ -55,6 +59,7 @@ export class UsuDatosComponent implements OnInit {
     this.clickCrear = false;
     this.miSuscripcion = this.temporal;
     this.arregloRoles = [];
+    this.arregloTiposDependencia=[];
     this.arregloTiposDocumentos = ARREGLO_TIPO_DOC;
     this.cargaFinalizada = false;
     this.codUsuario = 0;
@@ -69,6 +74,7 @@ export class UsuDatosComponent implements OnInit {
     this.iniAcceso();
     this.iniIma();
     this.obtenerTodosRoles();
+    this.obtenerTiposDependencia();
   }
 
   ngOnDestroy(): void {
@@ -78,7 +84,7 @@ export class UsuDatosComponent implements OnInit {
   }
 
   public inicializarUsuario(): Usuarios {
-    return new Usuarios(0, 0, '', '', '', '', '', '', 0, '', '', 0, 0);
+    return new Usuarios(0, 0, '', '', '', '', '', '', 0, '', '', 0, 0,0);
   }
 
   public inicializarAcceso(): Acceso {
@@ -146,6 +152,23 @@ export class UsuDatosComponent implements OnInit {
         })
       )
       .subscribe(observadorAny);
+  }
+
+  public obtenerTiposDependencia():void{
+    this.miSuscripcion = this.encuestaService
+    .listarTipoDependencias()
+    .pipe(
+      map((respuesta) => {
+        this.arregloTiposDependencia = respuesta;
+      }),
+      catchError((err) => {
+        throw err;
+      }),
+      finalize(() => {
+        this.cargaFinalizada = true;
+      })
+    )
+    .subscribe(observadorAny);
   }
 
   public seleccionarFoto(input: any): any {

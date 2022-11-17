@@ -58,7 +58,7 @@ export class UsuCrearComponent implements OnInit {
   // ****************/
 
   public inicializarUsuario(): Usuarios {
-    return new Usuarios(0, 0, '', '', '', '', '', '', 0, '', '', 0, 0);
+    return new Usuarios(0, 0, '', '', '', '', '', '', 0, '', '', 0, 0,0);
   }
 
   public inicializarAcceso():Acceso{

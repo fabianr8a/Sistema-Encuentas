@@ -111,7 +111,6 @@ class EncuestaDAO {
                     res.status(400).json({ respuesta: 'Error seleccionando la encuesta a modificar' });
                 }
                 res.status(200).json(resultado);
-                console.log(resultado);
             })
                 .catch((miError) => {
                 console.log(miError);

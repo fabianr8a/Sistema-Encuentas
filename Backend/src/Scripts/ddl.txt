@@ -133,16 +133,16 @@ constraint pk_opciones primary key (cod_opcion)
 
 alter table opciones owner to user_encuestas;
 
-CREATE TABLE usuarios_preguntas(
+CREATE TABLE usuarios_respuestas(
 cod_usuario int not null,
 cod_pregunta int not null,
 respuesta_abierta varchar(500),
 respuesta_fecha DATE,
 cod_opcion int,
-constraint pk_usuarios_preguntas primary key (cod_usuario,cod_pregunta)
+constraint pk_usuarios_respuestas primary key (cod_usuario,cod_pregunta)
 );
 
-alter table usuarios_preguntas owner to user_encuestas;
+alter table usuarios_respuestas owner to user_encuestas;
 
 CREATE TABLE usuario_encuestas(
 	cod_usuario int not null,
@@ -197,7 +197,7 @@ add constraint fk_opciones_ref_preguntas foreign key (cod_pregunta)
 references preguntas (cod_pregunta)
 on delete restrict on update cascade;
 
-alter table usuarios_preguntas
+alter table usuarios_respuestas
 add constraint fk_respuestas_ref_usuarios foreign key (cod_usuario)
 references usuarios (cod_usuario),
 add constraint fk_respuestas_ref_preguntas foreign key (cod_pregunta)

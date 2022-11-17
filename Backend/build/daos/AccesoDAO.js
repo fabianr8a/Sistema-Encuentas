@@ -46,8 +46,9 @@ class AccesoDAO {
                     const apellidos = parametros[2];
                     const documento = parametros[3];
                     const telefono = parametros[4];
-                    const nuevoUsuario = yield consulta.one(sqlAgreUsu, [documento, nombres, apellidos, telefono]);
-                    const clavecita = parametros[5];
+                    const dependencia = parametros[5];
+                    const nuevoUsuario = yield consulta.one(sqlAgreUsu, [documento, nombres, apellidos, telefono, dependencia]);
+                    const clavecita = parametros[6];
                     yield consulta.none(sqlAgreAcceso, [nuevoUsuario.codUsuario, correito, clavecita]);
                     return yield consulta.result(sqlTodoListo, [nuevoUsuario.codUsuario]);
                 }

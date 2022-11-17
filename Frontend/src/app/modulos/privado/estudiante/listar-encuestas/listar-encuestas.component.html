@@ -54,10 +54,10 @@
               >
                 <thead>
                   <tr>
-                    <th style="width: 17%">Fecha de finalización</th>
-                    <th style="width: 15%">Tipo Evento</th>
-                    <th style="width: 30%">Nombre Evento</th>
-                    <th style="width: 25%">Facultad</th>
+                    <th style="width: 17%">Fecha de inicio</th>
+                    <th style="width: 17%">Fecha de cierre</th>
+                    <th style="width: 18%">Tipo Evento</th>
+                    <th style="width: 35%">Nombre Evento</th>
                     <th style="width: 13%">Responder</th>
                   </tr>
                 </thead>
@@ -68,9 +68,6 @@
                         | filterBy
                           : ['nombreEncuesta']
                           : busqueda
-                          | filterBy
-                          : ['nombreTipoDependencia']
-                          : objTipoDependencia.nombreTipoDependencia
                         | paginate
                           : {
                               id: 'codiguitoPaginacion',
@@ -80,12 +77,12 @@
                             }
                     "
                   >
+                   <td>{{ objEncuesta.fechaCreacionEncuesta }}</td>
                     <td>
                       {{ objEncuesta.fechaCierreEncuesta }}
                     </td>
                     <td>{{ objEncuesta.nombreTipoEvento }}</td>
                     <td>{{ objEncuesta.nombreEncuesta }}</td>
-                    <td>{{ objEncuesta.nombreTipoDependencia }}</td>
                     <td>
                       <a
                         [routerLink]="[

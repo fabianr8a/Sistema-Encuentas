@@ -5,11 +5,9 @@ import { SQL_ENCUESTA_ESTUDIANTES } from '../repositorios/Estudiantes_sql';
 class EstudianteControlador extends EstudianteDAO {
 
   public listarEncuestas(req: Request, res: Response) {
-    EstudianteControlador.listarLasEncuestas(SQL_ENCUESTA_ESTUDIANTES.LISTAR_ENCUESTAS, req, res);
-  }
-
-  public listarTiposDependencia(req: Request, res: Response) {
-    EstudianteControlador.listarLosTiposDependencia(SQL_ENCUESTA_ESTUDIANTES.LISTAR_TIPO_DEPENDENCIAS, req, res);
+    const codigoUsuario = req.params.codUsuario;
+    const miParametro = [codigoUsuario];
+    EstudianteControlador.listarLasEncuestas(SQL_ENCUESTA_ESTUDIANTES.LISTAR_ENCUESTAS, miParametro, res);
   }
 }
 

@@ -18,6 +18,7 @@ class AccesoControlador extends AccesoDAO_1.default {
             req.body[0].apellidosRegistro,
             req.body[0].documentoRegistro,
             req.body[0].telefonoRegistro,
+            req.body[0].codTipoDependencia,
             req.body[0].claveRegistro,
         ];
         AccesoControlador.crearElUsuario(RegistrarUsuario_sql_1.SQL_REG_USU.EXISTE_CORREO, RegistrarUsuario_sql_1.SQL_REG_USU.AGREGAR_USUARIO, RegistrarUsuario_sql_1.SQL_REG_USU.AGREGAR_ACCESO, RegistrarUsuario_sql_1.SQL_REG_USU.TODO_LISTO, parametros, res);

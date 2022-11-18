@@ -10,4 +10,13 @@ export const SQL_ENCUESTA_ESTUDIANTES = {
   on e.cod_tipo_evento=te.cod_tipo_evento \
   where (u.cod_usuario=$1) and (e.fecha_cierre_encuesta >= current_date) \
   order by e.fecha_cierre_encuesta ASC',
+
+  RESPONDER_PREGUNTA_FECHA:'INSERT INTO usuarios_respuestas(cod_usuario, cod_pregunta, respuesta_fecha) \
+	VALUES ($1,$2,$3)',
+
+  RESPONDER_PREGUNTA_ABIERTA:'INSERT INTO usuarios_respuestas(cod_usuario, cod_pregunta, respuesta_abierta) \
+	VALUES ($1,$2,$3)',
+
+  RESPONDER_PREGUNTA_OPCION:'INSERT INTO usuarios_respuestas(cod_usuario, cod_pregunta, cod_opcion) \
+	VALUES ($1,$2,$3)'
 }

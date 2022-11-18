@@ -1,6 +1,5 @@
 import { TiposDependencia } from './../../../../modelos/tipo_dependencias';
 import { Router, ActivatedRoute } from '@angular/router';
-import { OpcionesService } from './../../../../servicios/opciones.service';
 import { PreguntaService } from 'src/app/servicios/pregunta.service';
 import { EncuestaService } from './../../../../servicios/encuesta.service';
 import { ParamMap } from '@angular/router';
@@ -9,12 +8,15 @@ import { TipoPreguntas } from './../../../../modelos/tipo_preguntas';
 import { Dependencias } from './../../../../modelos/dependencias';
 import { Encuesta } from './../../../../modelos/encuesta';
 import { Preguntas } from './../../../../modelos/preguntas';
-import { Opciones } from './../../../../modelos/opciones';
 import { observadorAny } from './../../../../utilidades/observadores/tipo-any';
 import { mostrarMensaje } from 'src/app/utilidades/mensajes/toas.func';
 import { catchError, map, finalize, Subscription } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { usuariosRespuestas } from 'src/app/modelos/usuarios-respuestas';
+import { AccesoService } from 'src/app/servicios/acceso.service';
+import { UsuarioEncuestaService } from 'src/app/servicios/usuario-respuestas.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-responder-encuesta',
@@ -24,13 +26,13 @@ import { ToastrService } from 'ngx-toastr';
 export class ResponderEncuestaComponent implements OnInit {
 
   arregloPreguntas: Preguntas[] = [];
-  arregloOpciones: Opciones[] = [];
-
+  arregloRespuestas: usuariosRespuestas[];
 
   public arregloEvento: TipoEventos[];
   public arregloTipoPreguntas: TipoPreguntas[];
   public arregloDependencias: Dependencias[];
   public arregloTiposDependencia: TiposDependencia[];
+  public objUsuPreguntas: usuariosRespuestas;
 
 
   //Atributos consumo servicios
@@ -41,6 +43,7 @@ export class ResponderEncuestaComponent implements OnInit {
   public miSuscripcionEliminar: Subscription;
   public codigoEncuesta: number;
 
+
   constructor(
     public tipoEventosService: EncuestaService,
     public tipoPreguntasService: EncuestaService,
@@ -48,17 +51,20 @@ export class ResponderEncuestaComponent implements OnInit {
     public tipoDependenciasService: EncuestaService,
     public encuestaService: EncuestaService,
     public preguntaService: PreguntaService,
-    public opcionService: OpcionesService,
+    public usuarioEncuestaService: UsuarioEncuestaService,
     private toastrService: ToastrService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private acceso: AccesoService,
   ) {
     //Inicializar atributos requeridos
     this.arregloEvento = [];
     this.arregloTipoPreguntas = [];
     this.arregloDependencias = [];
     this.arregloTiposDependencia = [];
+    this.arregloRespuestas = [];
     this.objEncuesta = this.inicializarEncuesta();
+    this.objUsuPreguntas = this.inicializarUsuariosPreguntas();
     this.codigoEncuesta = 0;
 
 
@@ -110,7 +116,6 @@ export class ResponderEncuestaComponent implements OnInit {
   }
 
 
-
   public obtenerTiposDependencia(): void {
     this.miSuscripcion = this.tipoDependenciasService
       .listarTipoDependencias()
@@ -128,7 +133,6 @@ export class ResponderEncuestaComponent implements OnInit {
       .subscribe(observadorAny);
   }
 
-  //MODIFICAR y LISTAR ENCUESTA//
 
   public inicializarEncuesta(): Encuesta {
     return new Encuesta(0, 0, 0, 0, '', '', '', '', 0, '', '');
@@ -152,11 +156,6 @@ export class ResponderEncuestaComponent implements OnInit {
       .subscribe(observadorAny);
   }
 
-
-   //MODIFICAR LISTAR Y ELIMINAR PREGUNTAS//
-
-
-
   public listarPreguntas(codigoEncuesta:number): void {
     this.miSuscripcion = this.preguntaService
       .seleccionarPregunta(codigoEncuesta)
@@ -168,27 +167,49 @@ export class ResponderEncuestaComponent implements OnInit {
         catchError((err) => {
           throw err;
         }),
+        finalize(() => {
+          this.llenarRespuestas();
+        })
       )
       .subscribe(observadorAny);
   }
 
+  public inicializarUsuariosPreguntas() {
+    return new usuariosRespuestas(0, 0, '', '', 0);
+  }
 
+  public llenarRespuestas(): void {
+    this.arregloPreguntas.map((objPregunta: Preguntas) => {
+      this.arregloRespuestas.push(new usuariosRespuestas(this.acceso.objAcceso.codUsuario, objPregunta.codPregunta, '', '', 0));
+    });
+  }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  public enviarEncuesta(formulario: NgForm): void {
+    console.log(this.arregloRespuestas);
+    this.miSuscripcion = this.usuarioEncuestaService
+      .responderEncuesta(this.arregloRespuestas)
+      .pipe(
+        map(() => {
+          mostrarMensaje(
+            'success',
+            'Encuesta Respondida',
+            'Exito',
+            this.toastrService
+          );
+          this.router.navigate(['/private/estudiante/listar-encuesta']);
+        }),
+        catchError((err) => {
+          mostrarMensaje(
+            'error',
+            'No se puede responder la encuesta',
+            'Error',
+            this.toastrService
+          );
+          throw err;
+        })
+      )
+      .subscribe(observadorAny);
+  }
 
   ngOnDestroy(): void {
     if (this.miSuscripcion) {

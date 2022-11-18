@@ -201,7 +201,7 @@ alter table usuarios_respuestas
 add constraint fk_respuestas_ref_usuarios foreign key (cod_usuario)
 references usuarios (cod_usuario),
 add constraint fk_respuestas_ref_preguntas foreign key (cod_pregunta)
-references preguntas (cod_pregunta)
+references preguntas (cod_pregunta),
 add constraint fk_respuestas_ref_opciones foreign key (cod_opcion)
 references opciones (cod_opcion)
 on delete restrict on update cascade;

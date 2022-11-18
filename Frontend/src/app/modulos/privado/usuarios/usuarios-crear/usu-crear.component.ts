@@ -13,6 +13,8 @@ import { Acceso } from 'src/app/modelos/acceso';
 import { Rol } from 'src/app/modelos/rol';
 import { RolService } from 'src/app/servicios/rol.service';
 import { ARREGLO_TIPO_DOC } from 'src/app/utilidades/dominios/tipos-documento';
+import { EncuestaService } from 'src/app/servicios/encuesta.service';
+import { TiposDependencia } from 'src/app/modelos/tipo_dependencias';
 
 @Component({
   selector: 'app-usu-crear',
@@ -20,13 +22,13 @@ import { ARREGLO_TIPO_DOC } from 'src/app/utilidades/dominios/tipos-documento';
   styleUrls: ['./usu-crear.component.css'],
 })
 export class UsuCrearComponent implements OnInit {
-
   public tmpBase64: any;
   public temporal: any;
   public objUsuario: Usuarios;
   public objAcceso: Acceso;
   public arregloRoles: Rol[];
   public arregloTiposDocumentos:any[];
+  public arregloTiposDependencia: TiposDependencia[];
   public miSuscripcionUsu: Subscription;
   public cargaFinalizada: boolean;
 
@@ -35,17 +37,20 @@ export class UsuCrearComponent implements OnInit {
     private usuarioService: UsuarioService,
     private router:Router,
     private rolService:RolService,
+    private encuestaService:EncuestaService,
   ) {
     this.miSuscripcionUsu = this.temporal;
     this.objUsuario = this.inicializarUsuario();
     this.objAcceso = this.inicializarAcceso();
     this.arregloRoles = [];
+    this.arregloTiposDependencia=[],
     this.arregloTiposDocumentos=ARREGLO_TIPO_DOC;
     this.cargaFinalizada = false;
   }
 
   ngOnInit(): void {
     this.obtenerTodosRoles();
+    this.obtenerTiposDependencia();
   }
 
   ngOnDestroy(): void {
@@ -54,8 +59,6 @@ export class UsuCrearComponent implements OnInit {
     }
   }
 
-  //Métodos obligatorios
-  // ****************/
 
   public inicializarUsuario(): Usuarios {
     return new Usuarios(0, 0, '', '', '', '', '', '', 0, '', '', 0, 0,0);
@@ -122,5 +125,22 @@ export class UsuCrearComponent implements OnInit {
         })
       )
       .subscribe(observadorAny);
+  }
+
+  public obtenerTiposDependencia():void{
+    this.miSuscripcionUsu = this.encuestaService
+    .listarTipoDependencias()
+    .pipe(
+      map((respuesta) => {
+        this.arregloTiposDependencia = respuesta;
+      }),
+      catchError((err) => {
+        throw err;
+      }),
+      finalize(() => {
+        this.cargaFinalizada = true;
+      })
+    )
+    .subscribe(observadorAny);
   }
 }

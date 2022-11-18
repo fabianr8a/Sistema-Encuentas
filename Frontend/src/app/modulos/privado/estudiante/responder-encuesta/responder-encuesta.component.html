@@ -25,7 +25,13 @@
 
         <br />
 
-        <form #frmModificarEncuesta="ngForm" novalidate>
+        <form
+          #frmResponderEncuesta="ngForm"
+          (submit)="
+            frmResponderEncuesta.form.valid &&
+              enviarEncuesta(frmResponderEncuesta)
+          "
+        >
           <div class="card mb-4 encabezado">
             <div
               class="card-header"
@@ -40,6 +46,7 @@
                 <p style="text-align: center">
                   <input
                     readonly
+                    disabled
                     type="text"
                     id="titulo"
                     name="titulo"
@@ -58,13 +65,17 @@
                         <div class="input-group-prepend">
                           <label>Fecha de inicio:</label>
                           <input
-                            class="fecha-encuesta"
                             readonly
+                            class="fecha-encuesta"
                             type="date"
                             id="fecha_inicio"
                             name="fecha_inicio"
+                            min="2022-01-01"
+                            max="2040-12-31"
                             [(ngModel)]="objEncuesta.fechaCreacionEncuesta"
                             #fecha_inicio="ngModel"
+                            required
+                            disabled
                           />
                         </div>
                       </div>
@@ -80,6 +91,7 @@
                           <label>Fecha de cierre:</label>
                           <input
                             readonly
+                            disabled
                             class="fecha-encuesta"
                             type="date"
                             id="fecha_cierre"
@@ -87,6 +99,7 @@
                             value="2022-07-22"
                             [(ngModel)]="objEncuesta.fechaCierreEncuesta"
                             #fecha_cierre="ngModel"
+                            required
                           />
                         </div>
                       </div>
@@ -169,95 +182,117 @@
             <div [ngSwitch]="pregunta.codTipoPregunta">
               <!--Pregunta y respuesta de fecha---->
               <div *ngSwitchCase="1" class="card mb-4 seccion-preguntas">
-                <div class="form-floating">
-                  <textarea
-                    class="pregunta"
-                    id="floatingTextareaFecha"
-                    [name]="fecha + '_' + indice"
-                    [(ngModel)]="pregunta.descripcionPregunta"
-                    #fecha="ngModel"
-                    readonly
-                  ></textarea>
+                <div>
+                  <label class="pregunta">{{
+                    pregunta.descripcionPregunta
+                  }}</label>
                 </div>
                 <br />
                 <div>
                   <input
-                    class="respuesta-fecha"
                     type="date"
-                    id="respuesta_fecha"
-                    name="respuesta_fecha"
-                    min="2022-01-01"
-                    max="2040-12-31"
+                    class="respuesta-fecha"
+                    id="resFecha"
+                    [(ngModel)]="arregloRespuestas[indice].respuestaFecha"
+                    [name]="'resFecha' + pregunta.codPregunta"
+                    #resFecha="ngModel"
+                    [ngClass]="{
+                      'is-invalid':
+                        frmResponderEncuesta.submitted && resFecha.invalid
+                    }"
                     required
                   />
+                </div>
+                <div
+                  class="text-danger"
+                  *ngIf="frmResponderEncuesta.submitted && resFecha.invalid"
+                >
+                  <span *ngIf="resFecha.errors?.['required']"
+                    >Respuesta obligatoria</span
+                  >
                 </div>
               </div>
 
               <!--!--Pregunta y respuesta abierta---->
               <div *ngSwitchCase="2" class="card mb-4 seccion-preguntas">
-                <div class="form-floating">
-                  <textarea
-                    class="pregunta"
-                    placeholder="Escriba la pregunta"
-                    id="floatingTextareaAbierta"
-                    [name]="abierta + '_' + indice"
-                    [(ngModel)]="pregunta.descripcionPregunta"
-                    #abierta="ngModel"
-                    readonly
-                  ></textarea>
+                <div>
+                  <label class="pregunta">{{
+                    pregunta.descripcionPregunta
+                  }}</label>
                 </div>
+                <br />
                 <div>
                   <textarea
                     placeholder="Escriba aquí su respuesta"
+                    type="text"
                     class="respuesta-abierta"
+                    id="resAbierta"
+                    [(ngModel)]="arregloRespuestas[indice].respuestaAbierta"
+                    [name]="'resAbierta' + pregunta.codPregunta"
+                    #resAbierta="ngModel"
+                    [ngClass]="{
+                      'is-invalid':
+                        frmResponderEncuesta.submitted && resAbierta.invalid
+                    }"
+                    required
                   ></textarea>
+                  <div
+                    class="text-danger"
+                    *ngIf="frmResponderEncuesta.submitted && resAbierta.invalid"
+                  >
+                    <span *ngIf="resAbierta.errors?.['required']"
+                      >Respuesta obligatoria</span
+                    >
+                  </div>
                 </div>
               </div>
 
               <!--!--Pregunta y respuesta de selección multiple-->
               <div *ngSwitchCase="3" class="card mb-4 seccion-preguntas">
-                <div class="form-floating">
-                  <textarea
-                    class="pregunta"
-                    placeholder="Escriba la pregunta"
-                    id="seleccion{{ indice }}"
-                    name="seleccion{{ indice }}"
-                    [(ngModel)]="pregunta.descripcionPregunta"
-                    #seleccion="ngModel"
-                    readonly
-                  ></textarea>
+                <div>
+                  <label class="pregunta">{{
+                    pregunta.descripcionPregunta
+                  }}</label>
                 </div>
                 <div
-                  class="row"
-                  *ngFor="
-                    let opcion of pregunta.arregloOpciones;
-                    let indiceOp = index
-                  "
+                    class="row"
+                    *ngFor="
+                      let opcion of pregunta.arregloOpciones;
+                      let indiceOp = index
+                    "
                 >
-                  <div class="col-md-8 custom-control custom-radio">
+                  <div class="col-md-9 custom-control custom-radio">
                     <input
                       type="radio"
-                      name="customRadio"
-                      class="custom-control-input"
-                      id="radio"
-                    />&nbsp;
-                    <input
-                      type="text"
-                      class="custom-control-label"
-                      for="customRadio1"
-                      placeholder="Opción"
-                      id="opcion{{ indiceOp }}{{ indice }}"
-                      name="opcion{{ indiceOp }}{{ indice }}"
-                      #opcion="ngModel"
-                      [(ngModel)]="opcion.textoOpcion"
-                      readonly
+                      class="custom-control-input radido-button"
+                      id="resOpcion"
+                      name="resOpcion"
+                      [(ngModel)]="arregloRespuestas[indice].codOpcion"
+                      [value]="opcion.codOpcion"
+                      #resOpcion="ngModel"
+                      required
                     />
+                    &nbsp;
+                    <label class="fs-6">{{ opcion.textoOpcion }}</label>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
+          <div class="d-flex justify-content-center">
+            <div class="d-grid gap-2 d-md-flex">
+              <button type="submit" class="btn btn-primary cancelar-preguntas">
+                Responder
+              </button>
+              <button
+                type="button"
+                class="btn btn-danger cancelar-preguntas"
+                [routerLink]="['/private/estudiante/listar-encuesta']"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
         </form>
       </div>
     </main>

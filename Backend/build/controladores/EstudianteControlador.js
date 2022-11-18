@@ -11,6 +11,10 @@ class EstudianteControlador extends EstudianteDAO_1.default {
         const miParametro = [codigoUsuario];
         EstudianteControlador.listarLasEncuestas(Estudiantes_sql_1.SQL_ENCUESTA_ESTUDIANTES.LISTAR_ENCUESTAS, miParametro, res);
     }
+    ResponderEncuestas(req, res) {
+        const arregloRespuestas = req.body[0];
+        EstudianteControlador.ResponderEncuesta(Estudiantes_sql_1.SQL_ENCUESTA_ESTUDIANTES.RESPONDER_PREGUNTA_FECHA, Estudiantes_sql_1.SQL_ENCUESTA_ESTUDIANTES.RESPONDER_PREGUNTA_ABIERTA, Estudiantes_sql_1.SQL_ENCUESTA_ESTUDIANTES.RESPONDER_PREGUNTA_OPCION, arregloRespuestas, res);
+    }
 }
 const estudianteControlador = new EstudianteControlador();
 exports.default = estudianteControlador;

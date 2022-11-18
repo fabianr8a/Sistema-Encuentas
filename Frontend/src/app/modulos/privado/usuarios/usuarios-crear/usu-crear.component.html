@@ -186,6 +186,40 @@
                     <div class="form-floating mb-3 mb-md-0">
                       <div class="input-group mb-2 mr-sm-2">
                         <div class="input-group-prepend">
+                          <label for="telUsu" class="input-group-text"
+                            >Teléfono</label
+                          >
+                        </div>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="tel"
+                          name="tel"
+                          required
+                          [(ngModel)]="objUsuario.telefonoUsuario"
+                          #tel="ngModel"
+                          [ngClass]="{
+                            'is-invalid': frmCrear.submitted && tipdoc.invalid
+                          }"
+                        />
+                      </div>
+                      <span
+                        class="text-danger"
+                        *ngIf="frmCrear.submitted && tel.invalid"
+                      >
+                        <span *ngIf="tel?.errors?.['required']">
+                          Teléfono obligatorio
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <div class="form-floating mb-3 mb-md-0">
+                      <div class="input-group mb-2 mr-sm-2">
+                        <div class="input-group-prepend">
                           <label for="corUsu" class="input-group-text"
                             >Correo</label
                           >
@@ -215,38 +249,78 @@
                     </div>
                   </div>
                 </div>
+              </div>
+
+
+              <div class="row mb-2">
+                <div class="col-md-6">
+                  <div class="form-floating mb-3 mb-md-0">
+                    <div class="input-group mb-2 mr-sm-2">
+                      <div class="input-group-prepend">
+                        <label for="codRol" class="input-group-text"
+                          >Rol asignado</label
+                        >
+                      </div>
+                      <select
+                        class="form-select"
+                        name="nomRol"
+                        [(ngModel)]="objUsuario.codRol"
+                        #nombreRol="ngModel"
+                        [ngClass]="{
+                          'is-invalid': frmCrear.submitted && nombreRol.invalid
+                        }"
+                        required
+                      >
+                        <option
+                          *ngFor="let objNomRol of arregloRoles"
+                          value="{{ objNomRol.codRol }}"
+                        >
+                          {{ objNomRol.nombreRol }}
+                        </option>
+                      </select>
+                    </div>
+                    <span
+                      class="text-danger"
+                      *ngIf="frmCrear.submitted && nombreRol.invalid"
+                    >
+                      <span *ngIf="nombreRol?.errors?.['required']">
+                        Rol obligatorio
+                      </span>
+                    </span>
+                  </div>
+                </div>
 
                 <div class="col-md-6">
-                  <div class="form-group">
-                    <div class="form-floating mb-3 mb-md-0">
-                      <div class="input-group mb-2 mr-sm-2">
-                        <div class="input-group-prepend">
-                          <label for="telUsu" class="input-group-text"
-                            >Teléfono</label
-                          >
-                        </div>
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="tel"
-                          name="tel"
-                          required
-                          [(ngModel)]="objUsuario.telefonoUsuario"
-                          #tel="ngModel"
-                          [ngClass]="{
-                            'is-invalid': frmCrear.submitted && tipdoc.invalid
-                          }"
-                        />
+                  <div class="form-floating mb-3 mb-md-0">
+                    <div class="input-group mb-2 mr-sm-2">
+                      <div class="input-group-prepend">
+                        <label for="codRol" class="input-group-text"
+                          >Facultad</label
+                        >
                       </div>
-                      <span
-                        class="text-danger"
-                        *ngIf="frmCrear.submitted && tel.invalid"
+                      <select
+                        class="form-select"
+                        name="nomRol"
+                        [(ngModel)]="objUsuario.codTipoDependencia"
+                        #nombreRol="ngModel"
+                        required
                       >
-                        <span *ngIf="tel?.errors?.['required']">
-                          Teléfono obligatorio
-                        </span>
-                      </span>
+                        <option
+                        *ngFor="let objTipoDependencia of arregloTiposDependencia"
+                        value="{{ objTipoDependencia.codTipoDependencia }}"
+                        >
+                        {{ objTipoDependencia.nombreTipoDependencia }}
+                        </option>
+                      </select>
                     </div>
+                    <span
+                      class="text-danger"
+                      *ngIf="frmCrear.submitted && nombreRol.invalid"
+                    >
+                      <span *ngIf="nombreRol?.errors?.['required']">
+                        Rol obligatorio
+                      </span>
+                    </span>
                   </div>
                 </div>
               </div>
@@ -317,45 +391,6 @@
                       </span>
                       <span *ngIf="cla?.errors?.['pattern']">
                         Contraseña Diferente
-                      </span>
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row mb-2">
-                <div class="col-md-6">
-                  <div class="form-floating mb-3 mb-md-0">
-                    <div class="input-group mb-2 mr-sm-2">
-                      <div class="input-group-prepend">
-                        <label for="codRol" class="input-group-text"
-                          >Rol asignado</label
-                        >
-                      </div>
-                      <select
-                        class="form-select"
-                        name="nomRol"
-                        [(ngModel)]="objUsuario.codRol"
-                        #nombreRol="ngModel"
-                        [ngClass]="{
-                          'is-invalid': frmCrear.submitted && nombreRol.invalid
-                        }"
-                        required
-                      >
-                        <option
-                          *ngFor="let objNomRol of arregloRoles"
-                          value="{{ objNomRol.codRol }}"
-                        >
-                          {{ objNomRol.nombreRol }}
-                        </option>
-                      </select>
-                    </div>
-                    <span
-                      class="text-danger"
-                      *ngIf="frmCrear.submitted && nombreRol.invalid"
-                    >
-                      <span *ngIf="nombreRol?.errors?.['required']">
-                        Rol obligatorio
                       </span>
                     </span>
                   </div>

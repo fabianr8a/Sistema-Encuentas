@@ -51,7 +51,7 @@ export const API_ENCUESTA_TIPO_DEPENDENCIAS = API_URL + 'api/private/encuesta/ti
 
 /*********************Estudiante*********************/
 export const API_LISTAR_ENCUESTAS = API_URL + 'api/private/estudiante/getAll';
-export const API_LISTAR_TIPO_DEPENDENCIAS = API_URL + 'api/private/estudiante/tipoDependencias';
+export const API_RESPONDER_ENCUESTA = API_URL + 'api/private/estudiante/responderEncuesta';
 
 
 /*******************Preguntas*********************/

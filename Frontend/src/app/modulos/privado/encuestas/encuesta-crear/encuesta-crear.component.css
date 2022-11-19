@@ -4,8 +4,8 @@ a {
 
 .titulo-formulario {
   border-bottom: solid rgb(145, 142, 142) 0.5px;
-  font-family: "Google Sans", Roboto, Arial, sans-serif;
-  font-size: 20px;
+  font-family:  Didot;
+  font-size: 24px;
   text-align: center;
   font-weight: 400;
   color: #202124;
@@ -52,7 +52,8 @@ a {
 }
 
 .descripcion-formulario {
-  font-size: 15px;
+  font-size: 18px;
+  font-family:  Didot;
   text-align: justify;
   font-weight: 400;
   color: #202124;
@@ -199,7 +200,8 @@ a {
 }
 
 .pregunta {
-  font-size: 17px;
+  font-size: 20px;
+  font-family:  Didot;
   width: 97%;
   height: 50px;
   line-height: 23px;

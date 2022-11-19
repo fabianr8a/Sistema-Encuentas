@@ -47,7 +47,7 @@ export class EncuestaCrearComponent implements OnInit {
     public encuestaService: EncuestaService,
     private toastrService: ToastrService,
     private router: Router,
-    private acceso: AccesoService
+    private acceso: AccesoService,
   ) {
     //Inicializar atributos requeridos
     this.arregloEvento = [];

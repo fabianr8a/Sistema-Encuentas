@@ -3,7 +3,7 @@ export class usuariosRespuestas {
   public codPregunta: number;
   public respuestaAbierta: string;
   public respuestaFecha: Date | string;
-  public codOpcion: number;
+  public codOpcion?: number;
 
   constructor(
       codiUsuario: number,

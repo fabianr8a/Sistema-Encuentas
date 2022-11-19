@@ -13,6 +13,8 @@ class EstudianteRutas {
     listadoRutas() {
         //listar encuestas
         this.miRutaEstudiante.get('/getAll/:codUsuario', EstudianteControlador_1.default.listarEncuestas);
+        //Responder encuestas
+        this.miRutaEstudiante.post('/responderEncuesta', EstudianteControlador_1.default.ResponderEncuestas);
     }
 }
 const estudianteRutas = new EstudianteRutas();

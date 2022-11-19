@@ -26,5 +26,33 @@ class EstudianteDAO {
             });
         });
     }
+    static ResponderEncuesta(sqlResponderFecha, sqlResponderAbierta, sqlResponderOpcion, parametrosEncuesta, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield conexionBd_1.default.task((consulta) => __awaiter(this, void 0, void 0, function* () {
+                for (const encuesta of parametrosEncuesta) {
+                    if (encuesta.respuestaAbierta != '') {
+                        const arregloEncuestaAbierta = [encuesta.codUsuario, encuesta.codPregunta, encuesta.respuestaAbierta];
+                        yield consulta.none(sqlResponderAbierta, arregloEncuestaAbierta);
+                    }
+                    if (encuesta.respuestaFecha != '') {
+                        const arregloEncuestaFecha = [encuesta.codUsuario, encuesta.codPregunta, encuesta.respuestaFecha];
+                        yield consulta.none(sqlResponderFecha, arregloEncuestaFecha);
+                    }
+                    if (encuesta.codOpcion != 0) {
+                        const arregloEncuestasOpcion = [encuesta.codUsuario, encuesta.codPregunta, encuesta.codOpcion];
+                        yield consulta.none(sqlResponderOpcion, arregloEncuestasOpcion);
+                    }
+                }
+            })).then((resultado) => {
+                res.status(200).json({
+                    respuesta: "Encuesta Contestada",
+                    resultado: resultado
+                });
+            }).catch((miError) => {
+                console.log(miError);
+                res.status(400).json({ respuesta: 'Error al responder la encuesta' });
+            });
+        });
+    }
 }
 exports.default = EstudianteDAO;

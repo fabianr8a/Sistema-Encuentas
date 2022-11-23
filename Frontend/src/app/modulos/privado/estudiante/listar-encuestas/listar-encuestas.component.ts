@@ -1,14 +1,10 @@
+import { usuariosRespuestas } from './../../../../modelos/usuarios-respuestas';
 import { observadorAny } from 'src/app/utilidades/observadores/tipo-any';
-import { ToastrService } from 'ngx-toastr';
-import { EncuestaService } from 'src/app/servicios/encuesta.service';
 import { Subscription, map, finalize, catchError } from 'rxjs';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Encuesta } from 'src/app/modelos/encuesta';
 import { Component, OnInit } from '@angular/core';
-import { TipoEventos } from 'src/app/modelos/tipo_eventos';
 import { UsuarioEncuestaService } from 'src/app/servicios/usuario-respuestas.service';
-import { TiposDependencia } from 'src/app/modelos/tipo_dependencias';
-import { ActivatedRoute, ParamMap } from '@angular/router';
 import { AccesoService } from 'src/app/servicios/acceso.service';
 
 @Component({
@@ -18,8 +14,9 @@ import { AccesoService } from 'src/app/servicios/acceso.service';
 })
 export class ListarEncuestasComponent implements OnInit {
   public arregloEncuesta: Encuesta[];
-  public objEncuesta: Encuesta;
   public busqueda: string = '';
+  public arregloEncuestica: any[];
+  public estadoRespuesta:number;
 
   //Atributos paginación
   public paginaActual: number;
@@ -39,17 +36,17 @@ export class ListarEncuestasComponent implements OnInit {
   public miSuscripcionEliminar: Subscription;
   public cargaFinalizada: boolean;
 
-
   constructor(
-    public encuestaService: UsuarioEncuestaService,
+    public usuarioEncuestaService: UsuarioEncuestaService,
     public modalService: BsModalService,
-    private acceso: AccesoService,
+    private acceso: AccesoService
   ) {
     //Inicializar atributos requeridos
     this.arregloEncuesta = [];
-    this.objEncuesta = this.inicializarEncuesta();
+    this.arregloEncuestica = [];
 
     //Inicializar modales
+    this.estadoRespuesta=0;
     this.modalTitulo = '';
     this.modalContenido = '';
     this.modalCuerpo = '';
@@ -67,15 +64,6 @@ export class ListarEncuestasComponent implements OnInit {
     this.cargaFinalizada = false;
   }
 
-  //Metodos obligatorios
-  public inicializarEncuesta(): Encuesta {
-    return new Encuesta(0, 0, 0, 0,'', '', '', '',this.acceso.objAcceso.codUsuario,  '','');
-  }
-
-  public inicializarTipoDependencia(): TiposDependencia {
-    return new TiposDependencia(0,0,'');
-  }
-
   ngOnInit(): void {
     this.listarEncuestasUsuarios(this.acceso.objAcceso.codUsuario);
   }
@@ -91,8 +79,8 @@ export class ListarEncuestasComponent implements OnInit {
 
   //Lógica del negocio - Servicios
 
-  public listarEncuestasUsuarios(codUsuario:number): void {
-    this.miSuscripcion = this.encuestaService
+  public listarEncuestasUsuarios(codUsuario: number): void {
+    this.miSuscripcion = this.usuarioEncuestaService
       .listarEncuestasUsuarios(codUsuario)
       .pipe(
         map((resultado: Encuesta[]) => {
@@ -101,9 +89,38 @@ export class ListarEncuestasComponent implements OnInit {
         finalize(() => {
           this.cargaFinalizada = true;
           this.verificarPaginador();
+          this.obtenerCodigoEncuesta(this.arregloEncuesta);
         })
       )
       .subscribe(observadorAny);
+  }
+
+  public obtenerCodigoEncuesta(arregloEncuesta: Encuesta[]): void {
+    for (const arreglo of arregloEncuesta) {
+      const codigoEncuesta = arreglo.codEncuesta;
+      this.miSuscripcion = this.usuarioEncuestaService
+        .validarOpcionResponder(codigoEncuesta)
+        .pipe(
+          map((resultado: Encuesta[]) => {
+            this.arregloEncuestica.push(resultado);
+          }),
+          finalize(() => {
+            this.validarRespuestas();
+          })
+        )
+        .subscribe(observadorAny);
+    }
+  }
+
+  public validarRespuestas(): void {
+    for (const arreglo of this.arregloEncuestica) {
+      const informacionEncuesta = arreglo[0].codUsuario;
+      if (informacionEncuesta=== this.acceso.objAcceso.codUsuario) {
+        this.estadoRespuesta===1; //contestado
+      } else {
+       this.estadoRespuesta===2; //no contestado
+      }
+    }
   }
 
   // Paginador

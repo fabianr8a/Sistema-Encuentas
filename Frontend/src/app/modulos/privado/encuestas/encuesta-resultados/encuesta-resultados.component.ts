@@ -6,7 +6,11 @@ import { Encuesta } from './../../../../modelos/encuesta';
 import { Component, OnInit } from '@angular/core';
 import { EncuestaService } from 'src/app/servicios/encuesta.service';
 import { TipoEventos } from 'src/app/modelos/tipo_eventos';
-import { Dependencias } from 'src/app/modelos/dependencias';
+import { PreguntaService } from 'src/app/servicios/pregunta.service';
+import { Preguntas } from 'src/app/modelos/preguntas';
+import { UsuarioEncuestaService } from 'src/app/servicios/usuario-respuestas.service';
+import { usuariosRespuestas } from 'src/app/modelos/usuarios-respuestas';
+import { ResultadosEncuestasService } from 'src/app/servicios/resultados-encuestas.service';
 
 @Component({
   selector: 'app-encuesta-resultados',
@@ -14,24 +18,32 @@ import { Dependencias } from 'src/app/modelos/dependencias';
   styleUrls: ['./encuesta-resultados.component.css'],
 })
 export class EncuestaResultadosComponent implements OnInit {
+
+  public arregloEvento: TipoEventos[];
+  arregloRespuestas: any[];
+  public arregloTiposDependencias: TiposDependencia[];
+  arregloPreguntas: Preguntas[] = [];
+
+  //Atributos consumo servicios
   public objEncuesta: Encuesta;
-  public codigoEncuesta: number;
   public miSuscripcion: Subscription;
   public temporal: any;
   public cargaFinalizada: boolean;
-  public arregloEvento: TipoEventos[];
-  public arregloTiposDependencias: TiposDependencia[];
+  public codigoEncuesta: number;
 
   constructor(
     public encuestaService: EncuestaService,
-    private route: ActivatedRoute)
-    {
+    public preguntaService: PreguntaService,
+    public respuestasEncuestas: ResultadosEncuestasService,
+    private route: ActivatedRoute
+  ) {
     this.objEncuesta = this.inicializarEncuesta();
     this.codigoEncuesta = 0;
     this.miSuscripcion = this.temporal;
     this.cargaFinalizada = false;
     this.arregloEvento = [];
     this.arregloTiposDependencias = [];
+    this.arregloRespuestas = [];
   }
 
   ngOnInit(): void {
@@ -74,7 +86,7 @@ export class EncuestaResultadosComponent implements OnInit {
 
 
   public inicializarEncuesta(): Encuesta {
-    return new Encuesta(0, 0, 0, 0, '', '', '', '', 0, '', '');
+    return new Encuesta(0, 0, 0, 0, '', '', '', '', 0, '', '',0);
   }
 
   public listarEncuesta(): void {
@@ -89,8 +101,57 @@ export class EncuestaResultadosComponent implements OnInit {
           throw err;
         }),
         finalize(() => {
+          this.listarPreguntas(this.objEncuesta.codEncuesta);
         })
       )
       .subscribe(observadorAny);
   }
+
+  //LISTAR PREGUNTAS
+
+  public inicializarPregunta() {
+    return new Preguntas(0, 0, '', 0, []);
+  }
+
+  public listarPreguntas(codigoEncuesta: number): void {
+    this.miSuscripcion = this.preguntaService
+      .seleccionarPregunta(codigoEncuesta)
+      .pipe(
+        map((respuesta: Preguntas[]) => {
+          this.arregloPreguntas = respuesta;
+          return respuesta;
+        }),
+        catchError((err) => {
+          throw err;
+        }),
+        finalize(() => {
+          this.listarRespuesta(this.arregloPreguntas);
+        })
+      )
+      .subscribe(observadorAny);
+  }
+
+  public listarRespuesta(arregloPregunta: Preguntas[]): void {
+    for (const encuesta of arregloPregunta) {
+      const codPregunta = encuesta.codPregunta;
+      this.miSuscripcion = this.respuestasEncuestas
+        .listarRespuestas(codPregunta)
+        .pipe(
+          map((respuesta: usuariosRespuestas[]) => {
+            this.arregloRespuestas.push(respuesta);
+            return respuesta;
+          }),
+          catchError((err) => {
+            throw err;
+          }),
+          finalize(()=> {
+          })
+        )
+        .subscribe(observadorAny);
+    }
+  }
+
+
+
 }
+

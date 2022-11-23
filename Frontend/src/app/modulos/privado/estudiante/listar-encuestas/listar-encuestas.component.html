@@ -65,9 +65,7 @@
                   <tr
                     *ngFor="
                       let objEncuesta of arregloEncuesta
-                        | filterBy
-                          : ['nombreEncuesta']
-                          : busqueda
+                        | filterBy: ['nombreEncuesta']:busqueda
                         | paginate
                           : {
                               id: 'codiguitoPaginacion',
@@ -75,23 +73,30 @@
                               currentPage: paginaActual,
                               totalItems: cantidadTotalRegistros
                             }
+
                     "
                   >
-                   <td>{{ objEncuesta.fechaCreacionEncuesta }}</td>
+                    <td>{{ objEncuesta.fechaCreacionEncuesta }}</td>
                     <td>
                       {{ objEncuesta.fechaCierreEncuesta }}
                     </td>
                     <td>{{ objEncuesta.nombreTipoEvento }}</td>
                     <td>{{ objEncuesta.nombreEncuesta }}</td>
                     <td>
-                      <a
-                        [routerLink]="[
-                          '/private/estudiante/responder-encuesta', objEncuesta.codEncuesta
-                        ]"
-                      >
+                      <div>
+                        <div>
+                          <a
 
-                        <i class="fa-solid fa-spell-check"></i>&nbsp;Responder
-                      </a>
+                            [routerLink]="[
+                              '/private/estudiante/responder-encuesta',
+                              objEncuesta.codEncuesta
+                            ]"
+                          >
+                            <i class="fa-solid fa-spell-check"></i
+                            >&nbsp;Responder
+                          </a>
+                        </div>
+                      </div>
                     </td>
                   </tr>
                 </tbody>

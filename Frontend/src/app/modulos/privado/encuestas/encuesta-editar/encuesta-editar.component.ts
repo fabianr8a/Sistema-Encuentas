@@ -25,13 +25,10 @@ export class EncuestaEditarComponent implements OnInit {
   arregloPreguntas: Preguntas[] = [];
   arregloPreguntasNuevas:Preguntas[]=[];
 
-
-
   public arregloEvento: TipoEventos[];
   public arregloTipoPreguntas: TipoPreguntas[];
   public arregloDependencias: Dependencias[];
   public arregloTiposDependencia: TiposDependencia[];
-
 
   //Atributos consumo servicios
   public temporal: any;
@@ -41,7 +38,6 @@ export class EncuestaEditarComponent implements OnInit {
   public cargaFinalizada: boolean;
   public miSuscripcionEliminar: Subscription;
   public codigoEncuesta: number;
-
 
   constructor(
     public encuestaService: EncuestaService,
@@ -141,7 +137,7 @@ export class EncuestaEditarComponent implements OnInit {
   //MODIFICAR y LISTAR ENCUESTA//
 
   public inicializarEncuesta(): Encuesta {
-    return new Encuesta(0, 0, 0, 0, '', '', '', '', 0, '', '');
+    return new Encuesta(0, 0, 0, 0, '', '', '', '', 0, '', '',0);
   }
 
   public listarEncuesta(): void {

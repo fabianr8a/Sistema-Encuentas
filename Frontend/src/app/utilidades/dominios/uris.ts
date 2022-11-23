@@ -52,6 +52,7 @@ export const API_ENCUESTA_TIPO_DEPENDENCIAS = API_URL + 'api/private/encuesta/ti
 /*********************Estudiante*********************/
 export const API_LISTAR_ENCUESTAS = API_URL + 'api/private/estudiante/getAll';
 export const API_RESPONDER_ENCUESTA = API_URL + 'api/private/estudiante/responderEncuesta';
+export const API_VALIDAR_RESPUESTAS= API_URL + 'api/private/estudiante/validarRespuestas';
 
 
 /*******************Preguntas*********************/
@@ -66,6 +67,10 @@ export const API_LISTAR_OPCIONES=API_URL + 'api/private/opciones/listar'
 export const API_ELIMINAR_OPCIONES=API_URL + 'api/private/opciones/eliminar'
 export const API_SELECCIONAR_OPCION=API_URL + 'api/private/opciones/seleccionar'
 export const API_MODIFICAR_OPCIONES= API_URL + 'api/private/opciones/modificar'
+
+
+/********************Resultados****************/
+export const API_RESPUESTAS = API_URL + 'api/private/resultados/respuestas';
 
 
 

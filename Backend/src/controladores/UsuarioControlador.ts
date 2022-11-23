@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import UsuarioDAO from '../daos/UsuarioDAO';
 import { SQL_USUARIO } from '../repositorios/Usuario_sql';
-import { SQL_REG_USU } from '../repositorios/RegistrarUsuario_sql';
+import { SQL_REG_USU } from '../repositorios/Registrar_Usuario_sql';
 
 
 class UsuarioControlador extends UsuarioDAO {

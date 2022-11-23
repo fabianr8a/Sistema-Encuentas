@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import estudianteControlador from '../controladores/EstudianteControlador';
+import estudianteControlador from '../controladores/UsuariosRespuestasControlador';
 
 class EstudianteRutas {
   public miRutaEstudiante: Router;
@@ -14,6 +14,8 @@ class EstudianteRutas {
     this.miRutaEstudiante.get('/getAll/:codUsuario',estudianteControlador.listarEncuestas);
     //Responder encuestas
     this.miRutaEstudiante.post('/responderEncuesta',estudianteControlador.ResponderEncuestas);
+    //Responder encuestas
+    this.miRutaEstudiante.get('/validarRespuestas/:codEncuesta',estudianteControlador.validarOpcionResponder);
   }
 }
 const estudianteRutas = new EstudianteRutas();

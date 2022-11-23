@@ -83,7 +83,7 @@ export class EncuestaCrearComponent implements OnInit {
 
   //Metodos obligatorios
   public inicializarEncuesta(): Encuesta {
-    return new Encuesta(0, 0,0,0,'','','','',this.acceso.objAcceso.codUsuario,'','');
+    return new Encuesta(0, 0,0,0,'','','','',this.acceso.objAcceso.codUsuario,'','',0);
   }
 
   public inicializarPregunta() {

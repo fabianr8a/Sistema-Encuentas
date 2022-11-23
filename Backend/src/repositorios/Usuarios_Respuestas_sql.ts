@@ -1,7 +1,7 @@
 export const SQL_ENCUESTA_ESTUDIANTES = {
   LISTAR_ENCUESTAS:'select e.cod_encuesta, e.cod_tipo_dependencia, e.nombre_encuesta, te.nombre_tipo_evento, \
   to_char(e.fecha_creacion_encuesta::date,\'dd/mm/yyyy\') as fecha_creacion_encuesta, \
-  to_char(e.fecha_cierre_encuesta::date,\'dd/mm/yyyy\') as fecha_cierre_encuesta, e.descripcion_encuesta, \
+  to_char(e.fecha_cierre_encuesta::date,\'dd/mm/yyyy\') as fecha_cierre_encuesta, e.descripcion_encuesta, e.estado_encuesta, \
   te.nombre_tipo_evento \
   from encuestas as e \
   inner join usuarios as u \
@@ -18,5 +18,13 @@ export const SQL_ENCUESTA_ESTUDIANTES = {
 	VALUES ($1,$2,$3)',
 
   RESPONDER_PREGUNTA_OPCION:'INSERT INTO usuarios_respuestas(cod_usuario, cod_pregunta, cod_opcion) \
-	VALUES ($1,$2,$3)'
+	VALUES ($1,$2,$3)',
+
+  VALIDAR_OPCION_RESPONDER:'select res.cod_pregunta,res.cod_usuario, cod_encuesta from respuestas_usuarios \
+  inner join usuarios_respuestas as res \
+  on respuestas_usuarios.cod_pregunta=res.cod_pregunta \
+  where cod_encuesta=$1',
+
+  MODIFICAR_ESTADO_ENCUESTA: 'UPDATE encuestas SET estado_encuesta = 1 WHERE cod_encuesta = $1',
+
 }

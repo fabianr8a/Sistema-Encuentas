@@ -87,17 +87,19 @@
                     <td>{{ objEncuesta.nombreTipoEvento }}</td>
                     <td>{{ objEncuesta.nombreEncuesta }}</td>
                     <td>
-                      <p style="text-align: center; margin: 0">
-                        <a
-                          [routerLink]="[
-                            '/private/encuestas/resultados-encuesta', objEncuesta.codEncuesta
-                          ]"
-                        >
-                          <i class="fa fa-chart-area"></i>&nbsp;Resultados
-                        </a>
-                      </p>
+                        <p style="text-align: center; margin: 0">
+                          <a
+                            [routerLink]="[
+                              '/private/encuestas/resultados-encuesta',
+                              objEncuesta.codEncuesta
+                            ]"
+                          >
+                            <i class="fa fa-chart-area"></i>&nbsp;Resultados
+                          </a>
+                        </p>
                     </td>
                     <td>
+                      <div *ngIf="objEncuesta.estadoEncuesta == 2;else nueva">
                       <p style="text-align: center; margin: 0">
                         <a
                           [routerLink]="[
@@ -107,6 +109,14 @@
                           ><i class="far fa-edit" title="Modificar encuesta"></i
                         ></a>
                       </p>
+                      </div>
+                      <ng-template #nueva>
+                        <p style="text-align: center; margin: 0">
+                          <a
+                            ><i class="far fa-edit no-modificar" title="La encuesta no se puede modificar, ya fue respondida"></i
+                          ></a>
+                        </p>
+                      </ng-template>
                     </td>
                   </tr>
                 </tbody>

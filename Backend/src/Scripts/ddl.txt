@@ -76,8 +76,14 @@ nombre_encuesta varchar(200) not null,
 fecha_creacion_encuesta DATE not null,
 fecha_cierre_encuesta DATE not null,
 descripcion_encuesta text not null,
+estado_encuesta int2 not null default 2,
+CONSTRAINT ckc_estado_encuesta_encuestas check (estado_encuesta is null or (estado_encuesta in (1,2))),
 constraint pk_encuestas primary key (cod_encuesta)
 );
+
+comment on column encuestas.estado_encuesta is
+'1 Contestado
+2 Sin contestar';
 
 alter table encuestas owner to user_encuestas;
 

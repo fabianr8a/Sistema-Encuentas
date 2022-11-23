@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import encuestaControlador from '../controladores/EncuestaControlador';
+import resultadosEncuestasControlador from '../controladores/ResultadosEncuestasControlador';
 
 class ResultadosEncuestaRutas {
   public miRutaResultados: Router;
@@ -12,6 +13,8 @@ class ResultadosEncuestaRutas {
   public listadoRutas(): void {
     //listar encuestas
     this.miRutaResultados.get('/getAll/:codEncuesta',encuestaControlador.seleccionarEncuestaModificar);
+    //Obtener respuestas
+    this.miRutaResultados.get('/respuestas/:codPregunta',resultadosEncuestasControlador.listarRespuestas);
   }
 }
 const resultadosRutas = new ResultadosEncuestaRutas();

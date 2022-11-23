@@ -135,7 +135,7 @@ export class ResponderEncuestaComponent implements OnInit {
 
 
   public inicializarEncuesta(): Encuesta {
-    return new Encuesta(0, 0, 0, 0, '', '', '', '', 0, '', '');
+    return new Encuesta(0, 0, 0, 0, '', '', '', '', 0, '', '',0);
   }
 
   public listarEncuesta(): void {
@@ -185,9 +185,8 @@ export class ResponderEncuestaComponent implements OnInit {
   }
 
   public enviarEncuesta(formulario: NgForm): void {
-    console.log(this.arregloRespuestas);
     this.miSuscripcion = this.usuarioEncuestaService
-      .responderEncuesta(this.arregloRespuestas)
+      .responderEncuesta(this.arregloRespuestas,this.objEncuesta.codEncuesta)
       .pipe(
         map(() => {
           mostrarMensaje(
@@ -199,12 +198,21 @@ export class ResponderEncuestaComponent implements OnInit {
           this.router.navigate(['/private/estudiante/listar-encuesta']);
         }),
         catchError((err) => {
-          mostrarMensaje(
-            'error',
-            'No se puede responder la encuesta',
-            'Error',
-            this.toastrService
-          );
+          if(err.status === 403){
+            mostrarMensaje(
+              'error',
+              'Esta encuesta solo puede ser respondida una vez',
+              'Error',
+              this.toastrService
+            );
+          }else{
+            mostrarMensaje(
+              'error',
+              'No se pudo responder la encuesta',
+              'Error',
+              this.toastrService
+            );
+          }
           throw err;
         })
       )

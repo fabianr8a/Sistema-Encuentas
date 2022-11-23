@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const AccesoDAO_1 = __importDefault(require("../daos/AccesoDAO"));
 const Acceso_sql_1 = require("../repositorios/Acceso_sql");
-const RegistrarUsuario_sql_1 = require("../repositorios/RegistrarUsuario_sql");
+const Registrar_Usuario_sql_1 = require("../repositorios/Registrar_Usuario_sql");
 class AccesoControlador extends AccesoDAO_1.default {
     validarSesion(req, res) {
         const parametros = [req.body.correoAcceso, req.body.claveAcceso];
@@ -21,7 +21,7 @@ class AccesoControlador extends AccesoDAO_1.default {
             req.body[0].codTipoDependencia,
             req.body[0].claveRegistro,
         ];
-        AccesoControlador.crearElUsuario(RegistrarUsuario_sql_1.SQL_REG_USU.EXISTE_CORREO, RegistrarUsuario_sql_1.SQL_REG_USU.AGREGAR_USUARIO, RegistrarUsuario_sql_1.SQL_REG_USU.AGREGAR_ACCESO, RegistrarUsuario_sql_1.SQL_REG_USU.TODO_LISTO, parametros, res);
+        AccesoControlador.crearElUsuario(Registrar_Usuario_sql_1.SQL_REG_USU.EXISTE_CORREO, Registrar_Usuario_sql_1.SQL_REG_USU.AGREGAR_USUARIO, Registrar_Usuario_sql_1.SQL_REG_USU.AGREGAR_ACCESO, Registrar_Usuario_sql_1.SQL_REG_USU.TODO_LISTO, parametros, res);
     }
     buscarUnAcceso(req, res) {
         const codUsu = req.params.codUsuario;

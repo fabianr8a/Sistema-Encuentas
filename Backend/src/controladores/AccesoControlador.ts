@@ -1,7 +1,7 @@
 import { Response, Request } from 'express';
 import AccesoDAO from '../daos/AccesoDAO';
 import { SQL_ACCESO } from '../repositorios/Acceso_sql';
-import { SQL_REG_USU } from '../repositorios/RegistrarUsuario_sql'
+import { SQL_REG_USU } from '../repositorios/Registrar_Usuario_sql'
 
 
 class AccesoControlador extends AccesoDAO {

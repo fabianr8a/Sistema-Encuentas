@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SQL_ENCUESTA = void 0;
 exports.SQL_ENCUESTA = {
     LISTAR: 'SELECT u.cod_usuario, u.cod_encuesta,e.descripcion_encuesta, e.nombre_encuesta, to_char(e.fecha_creacion_encuesta::date,\'dd/mm/yyyy\') as fecha_creacion_encuesta, \
-  to_char(e.fecha_cierre_encuesta::date,\'dd/mm/yyyy\') as fecha_cierre_encuesta,te.nombre_tipo_evento \
+  to_char(e.fecha_cierre_encuesta::date,\'dd/mm/yyyy\') as fecha_cierre_encuesta,te.nombre_tipo_evento, e.estado_encuesta \
   from usuario_encuestas as u \
   inner join encuestas as e  \
   on e.cod_encuesta = u.cod_encuesta \
@@ -15,8 +15,8 @@ exports.SQL_ENCUESTA = {
     LISTAR_TIPO_PREGUNTAS: 'select cod_tipo_pregunta, nombre_tipo_pregunta from tipo_preguntas',
     LISTAR_DEPENDENCIAS: 'select cod_dependencia, nombre_dependencia from dependencias',
     LISTAR_TIPO_DEPENDENCIAS: 'select cod_tipo_dependencia, cod_dependencia, nombre_tipo_dependencia from tipo_dependencias',
-    CREAR_ENCUESTA: 'INSERT INTO encuestas(cod_tipo_dependencia, cod_tipo_evento, nombre_encuesta, fecha_creacion_encuesta, fecha_cierre_encuesta, descripcion_encuesta) \
-	VALUES ($1, $2, $3, $4, $5, $6) RETURNING cod_encuesta',
+    CREAR_ENCUESTA: 'INSERT INTO encuestas(cod_tipo_dependencia, cod_tipo_evento, nombre_encuesta, fecha_creacion_encuesta, fecha_cierre_encuesta, descripcion_encuesta, estado_encuesta) \
+	VALUES ($1, $2, $3, $4, $5, $6, 2) RETURNING cod_encuesta',
     SELECCIONAR_ENCUESTA_MODIFICAR: 'SELECT cod_encuesta, cod_tipo_dependencia, cod_tipo_evento, nombre_encuesta,\
    descripcion_encuesta,  to_char(fecha_creacion_encuesta::date,\'yyyy-MM-dd\') as fecha_creacion_encuesta, \
   to_char(fecha_cierre_encuesta::date,\'yyyy-MM-dd\') as fecha_cierre_encuesta \

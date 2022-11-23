@@ -12,7 +12,10 @@ a{
 
 .input-group-prepend{
   width: 36%;
+}
 
+.no-modificar{
+  color: rgb(184, 189, 194);
 }
 
 .form-control{

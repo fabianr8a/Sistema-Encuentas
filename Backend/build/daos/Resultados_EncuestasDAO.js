@@ -26,5 +26,17 @@ class ResultadosEncuestasDAO {
             });
         });
     }
+    static listarRespuestasUnicas(sqlRepUnicas, parametros, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield conexionBd_1.default.result(sqlRepUnicas, parametros)
+                .then((resultado) => {
+                res.status(200).json(resultado.rows);
+            })
+                .catch((miError) => {
+                console.log(miError);
+                res.status(400).json({ respuesta: 'Error listando las respuestas unicas' });
+            });
+        });
+    }
 }
 exports.default = ResultadosEncuestasDAO;

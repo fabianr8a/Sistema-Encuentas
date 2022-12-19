@@ -175,12 +175,12 @@ export class ResponderEncuestaComponent implements OnInit {
   }
 
   public inicializarUsuariosPreguntas() {
-    return new usuariosRespuestas(0, 0, '', '', 0);
+    return new usuariosRespuestas(0, 0, '', '', 0,'');
   }
 
   public llenarRespuestas(): void {
     this.arregloPreguntas.map((objPregunta: Preguntas) => {
-      this.arregloRespuestas.push(new usuariosRespuestas(this.acceso.objAcceso.codUsuario, objPregunta.codPregunta, '', '', 0));
+      this.arregloRespuestas.push(new usuariosRespuestas(this.acceso.objAcceso.codUsuario, objPregunta.codPregunta, '', '', 0,''));
     });
   }
 

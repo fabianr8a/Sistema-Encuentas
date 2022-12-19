@@ -24,4 +24,6 @@ exports.SQL_ENCUESTA = {
   where cod_encuesta=$1',
     MODIFICAR_ENCUESTA: 'UPDATE encuestas SET cod_tipo_dependencia=$2, cod_tipo_evento=$3, nombre_encuesta=$4, descripcion_encuesta=$5, fecha_creacion_encuesta=$6, fecha_cierre_encuesta=$7\
   WHERE cod_encuesta=$1',
+    MODIFICAR_ESTADO_ENCUESTA: 'UPDATE encuestas SET estado_encuesta = 1 WHERE cod_encuesta = $1',
+    ELIMINAR_ENCUESTA: 'DELETE FROM encuestas WHERE cod_encuesta=$1',
 };

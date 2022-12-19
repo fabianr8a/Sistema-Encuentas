@@ -56,8 +56,9 @@
                   <tr>
                     <th style="width: 17%">Fecha de inicio</th>
                     <th style="width: 17%">Fecha de cierre</th>
-                    <th style="width: 18%">Tipo Evento</th>
-                    <th style="width: 35%">Nombre Evento</th>
+                    <th style="width: 18%"><i class="fa-solid fa-filter"></i>
+                      Tipo Evento</th>
+                    <th style="width: 35%"><i class="fa-solid fa-filter"></i> Nombre Evento</th>
                     <th style="width: 13%">Responder</th>
                   </tr>
                 </thead>
@@ -65,7 +66,7 @@
                   <tr
                     *ngFor="
                       let objEncuesta of arregloEncuesta
-                        | filterBy: ['nombreEncuesta']:busqueda
+                        | filterBy: ['nombreEncuesta','nombreTipoEvento']:busqueda
                         | paginate
                           : {
                               id: 'codiguitoPaginacion',
@@ -86,7 +87,6 @@
                       <div>
                         <div>
                           <a
-
                             [routerLink]="[
                               '/private/estudiante/responder-encuesta',
                               objEncuesta.codEncuesta

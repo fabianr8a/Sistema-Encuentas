@@ -91,7 +91,7 @@ export class EncuestaCrearComponent implements OnInit {
   }
 
   public inicializarOpciones() {
-    return new Opciones(0, 0, '');
+    return new Opciones(0, 0, '',0);
   }
 
   //Lógica del negocio - Servicios
@@ -174,7 +174,7 @@ export class EncuestaCrearComponent implements OnInit {
 
   //agregar opciones al tipo de pregunta de seleccion en un array
   public agregarOpciones(codPregunta: number): void {
-    let objOpcion = new Opciones(0, codPregunta, '');
+    let objOpcion = new Opciones(0, codPregunta, '',0);
     this.arregloPreguntas.map((pregunta) => {
       if (pregunta.codPregunta === codPregunta) {
         pregunta.arregloOpciones.push(objOpcion);
@@ -193,7 +193,7 @@ export class EncuestaCrearComponent implements OnInit {
     if (this.objEncuesta.fechaCierreEncuesta<this.objEncuesta.fechaCreacionEncuesta) {
       mostrarMensaje(
         'error',
-        'Las fechas no son correctas',
+        'La fecha de cierre debe ser superior a la fecha de inicio',
         'Error',
         this.toastrService
       );

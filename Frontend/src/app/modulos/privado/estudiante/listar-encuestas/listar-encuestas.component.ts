@@ -104,24 +104,11 @@ export class ListarEncuestasComponent implements OnInit {
           map((resultado: Encuesta[]) => {
             this.arregloEncuestica.push(resultado);
           }),
-          finalize(() => {
-            this.validarRespuestas();
-          })
         )
         .subscribe(observadorAny);
     }
   }
 
-  public validarRespuestas(): void {
-    for (const arreglo of this.arregloEncuestica) {
-      const informacionEncuesta = arreglo[0].codUsuario;
-      if (informacionEncuesta=== this.acceso.objAcceso.codUsuario) {
-        this.estadoRespuesta===1; //contestado
-      } else {
-       this.estadoRespuesta===2; //no contestado
-      }
-    }
-  }
 
   // Paginador
   public verificarPaginador(): void {

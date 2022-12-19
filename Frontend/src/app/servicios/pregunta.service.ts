@@ -3,7 +3,6 @@ import {
   API_ELIMINAR_PREGUNTA,
   API_CREAR_PREGUNTA,
 } from './../utilidades/dominios/uris';
-import { Encuesta } from './../modelos/encuesta';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';

@@ -27,6 +27,8 @@ class EncuestaRutas {
         this.miRutaEncuesta.get('/encuestas/:codEncuesta', EncuestaControlador_1.default.seleccionarEncuestaModificar);
         //modificar encuesta
         this.miRutaEncuesta.put('/modificar/:codEncuesta', EncuestaControlador_1.default.modificarEncuesta);
+        //eliminar encuesta
+        this.miRutaEncuesta.delete('/eliminar/:codEncuesta', EncuestaControlador_1.default.eliminarEncuesta);
     }
 }
 const encuestaRutas = new EncuestaRutas();

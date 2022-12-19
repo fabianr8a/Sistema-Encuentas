@@ -5,9 +5,9 @@ import { EncuestaEditarComponent } from './encuesta-editar/encuesta-editar.compo
 import { EncuestaCrearComponent } from './encuesta-crear/encuesta-crear.component';
 import { EncuestaListarComponent } from './encuesta-listar/encuesta-listar.component';
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule, CanActivate } from '@angular/router';
+import { Routes, RouterModule} from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { AdminGuard } from 'src/app/utilidades/guards/admin.guard';
+
 
 const routes: Routes = [
   {

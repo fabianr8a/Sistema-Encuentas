@@ -10,6 +10,7 @@ import {
   API_CREAR_ENCUESTA,
   API_MODIFICAR_ENCUESTA,
   API_ENCUESTA_SELECCIONADA_MODIFICAR,
+  API_ELIMINAR_ENCUESTA,
 } from './../utilidades/dominios/uris';
 import { TipoEventos } from './../modelos/tipo_eventos';
 import { Encuesta } from '../modelos/encuesta';
@@ -30,6 +31,7 @@ export class EncuestaService {
   public apiCrearEncuesta:string=API_CREAR_ENCUESTA;
   public apiModificarEncuesta:string=API_MODIFICAR_ENCUESTA;
   public apiSeleccionarEncuestaModificar:string=API_ENCUESTA_SELECCIONADA_MODIFICAR;
+  public apiEliminarEncuesta : string=API_ELIMINAR_ENCUESTA;
 
   constructor(private http: HttpClient) {}
 
@@ -65,6 +67,10 @@ export class EncuestaService {
 
   public modificarEncuesta(objEncuesta:Encuesta): Observable<Encuesta>{
     return this.http.put<Encuesta>(this.apiModificarEncuesta+'/'+ objEncuesta.codEncuesta, objEncuesta);
+  }
+
+  public eliminarEncuesta(codEncuesta: number): Observable<Preguntas> {
+    return this.http.delete<Preguntas>(this.apiEliminarEncuesta + '/' + codEncuesta);
   }
 
 

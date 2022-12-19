@@ -578,15 +578,16 @@
                     <div>
                       <div>
                         <br />
-                        <div>
-                          <div *ngIf="tmpBase64">
-                            <img
-                              align="center"
-                              class="foto_usuario-2"
-                              [src]="tmpBase64"
-                              alt="foto_usuario"
-                            />
+                        <div style="text-align: center">
+                          <div *ngIf="tmpBase64; else nueva">
+                            <img class="foto_usuario" [src]="tmpBase64" alt="foto_usuario" />
                           </div>
+                          <ng-template #nueva>
+                            <div >
+                              <img class="foto_usuario" [src]="'data:image/png;base64,' + objImagen.base64"
+                                alt="foto_usuario" onerror="this.src='/assets/img/user.png'" />
+                            </div>
+                          </ng-template>
                         </div>
                       </div>
                       <br />

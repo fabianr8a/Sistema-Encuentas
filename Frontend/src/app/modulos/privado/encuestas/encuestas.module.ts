@@ -9,6 +9,8 @@ import { EncuestaEditarComponent } from '../encuestas/encuesta-editar/encuesta-e
 import { NgPipesModule } from 'ngx-pipes';
 import { EncuestaResultadosComponent } from './encuesta-resultados/encuesta-resultados.component';
 import { ScrollToTopComponent } from '../../contenedor/shared/scroll-to-top/scroll-to-top.component';
+import { NgChartsModule} from 'ng2-charts';
+import { DiagramasComponent } from './diagramas/diagramas.component';
 
 
 @NgModule({
@@ -18,12 +20,14 @@ import { ScrollToTopComponent } from '../../contenedor/shared/scroll-to-top/scro
     EncuestaListarComponent,
     EncuestaResultadosComponent,
     ScrollToTopComponent,
+    DiagramasComponent,
   ],
   imports: [
     CommonModule,
     EncuestasRoutingModule,
     NgxPaginationModule,
     FormsModule,
+    NgChartsModule,
     NgPipesModule,
   ]
 })

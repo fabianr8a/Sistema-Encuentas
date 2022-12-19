@@ -34,7 +34,7 @@ export const API_ENCUESTA = API_URL + 'api/private/encuesta/getAll';
 export const API_CREAR_ENCUESTA=API_URL + 'api/private/encuesta/crear';
 export const API_ENCUESTA_SELECCIONADA_MODIFICAR=API_URL + 'api/private/encuesta/encuestas';
 export const API_MODIFICAR_ENCUESTA=API_URL + 'api/private/encuesta/modificar';
-
+export const API_ELIMINAR_ENCUESTA=API_URL + 'api/private/encuesta/eliminar';
 
 /***************Listar tipo de eventos*************/
 export const API_ENCUESTA_EVENTOS = API_URL + 'api/private/encuesta/eventos';
@@ -71,6 +71,7 @@ export const API_MODIFICAR_OPCIONES= API_URL + 'api/private/opciones/modificar'
 
 /********************Resultados****************/
 export const API_RESPUESTAS = API_URL + 'api/private/resultados/respuestas';
+export const API_RESPUESTAS_UNICAS = API_URL + 'api/private/resultados/respuestasUnicas';
 
 
 

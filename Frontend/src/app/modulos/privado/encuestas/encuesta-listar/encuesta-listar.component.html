@@ -56,10 +56,15 @@
                   <tr>
                     <th style="width: 15%">Fecha de creación</th>
                     <th style="width: 15%">Fecha de cierre</th>
-                    <th style="width: 15%">Tipo Evento</th>
-                    <th style="width: 30%">Nombre Evento</th>
-                    <th style="width: 15%"></th>
-                    <th style="width: 10%"></th>
+                    <th style="width: 15%">
+                      <i class="fa-solid fa-filter"></i> Tipo Evento
+                    </th>
+                    <th style="width: 33%">
+                      <i class="fa-solid fa-filter"></i> Nombre Evento
+                    </th>
+                    <th style="width: 12%"></th>
+                    <th style="width: 5%"></th>
+                    <th style="width: 5%"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -87,33 +92,63 @@
                     <td>{{ objEncuesta.nombreTipoEvento }}</td>
                     <td>{{ objEncuesta.nombreEncuesta }}</td>
                     <td>
-                        <p style="text-align: center; margin: 0">
-                          <a
-                            [routerLink]="[
-                              '/private/encuestas/resultados-encuesta',
-                              objEncuesta.codEncuesta
-                            ]"
-                          >
-                            <i class="fa fa-chart-area"></i>&nbsp;Resultados
-                          </a>
-                        </p>
-                    </td>
-                    <td>
-                      <div *ngIf="objEncuesta.estadoEncuesta == 2;else nueva">
                       <p style="text-align: center; margin: 0">
                         <a
                           [routerLink]="[
-                            '/private/encuestas/editar-encuesta',
+                            '/private/encuestas/resultados-encuesta',
                             objEncuesta.codEncuesta
                           ]"
-                          ><i class="far fa-edit" title="Modificar encuesta"></i
-                        ></a>
+                        >
+                          <i class="fa fa-chart-area"></i>&nbsp;Resultados
+                        </a>
                       </p>
+                    </td>
+                    <td>
+                      <div *ngIf="objEncuesta.estadoEncuesta == 2; else nueva">
+                        <p style="text-align: center; margin: 0">
+                          <a
+                            [routerLink]="[
+                              '/private/encuestas/editar-encuesta',
+                              objEncuesta.codEncuesta
+                            ]"
+                            ><i
+                              class="far fa-edit"
+                              title="Modificar encuesta"
+                            ></i
+                          ></a>
+                        </p>
                       </div>
                       <ng-template #nueva>
                         <p style="text-align: center; margin: 0">
                           <a
-                            ><i class="far fa-edit no-modificar" title="La encuesta no se puede modificar, ya fue respondida"></i
+                            ><i
+                              class="far fa-edit no-modificar"
+                              title="La encuesta no se puede modificar, ya fue respondida"
+                            ></i
+                          ></a>
+                        </p>
+                      </ng-template>
+                    </td>
+
+                    <td>
+                      <div
+                        *ngIf="objEncuesta.estadoEncuesta == 2; else eliminar"
+                      >
+                        <p style="text-align: center; margin: 0">
+                          <i
+                            class="fa-solid fa-trash eliminar"
+                            title="Eliminar encuesta"
+                            (click)="eliminarEncuesta(objEncuesta.codEncuesta)"
+                          ></i>
+                        </p>
+                      </div>
+                      <ng-template #eliminar>
+                        <p style="text-align: center; margin: 0">
+                          <a
+                            ><i
+                              class="fa-solid fa-trash no-eliminar"
+                              title="La encuesta no se puede eliminar, ya fue respondida"
+                            ></i
                           ></a>
                         </p>
                       </ng-template>

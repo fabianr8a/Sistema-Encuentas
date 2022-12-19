@@ -135,6 +135,30 @@ class EncuestaDAO {
             });
         });
     }
+    static eliminarEncuesta(sqlEliminarPregunta, sqlEliminarOpcion, sqlEliminarEncuesta, sqlEliminarUsuEncuesta, sqltodo, parametros, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield conexionBd_1.default.task((consulta) => __awaiter(this, void 0, void 0, function* () {
+                let preguntica = yield consulta.result(sqltodo, parametros);
+                if (preguntica.rows.length !== 0) {
+                    preguntica.rows.forEach((opcion) => __awaiter(this, void 0, void 0, function* () {
+                        yield consulta.none(sqlEliminarOpcion, opcion.codPregunta);
+                    }));
+                }
+                yield consulta.result(sqlEliminarPregunta, parametros);
+                yield consulta.result(sqlEliminarUsuEncuesta, parametros);
+                return yield consulta.result(sqlEliminarEncuesta, parametros);
+            }))
+                .then((resultado) => {
+                res.status(200).json({
+                    respuesta: "Encuesta eliminada"
+                });
+            })
+                .catch((miError) => {
+                console.log(miError);
+                res.status(400).json({ respuesta: 'Error eliminando encuesta' });
+            });
+        });
+    }
     static guardarOpciones(sqlOpciones, arregloOpciones, codPregunta) {
         return __awaiter(this, void 0, void 0, function* () {
             yield conexionBd_1.default.task((consulta) => __awaiter(this, void 0, void 0, function* () {

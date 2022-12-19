@@ -3,28 +3,45 @@
     <main>
       <div class="container-fluid px-4">
         <h2 class="mt-4" style="font-size: 27px">Resultados Encuesta</h2>
-        <ol class="breadcrumb d-flex justify-content-end" style="background-color: white; margin-top: 24px">
+        <ol
+          class="breadcrumb d-flex justify-content-end"
+          style="background-color: white; margin-top: 24px"
+        >
           <li class="breadcrumb-item">
-            <a [routerLink]="['/private/inicio']"><i class="fas fa-home"></i></a>
+            <a [routerLink]="['/private/inicio']"
+              ><i class="fas fa-home"></i
+            ></a>
           </li>
           <li class="breadcrumb-item">
             <a href="javascript:void(0)">Encuestas</a>
           </li>
           <li class="breadcrumb-item">
-            <a [routerLink]="['/private/encuestas/listar-encuesta']">Listar encuestas</a>
+            <a [routerLink]="['/private/encuestas/listar-encuesta']"
+              >Listar encuestas</a
+            >
           </li>
           <li class="breadcrumb-item active">Resultados</li>
         </ol>
         <div class="card mb-4">
-          <div class="card-header" style="
+          <div
+            class="card-header"
+            style="
               padding-bottom: 32px;
               background-color: rgba(17, 17, 17, 0.116);
-            "></div>
+            "
+          ></div>
           <div class="card-body">
             <div>
               <p class="titulo-encuesta">
-                <input type="text" id="titulo" name="titulo" [(ngModel)]="objEncuesta.nombreEncuesta" #titulo="ngModel"
-                  class="titulo-formulario" readonly />
+                <input
+                  type="text"
+                  id="titulo"
+                  name="titulo"
+                  [(ngModel)]="objEncuesta.nombreEncuesta"
+                  #titulo="ngModel"
+                  class="titulo-formulario"
+                  readonly
+                />
               </p>
             </div>
             <div class="row mb-3">
@@ -34,8 +51,16 @@
                     <div class="input-group mb-2 mr-sm-2">
                       <div class="input-group-prepend">
                         <label>Fecha de inicio:</label>
-                        <input class="fecha-encuesta" type="date" id="fecha_inicio" name="fecha_inicio"
-                          [(ngModel)]="objEncuesta.fechaCreacionEncuesta" #fecha_inicio="ngModel" required disabled />
+                        <input
+                          class="fecha-encuesta"
+                          type="date"
+                          id="fecha_inicio"
+                          name="fecha_inicio"
+                          [(ngModel)]="objEncuesta.fechaCreacionEncuesta"
+                          #fecha_inicio="ngModel"
+                          required
+                          disabled
+                        />
                       </div>
                     </div>
                   </div>
@@ -48,9 +73,18 @@
                     <div class="input-group mb-2 mr-sm-2">
                       <div class="input-group-prepend">
                         <label>Fecha de cierre:</label>
-                        <input readonly class="fecha-encuesta" type="date" id="fecha_cierre" name="fecha_cierre"
-                          value="2022-07-22" [(ngModel)]="objEncuesta.fechaCierreEncuesta" #fecha_cierre="ngModel"
-                          required disabled />
+                        <input
+                          readonly
+                          class="fecha-encuesta"
+                          type="date"
+                          id="fecha_cierre"
+                          name="fecha_cierre"
+                          value="2022-07-22"
+                          [(ngModel)]="objEncuesta.fechaCierreEncuesta"
+                          #fecha_cierre="ngModel"
+                          required
+                          disabled
+                        />
                       </div>
                     </div>
                   </div>
@@ -62,10 +96,20 @@
                 <div class="form-group">
                   <div class="form-floating mb-3 mb-md-0">
                     <div class="input-group mb-2 mr-sm-2">
-                      <select name="eventos" id="eventos" class="fecha-encuesta" [(ngModel)]="objEncuesta.codTipoEvento"
-                        aria-label="Default select example" #eventos="ngModel" disabled="">
+                      <select
+                        name="eventos"
+                        id="eventos"
+                        class="fecha-encuesta"
+                        [(ngModel)]="objEncuesta.codTipoEvento"
+                        aria-label="Default select example"
+                        #eventos="ngModel"
+                        disabled=""
+                      >
                         <option value="0">Elija una opción</option>
-                        <option *ngFor="let objEventos of arregloEvento" value="{{ objEventos.codTipoEvento }}">
+                        <option
+                          *ngFor="let objEventos of arregloEvento"
+                          value="{{ objEventos.codTipoEvento }}"
+                        >
                           {{ objEventos.nombreTipoEvento }}
                         </option>
                       </select>
@@ -79,13 +123,23 @@
                 <div class="form-group">
                   <div class="form-floating mb-3 mb-md-0">
                     <div class="input-group mb-2 mr-sm-2">
-                      <select name="tipo_dependencia" id="tipo_dependencia" class="opciones-dependencias responsive"
-                        aria-label="Default select example" [(ngModel)]="objEncuesta.codTipoDependencia"
-                        #tipo_dependencia="ngModel" required disabled>
+                      <select
+                        name="tipo_dependencia"
+                        id="tipo_dependencia"
+                        class="opciones-dependencias responsive"
+                        aria-label="Default select example"
+                        [(ngModel)]="objEncuesta.codTipoDependencia"
+                        #tipo_dependencia="ngModel"
+                        required
+                        disabled
+                      >
                         <option value="0">Elija una opción</option>
-                        <option *ngFor="
+                        <option
+                          *ngFor="
                             let objTipoDependencia of arregloTiposDependencias
-                          " value="{{ objTipoDependencia.codTipoDependencia }}">
+                          "
+                          value="{{ objTipoDependencia.codTipoDependencia }}"
+                        >
                           {{ objTipoDependencia.nombreTipoDependencia }}
                         </option>
                       </select>
@@ -94,25 +148,18 @@
                 </div>
               </div>
             </div>
-            <div _ngcontent-frp-c74="" class="row-mb-3 form-group descripcion"></div>
+            <div
+              _ngcontent-frp-c74=""
+              class="row-mb-3 form-group descripcion"
+            ></div>
             <div>
-              <label class="descripcion-formulario" id="descripcion" name="descripcion">
-                {{objEncuesta.descripcionEncuesta}}
+              <label
+                class="descripcion-formulario"
+                id="descripcion"
+                name="descripcion"
+              >
+                {{ objEncuesta.descripcionEncuesta }}
               </label>
-            </div>
-          </div>
-        </div>
-
-        <div class="card mb-4 seccion-preguntas">
-          <div class="card-body">
-            <div class=" col-md-3 cantidadPreguntas">
-              <b><span class="total-preguntas">Respuestas totales: 3</span>
-              </b>
-            </div>
-            <br />
-            <div align="center">
-              ¿Cual fue su grado de satisfacción con el evento realizado? <br />
-              <img class="imagen-resultado" src="https://germangfeler.github.io/assets/img/dataviz2/piechart.png" />
             </div>
           </div>
         </div>
@@ -122,25 +169,41 @@
             <!--Pregunta y respuesta de fecha---->
             <div *ngSwitchCase="1" class="card mb-4 seccion-preguntas">
               <div class="form-floating mb-5">
-                <label class="pregunta">{{pregunta.descripcionPregunta}}</label>
+                <label class="pregunta">{{
+                  pregunta.descripcionPregunta
+                }}</label>
               </div>
-              <br>
-              <div class="row block-answers" *ngFor="let respuesta of arregloRespuestas[indice]">
+              <br />
+              <div
+                class="row block-answers"
+                *ngFor="let respuesta of arregloRespuestas[indice]"
+              >
                 <div *ngIf="pregunta.codPregunta == respuesta.codPregunta">
-                  <p class="respuesta-fecha">{{respuesta.respuestaFecha}}</p>
+                  <p class="respuesta-fecha">{{ respuesta.respuestaFecha }}</p>
                 </div>
               </div>
             </div>
 
             <!--!--Pregunta y respuesta abierta---->
-            <div *ngSwitchCase="2" class=" col-md-auto card mb-4 seccion-preguntas">
+            <div
+              *ngSwitchCase="2"
+              class="col-md-auto card mb-4 seccion-preguntas"
+            >
               <div class="form-floating mb-5">
-                <label class="pregunta">{{pregunta.descripcionPregunta}}</label>
+                <label class="pregunta">{{
+                  pregunta.descripcionPregunta
+                }}</label>
               </div>
-              <br>
-              <div class="row" *ngFor="let respuesta of arregloRespuestas[indice]">
-                <div class=" col-md-11 respuesta-abierta" *ngIf="pregunta.codPregunta == respuesta.codPregunta">
-                  <p class="respuestas">{{respuesta.respuestaAbierta}}</p>
+              <br />
+              <div
+                class="row"
+                *ngFor="let respuesta of arregloRespuestas[indice]"
+              >
+                <div
+                  class="col-md-11 respuesta-abierta"
+                  *ngIf="pregunta.codPregunta == respuesta.codPregunta"
+                >
+                  <p class="respuestas">{{ respuesta.respuestaAbierta }}</p>
                 </div>
               </div>
             </div>
@@ -148,7 +211,15 @@
             <!--!--Pregunta y respuesta de selección multiple-->
             <div *ngSwitchCase="3" class="card mb-4 seccion-preguntas">
               <div class="form-floating mb-5">
-                <label class="pregunta">{{pregunta.descripcionPregunta}}</label>
+                <label class="pregunta">{{
+                  pregunta.descripcionPregunta
+                }}</label>
+              </div>
+              <div class="col-md-2 respuestas">
+                <app-diagramas
+                  [barChartslabels]="barChartslabels"
+                  [barChartData]="barChartData"
+                ></app-diagramas>
               </div>
             </div>
           </div>

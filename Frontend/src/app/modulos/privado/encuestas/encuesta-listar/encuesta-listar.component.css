@@ -32,6 +32,15 @@ a{
   cursor: auto;
 }
 
+.eliminar{
+  color: rgb(167, 45, 45);
+  cursor: pointer;
+}
+
+.no-eliminar{
+  color: rgb(184, 189, 194);
+}
+
 
 
 

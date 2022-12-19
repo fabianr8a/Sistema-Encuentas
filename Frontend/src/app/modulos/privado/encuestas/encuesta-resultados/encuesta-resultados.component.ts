@@ -3,14 +3,15 @@ import { observadorAny } from './../../../../utilidades/observadores/tipo-any';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Subscription, map, catchError, finalize } from 'rxjs';
 import { Encuesta } from './../../../../modelos/encuesta';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { EncuestaService } from 'src/app/servicios/encuesta.service';
 import { TipoEventos } from 'src/app/modelos/tipo_eventos';
 import { PreguntaService } from 'src/app/servicios/pregunta.service';
 import { Preguntas } from 'src/app/modelos/preguntas';
-import { UsuarioEncuestaService } from 'src/app/servicios/usuario-respuestas.service';
 import { usuariosRespuestas } from 'src/app/modelos/usuarios-respuestas';
 import { ResultadosEncuestasService } from 'src/app/servicios/resultados-encuestas.service';
+import { BaseChartDirective } from 'ng2-charts';
+import { Opciones } from 'src/app/modelos/opciones';
 
 @Component({
   selector: 'app-encuesta-resultados',
@@ -18,14 +19,20 @@ import { ResultadosEncuestasService } from 'src/app/servicios/resultados-encuest
   styleUrls: ['./encuesta-resultados.component.css'],
 })
 export class EncuestaResultadosComponent implements OnInit {
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
+  public barChartslabels: string[] = [];
+  public totales: number[] = [];
+  public barChartData = [{ data: [0] }];
   public arregloEvento: TipoEventos[];
-  arregloRespuestas: any[];
+  public arregloRespuestas: any[];
+  public arregloOpciones: any[] = [];
   public arregloTiposDependencias: TiposDependencia[];
-  arregloPreguntas: Preguntas[] = [];
+  public arregloPreguntas: Preguntas[] = [];
 
   //Atributos consumo servicios
   public objEncuesta: Encuesta;
+  public objRespuestas: usuariosRespuestas = this.inicializarRespuestas();
   public miSuscripcion: Subscription;
   public temporal: any;
   public cargaFinalizada: boolean;
@@ -56,6 +63,10 @@ export class EncuestaResultadosComponent implements OnInit {
     this.listarTiposDependencias();
   }
 
+  public inicializarRespuestas(): usuariosRespuestas {
+    return new usuariosRespuestas(0, 0, '', '', 0, '');
+  }
+
   public listarEventos(): void {
     this.miSuscripcion = this.encuestaService
       .listarEventos()
@@ -84,9 +95,8 @@ export class EncuestaResultadosComponent implements OnInit {
       .subscribe(observadorAny);
   }
 
-
   public inicializarEncuesta(): Encuesta {
-    return new Encuesta(0, 0, 0, 0, '', '', '', '', 0, '', '',0);
+    return new Encuesta(0, 0, 0, 0, '', '', '', '', 0, '', '', 0);
   }
 
   public listarEncuesta(): void {
@@ -125,13 +135,14 @@ export class EncuestaResultadosComponent implements OnInit {
           throw err;
         }),
         finalize(() => {
-          this.listarRespuesta(this.arregloPreguntas);
+          this.listarRespuestas(this.arregloPreguntas);
+          this.listarTextoOpcion(this.arregloPreguntas);
         })
       )
       .subscribe(observadorAny);
   }
 
-  public listarRespuesta(arregloPregunta: Preguntas[]): void {
+  public listarRespuestas(arregloPregunta: Preguntas[]): void {
     for (const encuesta of arregloPregunta) {
       const codPregunta = encuesta.codPregunta;
       this.miSuscripcion = this.respuestasEncuestas
@@ -144,14 +155,34 @@ export class EncuestaResultadosComponent implements OnInit {
           catchError((err) => {
             throw err;
           }),
-          finalize(()=> {
-          })
+          finalize(() => {})
         )
         .subscribe(observadorAny);
     }
   }
 
-
-
+  public listarTextoOpcion(arregloPregunta: Preguntas[]): void {
+    for (const encuesta of arregloPregunta) {
+      const codPregunta = encuesta.codPregunta;
+      if (encuesta.codTipoPregunta === 3) {
+        this.miSuscripcion = this.respuestasEncuestas
+          .listarRespuestasUnicas(codPregunta)
+          .pipe(
+            map((respuesta: Opciones[]) => {
+              this.arregloOpciones = respuesta;
+              this.arregloOpciones.map((opcion: Opciones) => {
+                this.barChartslabels.push(opcion.textoOpcion);
+                this.totales.push(Number(opcion.contador));
+              });
+              this.barChartData = [{ data: this.totales }];
+              return respuesta;
+            }),
+            catchError((err) => {
+              throw err;
+            })
+          )
+          .subscribe(observadorAny);
+      }
+    }
+  }
 }
-

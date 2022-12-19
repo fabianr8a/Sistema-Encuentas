@@ -27,7 +27,6 @@
 }
 
 .cantidadPreguntas {
-  border: 1px solid #0a58ca;
   height: 30px;
   width: 19%;
   border-top: none;
@@ -38,7 +37,6 @@
 .total-preguntas {
   padding: 5px;
 }
-
 
 .imagen-resultado {
   width: 30%;
@@ -227,5 +225,15 @@ a {
 .cancelar-preguntas{
   margin-bottom: 16px;
 }
+
+.respuestas{
+  margin-left: 9px;
+}
+
+.respuesta-cantidad{
+  text-align: center;
+}
+
+
 
 

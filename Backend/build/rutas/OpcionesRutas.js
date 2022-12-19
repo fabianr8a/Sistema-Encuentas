@@ -12,13 +12,13 @@ class OpcionRutas {
     }
     listadoRutas() {
         //seleccionar opcion
-        this.miRutaOpcion.get('/seleccionar/:codOpcion', OpcionControlador_1.default.seleccionarOpcion);
+        this.miRutaOpcion.get("/seleccionar/:codOpcion", OpcionControlador_1.default.seleccionarOpcion);
         //modificar
-        this.miRutaOpcion.put('/modificar/:codOpcion', OpcionControlador_1.default.modificarOpcion);
+        this.miRutaOpcion.put("/modificar/:codOpcion", OpcionControlador_1.default.modificarOpcion);
         //eliminar opcion
-        this.miRutaOpcion.delete('/eliminar/:codOpcion', OpcionControlador_1.default.eliminarOpcion);
+        this.miRutaOpcion.delete("/eliminar/:codOpcion", OpcionControlador_1.default.eliminarOpcion);
         //agregar opcion
-        this.miRutaOpcion.post('/crear', OpcionControlador_1.default.crearOpciones);
+        this.miRutaOpcion.post("/crear", OpcionControlador_1.default.crearOpciones);
     }
 }
 const opcionRutas = new OpcionRutas();

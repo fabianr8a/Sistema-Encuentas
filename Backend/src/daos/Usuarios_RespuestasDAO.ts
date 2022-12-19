@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import pool from '../configuracion/conexion/conexionBd';
 
-class EstudianteDAO {
+class UsuariosRespuestasDAO {
 
   protected static async listarLasEncuestas(sql: string, parametros: any, res: Response): Promise<any> {
     await pool.result(sql, parametros)
@@ -14,7 +14,7 @@ class EstudianteDAO {
       });
   }
 
-  protected static async ResponderEncuesta(sqlResponderFecha: string, sqlResponderAbierta: string, sqlResponderOpcion: string, sqlModificarEstado:string, codigoEncuesta:number,parametrosEncuesta: any[], res: Response): Promise<any> {
+  protected static async ResponderEncuesta(sqlResponderFecha: string, sqlResponderAbierta: string, sqlResponderOpcion: string, sqlModificarEstado:string, codigoEncuesta:number, parametrosEncuesta: any[], res: Response): Promise<any> {
     await pool.task(async (consulta) => {
       for (const encuesta of parametrosEncuesta) {
         if (encuesta.respuestaAbierta != '') {
@@ -58,4 +58,4 @@ class EstudianteDAO {
   }
 }
 
-export default EstudianteDAO;
+export default UsuariosRespuestasDAO;

@@ -1,5 +1,5 @@
-import { Router } from 'express';
-import opcionControlador from '../controladores/OpcionControlador';
+import { Router } from "express";
+import opcionControlador from "../controladores/OpcionControlador";
 
 class OpcionRutas {
   public miRutaOpcion: Router;
@@ -11,15 +11,14 @@ class OpcionRutas {
 
   public listadoRutas(): void {
     //seleccionar opcion
-    this.miRutaOpcion.get('/seleccionar/:codOpcion', opcionControlador.seleccionarOpcion);
+    this.miRutaOpcion.get( "/seleccionar/:codOpcion", opcionControlador.seleccionarOpcion);
     //modificar
-    this.miRutaOpcion.put('/modificar/:codOpcion', opcionControlador.modificarOpcion);
+    this.miRutaOpcion.put("/modificar/:codOpcion",opcionControlador.modificarOpcion);
     //eliminar opcion
-    this.miRutaOpcion.delete('/eliminar/:codOpcion', opcionControlador.eliminarOpcion);
+    this.miRutaOpcion.delete("/eliminar/:codOpcion",opcionControlador.eliminarOpcion);
     //agregar opcion
-    this.miRutaOpcion.post('/crear', opcionControlador.crearOpciones);
-
+    this.miRutaOpcion.post("/crear", opcionControlador.crearOpciones);
   }
 }
-  const opcionRutas = new OpcionRutas();
-  export default opcionRutas.miRutaOpcion;
+const opcionRutas = new OpcionRutas();
+export default opcionRutas.miRutaOpcion;

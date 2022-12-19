@@ -10,6 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { ToastrModule } from 'ngx-toastr';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { NgChartsModule, NgChartsConfiguration } from 'ng2-charts';
 
 import {ContenedorModule} from './modulos/contenedor/contenedor.module';
 import { TokenInterceptor } from './token.interceptor';
@@ -18,17 +19,12 @@ import {LOCALE_ID } from '@angular/core';
 import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
 
-
-
-
-
 registerLocaleData(localeEs, 'es');
 
 
 @NgModule({
   declarations: [
     AppComponent,
-
 
   ],
   imports: [
@@ -40,9 +36,10 @@ registerLocaleData(localeEs, 'es');
     BrowserAnimationsModule,
     NgxPaginationModule,
     HttpClientModule,
+    NgChartsModule,
     ContenedorModule
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass:TokenInterceptor, multi:true },{ provide:LOCALE_ID, useValue: 'es',}],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass:TokenInterceptor, multi:true },{ provide:LOCALE_ID, useValue: 'es'},{provide: NgChartsConfiguration, useValue: { generateColors: false }}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

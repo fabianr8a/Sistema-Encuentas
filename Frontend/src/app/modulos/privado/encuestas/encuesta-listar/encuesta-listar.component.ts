@@ -1,10 +1,17 @@
+import { ParamMap, ActivatedRoute, Router } from '@angular/router';
+import { Preguntas } from './../../../../modelos/preguntas';
+import { Opciones } from './../../../../modelos/opciones';
+import { ToastrService } from 'ngx-toastr';
+import { mostrarMensaje } from 'src/app/utilidades/mensajes/toas.func';
 import { AccesoService } from './../../../../servicios/acceso.service';
 import { EncuestaService } from 'src/app/servicios/encuesta.service';
 import { Encuesta } from 'src/app/modelos/encuesta';
 import { Component, OnInit } from '@angular/core';
 import { observadorAny } from 'src/app/utilidades/observadores/tipo-any';
-import { Subscription, map, finalize } from 'rxjs';
+import { Subscription, map, finalize, catchError } from 'rxjs';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { OpcionesService } from 'src/app/servicios/opciones.service';
+import { PreguntaService } from 'src/app/servicios/pregunta.service';
 
 @Component({
   selector: 'app-encuesta-listar',
@@ -16,7 +23,9 @@ export class EncuestaListarComponent implements OnInit {
   public arregloEncuesta: Encuesta[];
   public encuestaSeleccionada: Encuesta;
   public busqueda: string = '';
-
+  public codigoEncuesta: number;
+  public objPregunta:Preguntas;
+  public arregloPreguntas: Preguntas[] = [];
 
   //Atributos paginación
   public paginaActual: number;
@@ -39,11 +48,18 @@ export class EncuestaListarComponent implements OnInit {
   constructor(
     public encuestaService: EncuestaService,
     public modalService: BsModalService,
+    public opcionService: OpcionesService,
+    public preguntaService: PreguntaService,
     private acceso: AccesoService,
+    private toastr: ToastrService,
+    private route: ActivatedRoute,
+    private router: Router,
   ) {
     //Inicializar atributos requeridos
     this.arregloEncuesta = [];
     this.encuestaSeleccionada = this.inicializarEncuesta();
+    this.objPregunta=this.inicializarPregunta();
+    this.codigoEncuesta = 0;
 
     //Inicializar atributos paginación
     this.paginaActual = 0;
@@ -68,7 +84,15 @@ export class EncuestaListarComponent implements OnInit {
     return new Encuesta(0, 0, 0, 0, '', '', '', '', this.acceso.objAcceso.codUsuario, '', '',0);
   }
 
+  public inicializarPregunta():Preguntas{
+    return new Preguntas (0,0,'',0,[])
+  }
+
   ngOnInit(): void {
+    this.route.paramMap.subscribe((parametro: ParamMap) => {
+      const valor = String(parametro.get('codEncuesta'));
+      this.codigoEncuesta = parseInt(valor) as number;
+    });
     this.listarEncuestas(this.acceso.objAcceso.codUsuario);
   }
 
@@ -80,8 +104,6 @@ export class EncuestaListarComponent implements OnInit {
 
   //Lógica del negocio - Servicios
 
-
-
   public listarEncuestas(codUsuario: number): void {
     this.miSuscripcion = this.encuestaService
       .listarEncuestas(codUsuario)
@@ -92,6 +114,59 @@ export class EncuestaListarComponent implements OnInit {
         finalize(() => {
           this.cargaFinalizada = true;
           this.verificarPaginador();
+        })
+      )
+      .subscribe(observadorAny);
+  }
+
+  public listarPreguntas(codigoEncuesta:number): void {
+    this.miSuscripcion = this.preguntaService
+      .seleccionarPregunta(codigoEncuesta)
+      .pipe(
+        map((respuesta: Preguntas[]) => {
+          this.arregloPreguntas = respuesta;
+          return respuesta;
+        }),
+        catchError((err) => {
+          throw err;
+        }),
+        finalize(()=>{
+          this.cargaFinalizada = true;
+        })
+      )
+      .subscribe(observadorAny);
+  }
+
+  public reloadComponent() {
+    let currentUrl = this.router.url;
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+        this.router.onSameUrlNavigation = 'reload';
+        this.router.navigate([currentUrl]);
+  }
+
+  public eliminarEncuesta(codEncuesta: number): void {
+    this.miSuscripcionEliminar = this.encuestaService
+      .eliminarEncuesta(codEncuesta)
+      .pipe(
+        map(() => {
+          mostrarMensaje(
+            'success',
+            'Encuesta eliminada',
+            'Exito',
+            this.toastr,
+          );
+        }),
+        catchError((miError) => {
+          mostrarMensaje(
+            'error',
+            'No se pudo eliminar la encuesta',
+            'Advertencia',
+            this.toastr
+          );
+          throw miError;
+        }),
+        finalize(()=>{
+          this.reloadComponent();
         })
       )
       .subscribe(observadorAny);

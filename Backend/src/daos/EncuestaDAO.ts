@@ -100,7 +100,7 @@ class EncuestaDAO {
   }
 
   //modificar la encuesta seleccionada
-  protected static async modificarLaEncuesta(sqlModificar: string, parametros: any, res: Response): Promise<any> {
+  protected static async modificarLaEncuesta(sqlModificar: string,  parametros: any, res: Response): Promise<any> {
     await pool.task(async (consulta: any) => {
       return await consulta.result(sqlModificar, parametros);
     })
@@ -112,6 +112,29 @@ class EncuestaDAO {
       .catch((miError: any) => {
         console.log(miError);
         res.status(400).json({ respuesta: 'Error modificando la encuesta' });
+      });
+  }
+
+  protected static async eliminarEncuesta(sqlEliminarPregunta: string, sqlEliminarOpcion: string, sqlEliminarEncuesta: string, sqlEliminarUsuEncuesta: string, sqltodo: string, parametros: any, res: Response): Promise<any> {
+    await pool.task(async (consulta) => {
+      let preguntica = await consulta.result(sqltodo, parametros);
+      if (preguntica.rows.length !== 0) {
+        preguntica.rows.forEach(async (opcion: any) => {
+          await consulta.none(sqlEliminarOpcion, opcion.codPregunta);
+        })
+      }
+      await consulta.result(sqlEliminarPregunta, parametros);
+      await consulta.result(sqlEliminarUsuEncuesta, parametros);
+      return await consulta.result(sqlEliminarEncuesta, parametros);
+    })
+      .then((resultado: any) => {
+        res.status(200).json({
+          respuesta: "Encuesta eliminada"
+        });
+      })
+      .catch((miError: any) => {
+        console.log(miError);
+        res.status(400).json({ respuesta: 'Error eliminando encuesta' });
       });
   }
 

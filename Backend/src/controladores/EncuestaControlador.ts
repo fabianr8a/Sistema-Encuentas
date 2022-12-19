@@ -63,6 +63,17 @@ class EncuestaControlador extends EncuestaDAO {
     EncuestaControlador.modificarLaEncuesta(SQL_ENCUESTA.MODIFICAR_ENCUESTA, misParametros, res);
   }
 
+  public eliminarEncuesta(req: Request, res: Response) {
+    const codigo = req.params.codEncuesta;
+    EncuestaControlador.eliminarEncuesta(
+      SQL_PREGUNTAS.ELIMINAR_TODAS_PREGUNTAS,
+      SQL_OPCIONES.ELIMINAR_TODAS_OPCIONES,
+      SQL_ENCUESTA.ELIMINAR_ENCUESTA,
+      SQL_USUARIO_ENCUESTAS.ELIMINAR_USUARIO_ENCUESTA,
+      SQL_PREGUNTAS.SELECCIONAR_TODAS_PREGUNTAS,
+      codigo, res);
+  }
+
 }
 const encuestaControlador = new EncuestaControlador();
 export default encuestaControlador;

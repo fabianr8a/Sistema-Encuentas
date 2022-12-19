@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const conexionBd_1 = __importDefault(require("../configuracion/conexion/conexionBd"));
-class EstudianteDAO {
+class UsuariosRespuestasDAO {
     static listarLasEncuestas(sql, parametros, res) {
         return __awaiter(this, void 0, void 0, function* () {
             yield conexionBd_1.default.result(sql, parametros)
@@ -73,4 +73,4 @@ class EstudianteDAO {
         });
     }
 }
-exports.default = EstudianteDAO;
+exports.default = UsuariosRespuestasDAO;

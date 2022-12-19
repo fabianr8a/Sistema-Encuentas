@@ -11,6 +11,12 @@ class ResultadosEncuestasControlador extends ResultadosEncuestasDAO{
     ResultadosEncuestasControlador.listarRespuestas(SQL_RESULTADOS_ENCUESTAS.LISTAR_RESPUESTAS, miParametro,res);
   }
 
+  public listarRespuestasUnicas(req: Request, res: Response) {
+    const codigoPregunta = req.params.codPregunta;
+    const miParametro = [codigoPregunta];
+    ResultadosEncuestasControlador.listarRespuestas(SQL_RESULTADOS_ENCUESTAS.RESPUESTAS_UNICAS, miParametro,res);
+  }
+
 }
 const resultadosEncuestasControlador = new ResultadosEncuestasControlador();
 export default resultadosEncuestasControlador;

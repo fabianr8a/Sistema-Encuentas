@@ -162,7 +162,7 @@ export class EncuestaEditarComponent implements OnInit {
     if (this.objEncuesta.fechaCierreEncuesta<this.objEncuesta.fechaCreacionEncuesta) {
       mostrarMensaje(
         'error',
-        'Las fechas no son correctas',
+        'La fecha de cierre debe ser superior a la fecha de inicio',
         'Error',
         this.toastrService
       );
@@ -293,7 +293,7 @@ export class EncuestaEditarComponent implements OnInit {
   //MODIFICAR LISTAR Y ELIMINAR OPCIONES//
 
   public inicializarOpcion(){
-    return new Opciones (0,0,'')
+    return new Opciones (0,0,'',0)
   }
 
   public eliminarOpciones(opcion: Opciones) {
@@ -372,7 +372,7 @@ export class EncuestaEditarComponent implements OnInit {
   }
 
   public agregarOpcionesNuevas(codPregunta: number): void {
-    let objOpcion = new Opciones(0, codPregunta, '');
+    let objOpcion = new Opciones(0, codPregunta, '',0);
     this.arregloPreguntasNuevas.map((preguntaNueva) => {
       if (preguntaNueva.codPregunta === codPregunta) {
         preguntaNueva.arregloOpciones.push(objOpcion);

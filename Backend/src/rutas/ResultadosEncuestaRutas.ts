@@ -15,6 +15,8 @@ class ResultadosEncuestaRutas {
     this.miRutaResultados.get('/getAll/:codEncuesta',encuestaControlador.seleccionarEncuestaModificar);
     //Obtener respuestas
     this.miRutaResultados.get('/respuestas/:codPregunta',resultadosEncuestasControlador.listarRespuestas);
+    //Obtener respuestas unicas
+    this.miRutaResultados.get('/respuestasUnicas/:codPregunta',resultadosEncuestasControlador.listarRespuestasUnicas);
   }
 }
 const resultadosRutas = new ResultadosEncuestaRutas();

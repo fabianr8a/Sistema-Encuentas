@@ -14,5 +14,7 @@ exports.SQL_PREGUNTAS = {
 	FROM preguntas \
 	where cod_pregunta=$1',
     MODIFICAR_PREGUNTA: 'UPDATE preguntas SET  descripcion_pregunta=$2 WHERE cod_pregunta=$1',
-    ELIMINAR_PREGUNTA: 'DELETE FROM preguntas WHERE cod_pregunta=$1;',
+    ELIMINAR_PREGUNTA: 'DELETE FROM preguntas WHERE cod_pregunta=$1',
+    ELIMINAR_TODAS_PREGUNTAS: 'DELETE FROM preguntas WHERE cod_encuesta=$1',
+    SELECCIONAR_TODAS_PREGUNTAS: 'SELECT * FROM preguntas WHERE cod_encuesta = $1',
 };

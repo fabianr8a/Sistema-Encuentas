@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SQL_ENCUESTA_ESTUDIANTES = void 0;
-exports.SQL_ENCUESTA_ESTUDIANTES = {
+exports.SQL_USUARIOS_RESPUESTAS = void 0;
+exports.SQL_USUARIOS_RESPUESTAS = {
     LISTAR_ENCUESTAS: 'select e.cod_encuesta, e.cod_tipo_dependencia, e.nombre_encuesta, te.nombre_tipo_evento, \
   to_char(e.fecha_creacion_encuesta::date,\'dd/mm/yyyy\') as fecha_creacion_encuesta, \
   to_char(e.fecha_cierre_encuesta::date,\'dd/mm/yyyy\') as fecha_cierre_encuesta, e.descripcion_encuesta, e.estado_encuesta, \
@@ -23,5 +23,4 @@ exports.SQL_ENCUESTA_ESTUDIANTES = {
   inner join usuarios_respuestas as res \
   on respuestas_usuarios.cod_pregunta=res.cod_pregunta \
   where cod_encuesta=$1',
-    MODIFICAR_ESTADO_ENCUESTA: 'UPDATE encuestas SET estado_encuesta = 1 WHERE cod_encuesta = $1',
 };

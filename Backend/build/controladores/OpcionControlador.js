@@ -7,10 +7,7 @@ const OpcionDAO_1 = __importDefault(require("../daos/OpcionDAO"));
 const Opciones_sql_1 = require("../repositorios/Opciones_sql");
 class OpcionControlador extends OpcionDAO_1.default {
     crearOpciones(req, res) {
-        const losParametros = [
-            req.body.textoOpcion,
-            req.body.codPregunta,
-        ];
+        const losParametros = [req.body.textoOpcion, req.body.codPregunta];
         OpcionControlador.crearLasOpciones(Opciones_sql_1.SQL_OPCIONES.CREAR_OPCIONES, losParametros, res);
     }
     eliminarOpcion(req, res) {
@@ -22,7 +19,7 @@ class OpcionControlador extends OpcionDAO_1.default {
         const buscarOpcion = req.params.codOpcion;
         const miParametro = [buscarOpcion];
         if (!buscarOpcion) {
-            return res.status(400).json({ 'Error': 'No se encontro un parametro' });
+            return res.status(400).json({ Error: "No se encontro un parametro" });
         }
         OpcionControlador.seleccionarOpcion(Opciones_sql_1.SQL_OPCIONES.SELECCIONAR_OPCION, miParametro, res);
     }
